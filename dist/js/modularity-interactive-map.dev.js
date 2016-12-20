@@ -54,6 +54,12 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
 
             this.toggleTooltip(e.target);
         }.bind(this));
+
+        $('[data-interactive-map-close-tooltip]').on('click', function (e) {
+            e.preventDefault();
+            var target = $(e.target).parents('.mod-interactive-map-pin')[0];
+            this.toggleTooltip(target);
+        }.bind(this));
     };
 
     PinTooltip.prototype.toggleTooltip = function(target) {

@@ -40,6 +40,7 @@ foreach ($categories as $key => $category) {
         text-align: center;
         padding: 20px;
         border-radius: 5px;
+        cursor: default;
     }
 
     .mod-interactive-map-pin-info::after {
@@ -55,6 +56,20 @@ foreach ($categories as $key => $category) {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-top: 10px solid #fff;
+    }
+
+    [data-interactive-map-close-tooltip] {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        border: 0;
+        background-color: transparent;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    [data-interactive-map-close-tooltip]:hover {
+        color: #ff0000;
     }
 </style>
 
@@ -77,6 +92,8 @@ foreach ($categories as $key => $category) {
         <?php foreach ($pins as $pin) : ?>
         <div class="mod-interactive-map-pin" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
             <div class="mod-interactive-map-pin-info">
+                <button type="button" data-interactive-map-close-tooltip>&times;</button>
+
                 <?php if (!empty($pin['title'])) : ?>
                 <h3><?php echo $pin['title']; ?></h3>
                 <?php endif; ?>
