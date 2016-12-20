@@ -1,0 +1,147 @@
+#map-image,
+#map-pin-categories {
+    .inside {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+#map-image {
+    .map-pin-toolbox {
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #eee;
+        padding: 12px;
+    }
+
+    .map-container {
+        position: relative;
+        margin: 12px;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .map-pin {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        background-color: #F2FF00;
+        box-shadow: 0 0 10px rgba(0,0,0,.3);
+        border-radius: 50%;
+    }
+
+    [data-map-editor] {
+        display: none;
+    }
+
+    .button.button-red {
+        background: #BA0000;
+        border-color: #AA0000 #990000 #990000;
+        -webkit-box-shadow: 0 1px 0 #990000;
+        box-shadow: 0 1px 0 #990000;
+        color: #fff;
+        text-decoration: none;
+        text-shadow: 0 -1px 1px #990000, 1px 0 1px #990000, 0 1px 1px #990000, -1px 0 1px #990000;
+    }
+
+    .map-pin-popup {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 250px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 0 20px rgba(#000, .3);
+        z-index: 3;
+
+        input, textarea, select {
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            height: 150px;
+        }
+
+        &::before {
+            $border-width: 8px;
+            $color: #fff;
+
+            content: '';
+            display: block;
+            position: absolute;
+            left: 50%;
+            margin-left: -$border-width;
+            bottom: -$border-width;
+
+            border-top: $border-width solid $color;
+            border-right: $border-width solid transparent;
+            border-bottom: none;
+            border-left: $border-width solid transparent;
+        }
+    }
+
+    .pin-actions {
+        text-align: right;
+
+        .button + .button {
+            margin-left: 10px;
+        }
+    }
+
+    .button-link:hover {
+        background-color: transparent;
+    }
+
+    [data-action="interactive-map-pin-remove"] {
+        color: #a00;
+
+        &:hover {
+            color: #ff0000;
+        }
+    }
+}
+
+#map-pin-categories {
+    .interactive-map-categories-form {
+        padding: 12px;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #eee;
+
+        label {
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+
+        div + div {
+            margin-top: 8px;
+        }
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 8px 12px;
+            margin: 0;
+        }
+
+        li:nth-child(even) {
+            background-color: #FAFAFA;
+        }
+    }
+
+    [data-action="interactive-map-add-remove-category"] {
+        float: right;
+        font-size: 17px;
+        padding: 0;
+        margin: 0;
+        height: 17px;
+        line-height: 17px;
+    }
+}
