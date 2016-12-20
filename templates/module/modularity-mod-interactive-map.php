@@ -71,6 +71,30 @@ foreach ($categories as $key => $category) {
     [data-interactive-map-close-tooltip]:hover {
         color: #ff0000;
     }
+
+    .mod-interactive-map-categories {
+        margin-bottom: 60px;
+    }
+
+    .mod-interactive-map-categories ul {
+        text-align: center;
+    }
+
+    .mod-interactive-map-categories li {
+        display: inline-block;
+        padding: 5px 10px;
+        padding-right: 15px;
+        border-radius: 30px;
+        background-color: rgba(0,0,0,.1);
+        text-align: left;
+    }
+
+    .mod-interactive-map-category-color-indicator {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
 </style>
 
 <div class="mod-interactive-map-wrapper">
@@ -81,6 +105,7 @@ foreach ($categories as $key => $category) {
                 <label>
                     <input type="checkbox" data-interactive-map-category="<?php echo $category['name']; ?>" checked>
                     <?php echo $category['name']; ?>
+                    <span style="background-color:<?php echo $category['color']; ?>" class="mod-interactive-map-category-color-indicator"></span>
                 </label>
             </li>
             <?php endforeach; ?>
