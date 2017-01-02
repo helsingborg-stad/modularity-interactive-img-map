@@ -95,6 +95,11 @@ foreach ($categories as $key => $category) {
         height: 10px;
         border-radius: 50%;
     }
+
+    .mod-interactive-map-pin-info a.btn {
+        margin-top: 10px;
+    }
+
 </style>
 
 <div class="mod-interactive-map-wrapper">
