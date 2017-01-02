@@ -43,9 +43,9 @@ class Module extends \Modularity\Module
      */
     public function enqueueAssets()
     {
-        if (!\ModularityOnePage\App::isOnepage() && !$this->hasModule()) {
+        /*if (!\ModularityOnePage\App::isOnepage() && !$this->hasModule()) {
             return;
-        }
+        }*/
 
         wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map.min.js', null, '1.0.0', true);
         wp_enqueue_script('modularity-interative-map');
