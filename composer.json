@@ -1,0 +1,17 @@
+{
+    "name": "helsingborg-stad/modularity-interactive-img-map",
+    "description": "Add functionality to create clickable interactive maps in modularity.",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kristoffer Svanmark",
+            "email": "kristoffer.svanmark@lexiconitkonsult.se"
+        },
+        {
+            "name": "Sebastian Thulin",
+            "email": "sebastian.thulin@helsingborg.se"
+        }
+    ],
+    "require": {}
+}
