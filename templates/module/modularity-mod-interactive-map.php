@@ -126,6 +126,11 @@ foreach ($categories as $key => $category) {
                 <?php if (!empty($pin['text'])) : ?>
                 <div class="description"><?php echo $pin['text']; ?></div>
                 <?php endif; ?>
+
+                <?php if (!empty($pin['link'])) : ?>
+                <a href="<?php echo $pin['link']; ?>" class="btn btn-primary btn-sm"><?php _e("Read more",'modularity-interactive-map'); ?></a>
+                <?php endif; ?>
+
             </div>
         </div>
         <?php endforeach; ?>

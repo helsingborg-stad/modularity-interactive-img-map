@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Modularity Interactive Image Map\n"
+"POT-Creation-Date: 2017-01-02 15:39+0100\n"
+"PO-Revision-Date: 2017-01-02 15:46+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: modularity-interactive-map.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: source/php/App.php:46
+msgid "Close"
+msgstr "Stäng"
+
+#: source/php/App.php:47
+msgid "Remove"
+msgstr "Ta bort"
+
+#: source/php/App.php:48
+msgid "Description"
+msgstr "Beskrivning"
+
+#: source/php/App.php:49
+msgid "Link"
+msgstr "Länk"
+
+#: source/php/App.php:50
+msgid "Title"
+msgstr "Titel"
+
+#: source/php/Module.php:59
+msgid "Map image"
+msgstr "Kartbild"
+
+#: source/php/Module.php:77
+msgid "Pin categories"
+msgstr "Kategorier"
+
+#: templates/admin/map-categories.php:3
+msgid "Category name"
+msgstr "Namn på kategori"
+
+#: templates/admin/map-categories.php:7
+msgid "Pin color"
+msgstr "Knappnålsfärg"
+
+#: templates/admin/map-categories.php:11
+msgid "Add"
+msgstr "Lägg till"
+
+#: templates/admin/map-image.php:4
+msgid "Select map image"
+msgstr "Välj kartbild"
+
+#: templates/admin/map-image.php:6
+msgid "Add pin"
+msgstr "Lägg till knappnål"
+
+#: templates/admin/map-image.php:7
+msgid "Change map image"
+msgstr "Byt ut kartbild"
+
+#: templates/admin/map-image.php:33
+msgid "No map image selected"
+msgstr "Ingen kartbild vald"
+
+#: templates/module/modularity-mod-interactive-map.php:131
+msgid "Read more"
+msgstr "Läs mer"
+
+#. Plugin Name of the plugin/theme
+msgid "Modularity Interactive Image Map"
+msgstr "Modularity interaktiv karta"
+
+#. Description of the plugin/theme
+msgid "Build a interactive image map in a Modularity Module"
+msgstr "Bygg en interaktiv karta med knappnålar"
+
+#. Author of the plugin/theme
+msgid "Kristoffer Svanmark"
+msgstr ""
