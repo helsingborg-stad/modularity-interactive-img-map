@@ -103,6 +103,22 @@ foreach ($categories as $key => $category) {
         margin-top: 10px;
     }
 
+    .mod-iteractive-map-buttons {
+        display: block;
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+    }
+
+    .mod-iteractive-map-buttons > button {
+        display: block;
+        padding: 7px;
+    }
+
+    .mod-iteractive-map-buttons > button + button {
+        margin-top: 5px;
+    }
+
 </style>
 
 <div class="mod-interactive-map-wrapper">
@@ -120,27 +136,43 @@ foreach ($categories as $key => $category) {
         </ul>
     </div>
     <div class="mod-interactive-map-container">
-        <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
 
-        <?php foreach ($pins as $pin) : ?>
-        <div class="mod-interactive-map-pin" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
-            <div class="mod-interactive-map-pin-info">
-                <button type="button" data-interactive-map-close-tooltip>&times;</button>
+        <div class="mod-interactive-map-zoomable">
+            <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
 
-                <?php if (!empty($pin['title'])) : ?>
-                <h3><?php echo $pin['title']; ?></h3>
-                <?php endif; ?>
+            <?php foreach ($pins as $pin) : ?>
+            <div class="mod-interactive-map-pin" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
+                <div class="mod-interactive-map-pin-info">
+                    <button type="button" data-interactive-map-close-tooltip>&times;</button>
 
-                <?php if (!empty($pin['text'])) : ?>
-                <div class="description"><?php echo $pin['text']; ?></div>
-                <?php endif; ?>
+                    <?php if (!empty($pin['title'])) : ?>
+                    <h3><?php echo $pin['title']; ?></h3>
+                    <?php endif; ?>
 
-                <?php if (!empty($pin['link'])) : ?>
-                <a href="<?php echo $pin['link']; ?>" class="btn btn-primary btn-sm"><?php _e("Read more",'modularity-interactive-map'); ?></a>
-                <?php endif; ?>
+                    <?php if (!empty($pin['text'])) : ?>
+                    <div class="description"><?php echo $pin['text']; ?></div>
+                    <?php endif; ?>
 
+                    <?php if (!empty($pin['link'])) : ?>
+                    <a href="<?php echo $pin['link']; ?>" class="btn btn-primary btn-sm"><?php _e("Read more",'modularity-interactive-map'); ?></a>
+                    <?php endif; ?>
+
+                </div>
             </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
+        <div class="mod-iteractive-map-buttons">
+
+            <button class="zoom-in btn button-md btn-secondary">
+                <i class="pricon pricon-plus-o"></i>
+                <span class="sr-only"><?php _e("Zoom in", 'modularity-interactive-map'); ?></span>
+            </button>
+
+            <button class="zoom-out btn button-md btn-secondary">
+                <i class="pricon pricon-minus-o"></i>
+                <span class="sr-only"><?php _e("Zoom out", 'modularity-interactive-map'); ?></span>
+            </button>
+
+        </div>
     </div>
 </div>

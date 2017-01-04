@@ -34,6 +34,7 @@ gulp.task('sass-dev', function() {
 gulp.task('scripts-dist', function() {
     gulp.src([
             '!source/js/admin/*.js',
+            'source/js/vendor/*.js',
             'source/js/**/*.js',
         ])
         .pipe(concat('modularity-interactive-map.dev.js'))
