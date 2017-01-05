@@ -29,12 +29,15 @@ foreach ($categories as $key => $category) {
     }
 
     .mod-interactive-map-pin-info {
-        display: none;
-        position: absolute;
         z-index: 3;
-        bottom: calc(100% + 7px);
-        left: 50%;
-        transform: translateX(-50%);
+        position: absolute;
+        width: 0;
+        height: 0;
+        overflow: visible;
+    }
+
+    .mod-interactive-map-pin-info .mod-interactive-map-pin-wrapper {
+        position: relative;
         width: 350px;
         background-color: #fff;
         text-align: center;
@@ -44,14 +47,15 @@ foreach ($categories as $key => $category) {
         outline: 1px solid #eee;
         border-radius: 2px;
         box-shadow: 0 0 3px rgba(0,0,0,.2);
+        transform: translate(calc(-50% + 10px), calc(-100% - 10px));
     }
 
     .mod-interactive-map-pin-info::after {
         content: '';
         display: block;
         position: absolute;
-        top: 100%;
-        left: 50%;
+        top: calc(100% - 10px);
+        left: calc(50% + 10px);
         transform: translateX(-50%);
         z-index: 99;
         width: 0;
@@ -137,30 +141,29 @@ foreach ($categories as $key => $category) {
     </div>
     <div class="mod-interactive-map-container">
 
-        <div class="mod-interactive-map-zoomable">
-            <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
-
-            <?php foreach ($pins as $pin) : ?>
-            <div class="mod-interactive-map-pin" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
-                <div class="mod-interactive-map-pin-info">
-                    <button type="button" data-interactive-map-close-tooltip>&times;</button>
-
-                    <?php if (!empty($pin['title'])) : ?>
-                    <h3><?php echo $pin['title']; ?></h3>
-                    <?php endif; ?>
-
-                    <?php if (!empty($pin['text'])) : ?>
-                    <div class="description"><?php echo $pin['text']; ?></div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($pin['link'])) : ?>
-                    <a href="<?php echo $pin['link']; ?>" class="btn btn-primary btn-sm"><?php _e("Read more",'modularity-interactive-map'); ?></a>
-                    <?php endif; ?>
-
-                </div>
+        <!-- Template for pins -->
+        <div class="mod-interactive-map-pin-info hidden">
+            <div class="mod-interactive-map-pin-wrapper">
+                <button type="button" data-interactive-map-close-tooltip>&times;</button>
+                <h3>{{title}}</h3>
+                <div class="description">{{description}}</div>
+                <a href="{{link}}" class="btn btn-primary btn-sm link"><?php _e("Read more",'modularity-interactive-map'); ?></a>
             </div>
-            <?php endforeach; ?>
         </div>
+
+        <!-- Zoom area with pins -->
+        <div class="mod-interactive-map-overflower">
+            <div class="mod-interactive-map-zoomable">
+                <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
+
+                <?php foreach ($pins as $pin) : ?>
+                <div class="mod-interactive-map-pin" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo $pin['text']; ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <!-- Zoom action buttons -->
         <div class="mod-iteractive-map-buttons">
 
             <button class="zoom-in btn button-md btn-secondary">

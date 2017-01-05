@@ -3,34 +3,64 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
 
     function PinTooltip() {
         this.handleEvents();
+
+        $(window).resize(function() {
+            $('.mod-interactive-map-pin-info').addClass("hidden");
+        });
+
+        $(window).on( "orientationchange", function( event ) {
+            $('.mod-interactive-map-pin-info').addClass("hidden");
+        });
     }
 
     PinTooltip.prototype.handleEvents = function() {
-        $('.mod-interactive-map-pin').on('click', function (e) {
-            if ($(e.target).parents('.mod-interactive-map-pin-info').length) {
-                return;
-            }
 
-            this.toggleTooltip(e.target);
+        //Show panel
+        $('.mod-interactive-map-pin').on('click', function (e) {
+            e.preventDefault();
+            this.populateTooltip(e);
+            this.showTooltip(e);
+            this.placeTooltip(e);
         }.bind(this));
 
+        //Hide panel
         $('[data-interactive-map-close-tooltip]').on('click', function (e) {
             e.preventDefault();
-            var target = $(e.target).parents('.mod-interactive-map-pin')[0];
-            this.toggleTooltip(target);
+            this.hideTooltip(e);
         }.bind(this));
     };
 
-    PinTooltip.prototype.toggleTooltip = function(target) {
-        $target = $(target).closest('.mod-interactive-map-pin');
+    PinTooltip.prototype.populateTooltip = function(e) {
 
-        if ($target.hasClass('mod-interactive-map-pin-active')) {
-            $target.removeClass('mod-interactive-map-pin-active');
-            return;
+        //Tooltip element
+        toolTip = $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent());
+
+        //Title
+        $("h3", toolTip).html($(e.target).attr('data-title'));
+
+        //Content
+        $(".description", toolTip).html($(e.target).attr('data-description'));
+
+        //Link
+        if($(e.target).attr('data-link')) {
+            $(".link", toolTip).attr('href',$(e.target).attr('data-link')).show(0);
+        } else {
+            $(".link", toolTip).attr('href',$(e.target).attr('data-link')).hide(0);
         }
 
-        $('.mod-interactive-map-pin-active').removeClass('mod-interactive-map-pin-active');
-        $target.addClass('mod-interactive-map-pin-active');
+    };
+
+    PinTooltip.prototype.showTooltip = function(e) {
+        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).removeClass("hidden");
+    };
+
+    PinTooltip.prototype.hideTooltip = function(e) {
+        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).addClass("hidden");
+    };
+
+    PinTooltip.prototype.placeTooltip = function(e) {
+        toolTip = $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent());
+        $(toolTip).offset($(e.target).offset());
     };
 
     return new PinTooltip();

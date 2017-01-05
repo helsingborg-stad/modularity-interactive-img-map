@@ -4,8 +4,8 @@
  * Plugin Name:       Modularity Interactive Image Map
  * Plugin URI:
  * Description:       Build a interactive image map in a Modularity Module
- * Version:           1.0.0
- * Author:            Kristoffer Svanmark
+ * Version:           1.1.0
+ * Author:            Kristoffer Svanmark, Sebastian Thulin
  * Author URI:
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT

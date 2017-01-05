@@ -19,8 +19,9 @@ ModularityInteractiveMap.Zoom = (function ($) {
                 contain: false
             });
 
-            jQuery("button",obj).click(function(){
-                jQuery('.mod-interactive-map-zoomable', jQuery(this).parent().parent()).panzoom("resetPan");
+            $("button",obj).click(function(){
+                $('.mod-interactive-map-zoomable', $(this).parent().parent()).panzoom("resetPan");
+                $('.mod-interactive-map-pin-info').addClass("hidden");
             })
 
         });
