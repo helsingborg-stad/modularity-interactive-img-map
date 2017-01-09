@@ -163,7 +163,7 @@ foreach ($categories as $key => $category) {
                 <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
 
                 <?php foreach ($pins as $pin) : ?>
-                <div class="mod-interactive-map-pin" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo $pin['text']; ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
+                <div class="mod-interactive-map-pin" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo preg_replace('/\s+/', ' ',trim($pin['text'])); ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
                 </div>
                 <?php endforeach; ?>
             </div>

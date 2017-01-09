@@ -22,7 +22,7 @@ if ($current['id']) {
                         \'' . $pin['left'] . '\',
                         \'' . $pin['title'] . '\',
                         \'' . $pin['link'] . '\',
-                        \'' . $pin['text'] . '\',
+                        \'' . preg_replace('/\s+/', ' ',trim($pin['text'])) . '\',
                         \'' . $pin['category'] . '\'
                 );';
         }
