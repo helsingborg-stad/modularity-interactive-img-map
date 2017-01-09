@@ -2,7 +2,17 @@ var ModularityInteractiveMap = ModularityInteractiveMap || {};
 ModularityInteractiveMap.Zoom = (function ($) {
 
     function Zoom() {
+
         this.init();
+
+        window.addEventListener("orientationchange", function() {
+            this.resize();
+        }.bind(this), false);
+
+        window.addEventListener("resize", function() {
+            this.resize();
+        }.bind(this), false);
+
     }
 
     Zoom.prototype.init = function() {
@@ -26,6 +36,18 @@ ModularityInteractiveMap.Zoom = (function ($) {
 
         });
     };
+
+    Zoom.prototype.resize = function() {
+        console.log("REZ");
+        $(".mod-interactive-map-container").each(function( key, obj ) {
+            $(".mod-interactive-map-zoomable", obj).panzoom(
+                "option",
+                "maxScale",
+                $("img",obj).get(0).naturalWidth / $("img",obj).get(0).clientWidth
+            );
+        });
+    };
+
     return new Zoom();
 
 })(jQuery);
