@@ -47,7 +47,7 @@ class Module extends \Modularity\Module
             return;
         }*/
 
-        wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map.min.js', null, '1.1.0', true);
+        wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map.min.js', null, '1.1.1', true);
         wp_enqueue_script('modularity-interative-map');
     }
 

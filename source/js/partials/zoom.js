@@ -4,6 +4,7 @@ ModularityInteractiveMap.Zoom = (function ($) {
     function Zoom() {
 
         this.init();
+        this.resize();
 
         window.addEventListener("orientationchange", function() {
             this.resize();
