@@ -63,7 +63,7 @@ foreach ($categories as $key => $category) {
         .mod-interactive-map-pin-info {
             width: auto !important;
             left: 0 !important;
-            right: 0 !important;
+            top: 0 !important;
         }
 
         .mod-interactive-map-pin-info .mod-interactive-map-pin-wrapper {
