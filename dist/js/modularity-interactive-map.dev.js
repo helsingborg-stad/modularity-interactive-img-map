@@ -1453,11 +1453,21 @@ ModularityInteractiveMap.Zoom = (function ($) {
 
     Zoom.prototype.resize = function() {
         $(".mod-interactive-map-container").each(function( key, obj ) {
+
+            //Adjust scale option
             $(".mod-interactive-map-zoomable", obj).panzoom(
                 "option",
                 "maxScale",
                 $("img",obj).get(0).naturalWidth / $("img",obj).get(0).clientWidth
             );
+
+            //Hide / show zoom options
+            if($("img",obj).get(0).naturalWidth / $("img",obj).get(0).clientWidth < 1.4) {
+                $('.mod-iteractive-map-buttons', obj).addClass('hidden');
+            } else {
+                $('.mod-iteractive-map-buttons', obj).removeClass('hidden');
+            }
+
         });
     };
 
