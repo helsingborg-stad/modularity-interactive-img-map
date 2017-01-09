@@ -1452,7 +1452,6 @@ ModularityInteractiveMap.Zoom = (function ($) {
     };
 
     Zoom.prototype.resize = function() {
-        console.log("REZ");
         $(".mod-interactive-map-container").each(function( key, obj ) {
             $(".mod-interactive-map-zoomable", obj).panzoom(
                 "option",
