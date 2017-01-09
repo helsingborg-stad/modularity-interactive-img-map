@@ -16,7 +16,7 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
     PinTooltip.prototype.handleEvents = function() {
 
         //Show panel
-        $('.mod-interactive-map-pin').on('click', function (e) {
+        $('.mod-interactive-map-pin').on('click touchstart', function (e) {
             e.preventDefault();
             this.populateTooltip(e);
             this.showTooltip(e);
@@ -24,7 +24,7 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
         }.bind(this));
 
         //Hide panel
-        $('[data-interactive-map-close-tooltip]').on('click', function (e) {
+        $('[data-interactive-map-close-tooltip]').on('click touchstart', function (e) {
             e.preventDefault();
             this.hideTooltip(e);
         }.bind(this));
