@@ -26,6 +26,7 @@ foreach ($categories as $key => $category) {
         border-radius: 50%;
         background-color: #fff;
         cursor: pointer;
+        box-shadow: 0 0 .3vw rgba(0, 0, 0, 0.7);
     }
 
     .mod-interactive-map-pin.mod-interactive-map-pin-active .mod-interactive-map-pin-info {
