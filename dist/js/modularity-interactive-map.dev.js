@@ -1445,12 +1445,25 @@ ModularityInteractiveMap.Zoom = (function ($) {
             });
 
             $("button",obj).click(function(){
-                $('.mod-interactive-map-zoomable', $(this).parent().parent()).panzoom("resetPan");
-                $('.mod-interactive-map-pin-info').addClass("hidden");
-            })
 
+                //Reset pan
+                $('.mod-interactive-map-zoomable', $(this).parent().parent()).panzoom("resetPan");
+
+                //Remove pin infos
+                $('.mod-interactive-map-pin-info').addClass("hidden");
+
+                // Zoom class
+                $(this).parent().parent().removeClass (function (index, css) {
+                    return (css.match (/(^|\s)zoomlevel-\S+/g) || []).join(' ');
+                }).addClass( 'zoomlevel-' +  Math.ceil( $(".mod-interactive-map-zoomable",$(this).parent().parent()).get(0).getBoundingClientRect().width / $(".mod-interactive-map-zoomable",$(this).parent().parent()).get(0).offsetWidth ));
+
+            });
         });
     };
+
+    Zoom.prototype.resize = function(object) {
+        //return ;
+    }
 
     Zoom.prototype.resize = function() {
         $(".mod-interactive-map-container").each(function( key, obj ) {

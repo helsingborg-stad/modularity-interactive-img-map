@@ -30,6 +30,23 @@ foreach ($categories as $key => $category) {
         transform: translate(-50%, -50%);
     }
 
+    .zoomlevel-2 .mod-interactive-map-pin {
+        min-width: 8px;
+        min-height: 8px;
+        max-width: 12px;
+        max-height: 12px;
+    }
+
+    .zoomlevel-3 .mod-interactive-map-pin,
+    .zoomlevel-4 .mod-interactive-map-pin,
+    .zoomlevel-5 .mod-interactive-map-pin,
+    .zoomlevel-6 .mod-interactive-map-pin {
+        min-width: 6px;
+        min-height: 6px;
+        max-width: 8px;
+        max-height: 8px;
+    }
+
     .mod-interactive-map-pin.mod-interactive-map-pin-active .mod-interactive-map-pin-info {
         display: block;
     }
