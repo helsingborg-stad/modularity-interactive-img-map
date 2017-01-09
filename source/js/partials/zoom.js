@@ -55,6 +55,9 @@ ModularityInteractiveMap.Zoom = (function ($) {
                 $('.mod-iteractive-map-buttons', obj).removeClass('hidden');
             }
 
+            //Reset zoom (zoom all the way out)
+            $(".mod-interactive-map-zoomable", obj).panzoom("reset");
+
         });
     };
 
