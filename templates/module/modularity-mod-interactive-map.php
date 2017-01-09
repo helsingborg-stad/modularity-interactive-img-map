@@ -17,8 +17,12 @@ foreach ($categories as $key => $category) {
 
     .mod-interactive-map-pin {
         position: absolute;
-        width: 20px;
-        height: 20px;
+        min-width: 12px;
+        min-height: 12px;
+        max-width: 20px;
+        max-height: 20px;
+        width: 1vw;
+        height: 1vw;
         border-radius: 50%;
         background-color: #fff;
         cursor: pointer;
