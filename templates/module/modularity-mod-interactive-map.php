@@ -3,7 +3,14 @@ $map = get_post_meta($module->ID, 'interactive_map_image_id', true);
 $map = wp_get_attachment_url($map);
 
 $pins = get_post_meta($module->ID, 'interactive_map_pins', true);
+if (!$pins) {
+    $pins = array();
+}
+
 $categories = get_post_meta($module->ID, 'interactive_map_categories', true);
+if (!$categories) {
+    $categories = array();
+}
 
 foreach ($categories as $key => $category) {
     $categories[$category['name']] = $category;
@@ -168,6 +175,7 @@ foreach ($categories as $key => $category) {
 </style>
 
 <div class="mod-interactive-map-wrapper">
+    <?php if (!empty($categories)) : ?>
     <div class="mod-interactive-map-categories">
         <ul>
             <?php foreach ($categories as $category) : ?>
@@ -181,6 +189,8 @@ foreach ($categories as $key => $category) {
             <?php endforeach; ?>
         </ul>
     </div>
+    <?php endif; ?>
+
     <div class="mod-interactive-map-container">
 
         <!-- Template for pins -->
