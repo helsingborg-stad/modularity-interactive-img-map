@@ -8,7 +8,7 @@
 </div>
 
 <ol id="map-layers"><?php if (is_array($current['layers']))  : foreach ($current['layers'] as $layer) : ?>
-    <li>
+    <li data-layer-id="<?php echo $layer['id']; ?>" data-layer-category="<?php echo $layer['category']; ?>">
         <input type="hidden" name="interactive-map-layers[<?php echo $layer['id']; ?>][id]" value="<?php echo $layer['id']; ?>">
         <input type="text" name="interactive-map-layers[<?php echo $layer['id']; ?>][name]" value="<?php echo $layer['name']; ?>">
     </li>

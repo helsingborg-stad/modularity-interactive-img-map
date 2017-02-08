@@ -31,13 +31,19 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         });
     };
 
-    MapPinCategories.prototype.getSelector = function(name, current) {
-        var categories = this.getAll('numeric');
-        var $select = $('<select class="widefat" name="' + name + '" data-map-category-selector></select>');
-
+    MapPinCategories.prototype.getSelector = function(name, current, classes) {
         if (typeof current === 'undefined') {
             current = null;
         }
+
+        if (typeof classes === 'undefined') {
+            classes = 'widefat';
+        }
+
+        var categories = this.getAll('numeric');
+        var $select = $('<select class="' + classes + '" name="' + name + '" data-map-category-selector></select>');
+
+        $select.append('<option value="" selected>-</option>');
 
         $.each(categories, function (index, item) {
             if (item.name === current) {

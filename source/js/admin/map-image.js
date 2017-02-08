@@ -8,6 +8,20 @@ ModularityInteractiveMap.MapImage = (function ($) {
 
         if ($('[name="interactive-map-is-selected"]').val() == 1) {
             this.mapSelected();
+
+            $(document).ready(function () {
+                $('#map-layers li').each(function () {
+                    var id = $(this).attr('data-layer-id');
+                    var category = $(this).attr('data-layer-category');
+
+                    if (id) {
+                        $(this).append(
+                            ModularityInteractiveMap.MapPinCategories.getSelector('interactive-map-layers[' + id + '][category]', category, null)
+                        );
+                    }
+                });
+            });
+
         }
     }
 
@@ -69,9 +83,10 @@ ModularityInteractiveMap.MapImage = (function ($) {
 
             $('.no-map').remove();
 
-            $('#map-layers').append('<li>\
+            $('#map-layers').append('<li data-layer-id="' + map.id + '">\
                 <input type="hidden" name="interactive-map-layers[' + map.id + '][id]" value="' + map.id + '">\
                 <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
+                ' + ModularityInteractiveMap.MapPinCategories.getSelector('interactive-map-layers[' + map.id + '][category]', category) + '\
             </li>');
         }
     };
