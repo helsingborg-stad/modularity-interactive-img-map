@@ -178,5 +178,9 @@
             display: inline-block;
             width: 30px;
         }
+
+        & + li {
+            border-top: 1px solid #eee;
+        }
     }
 }

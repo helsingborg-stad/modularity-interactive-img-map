@@ -126,3 +126,5 @@
       content: counter(maplayers);
       display: inline-block;
       width: 30px; }
+    #map-layers li + li {
+      border-top: 1px solid #eee; }
