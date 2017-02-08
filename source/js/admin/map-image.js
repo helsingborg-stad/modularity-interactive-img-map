@@ -86,7 +86,7 @@ ModularityInteractiveMap.MapImage = (function ($) {
             $('#map-layers').append('<li data-layer-id="' + map.id + '">\
                 <input type="hidden" name="interactive-map-layers[' + map.id + '][id]" value="' + map.id + '">\
                 <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
-                ' + ModularityInteractiveMap.MapPinCategories.getSelector('interactive-map-layers[' + map.id + '][category]', category) + '\
+                ' + ModularityInteractiveMap.MapPinCategories.getSelector('interactive-map-layers[' + map.id + '][category]', null, null) + '\
             </li>');
         }
     };

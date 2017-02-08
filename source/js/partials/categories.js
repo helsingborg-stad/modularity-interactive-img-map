@@ -11,23 +11,23 @@ ModularityInteractiveMap.Categories = (function ($) {
             var category = $checkbox.attr('data-interactive-map-category');
 
             if ($checkbox.prop('checked')) {
-                this.toggleCategoryPins(category, 'show');
+                this.toggleCategoryAssets(category, 'show');
             } else {
-                this.toggleCategoryPins(category, 'hide');
+                this.toggleCategoryAssets(category, 'hide');
             }
         }.bind(this));
     };
 
-    Categories.prototype.toggleCategoryPins = function(category, state) {
-        var $pins = $('.mod-interactive-map-pin[data-interactive-map-category-name="' + category + '"]');
+    Categories.prototype.toggleCategoryAssets = function(category, state) {
+        var $assets = $('[data-interactive-map-category-name="' + category + '"]');
 
         switch (state) {
             case 'hide':
-                $pins.hide();
+                $assets.hide();
                 return;
 
             case 'show':
-                $pins.show();
+                $assets.show();
                 return;
         }
     };
