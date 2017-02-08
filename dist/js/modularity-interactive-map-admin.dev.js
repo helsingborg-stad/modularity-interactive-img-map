@@ -273,6 +273,25 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         var $categoryRow = $('.interactive-map-categories-list li[data-category="' + nameBefore + '"]');
 
+        if (!color) {
+            color = '#FF0000';
+        }
+
+        if (!name) {
+            alert('You need to give your category a unique name');
+            return;
+        }
+
+        var existingCategories = [];
+        $('[data-map-category]').each(function () {
+            existingCategories.push($(this).val());
+        });
+
+        if (existingCategories.indexOf(name) > -1) {
+            alert('Category name must be unique');
+            return;
+        }
+
         // Change category details
         $categoryRow.attr('data-category', name);
         $categoryRow.find('[data-category-name]').attr('data-category-name', name);
@@ -330,6 +349,11 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         if (!color) {
             color = '#FF0000';
+        }
+
+        if (!name) {
+            alert('You need to give your category a unique name');
+            return;
         }
 
         var existingCategories = [];
