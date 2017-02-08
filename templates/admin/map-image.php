@@ -32,7 +32,7 @@ if ($current['pins']) {
     echo '<script>jQuery(document).ready(function() {';
 
     foreach ($current['pins'] as $pin) {
-        echo 'ModularityInteractiveMap.MapImage.addPin(
+        echo 'ModularityInteractiveMap.MapPins.addPin(
                     \'' . $pin['top'] . '\',
                     \'' . $pin['left'] . '\',
                     \'' . $pin['title'] . '\',
