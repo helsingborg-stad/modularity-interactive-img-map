@@ -146,13 +146,18 @@
         }
     }
 
-    [data-action="interactive-map-add-remove-category"] {
+    [data-action="interactive-map-add-remove-category"],
+    [data-action="interactive-map-add-edit-category"] {
         float: right;
         font-size: 17px;
         padding: 0;
         margin: 0;
         height: 17px;
         line-height: 17px;
+    }
+
+    [data-action="interactive-map-add-edit-category"] {
+        margin-right: 5px;
     }
 }
 

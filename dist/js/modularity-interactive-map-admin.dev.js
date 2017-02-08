@@ -177,10 +177,12 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     MapPinCategories.prototype.getMultiSelector = function(name, current) {
         numMultiselectors++;
 
-        current = current.split('|');
-
         if (typeof current === 'undefined') {
             current = null;
+        }
+
+        if (current) {
+            current = current.split('|');
         }
 
         var categories = this.getAll('numeric');
@@ -189,7 +191,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         var $options = $('<div class="ms-options"></div>');
 
         $.each(categories, function (index, item) {
-            if (current.indexOf(item.name) > -1) {
+            if (current && current.indexOf(item.name) > -1) {
                 $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '" checked> ' + item.name + '</label>')
                 return;
             }
@@ -271,6 +273,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             <li data-category="' + name + '">\
                 <span style="color:' + color + ';">' + name + '</span>\
                 <button type="button" class="button button-link" data-action="interactive-map-add-remove-category" data-category-name="' + name + '"><i class="fa fa-trash"></i></button>\
+                <button type="button" class="button button-link" data-action="interactive-map-add-edit-category" data-category-name="' + name + '"><i class="fa fa-edit"></i></button>\
                 \
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][name]" value="' + name + '" data-map-category>\
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][color]" value="' + color + '" data-map-category-color>\

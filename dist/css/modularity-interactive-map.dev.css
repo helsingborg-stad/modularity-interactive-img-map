@@ -102,13 +102,17 @@
   #map-pin-categories ul li:nth-child(even) {
     background-color: #FAFAFA; }
 
-#map-pin-categories [data-action="interactive-map-add-remove-category"] {
+#map-pin-categories [data-action="interactive-map-add-remove-category"],
+#map-pin-categories [data-action="interactive-map-add-edit-category"] {
   float: right;
   font-size: 17px;
   padding: 0;
   margin: 0;
   height: 17px;
   line-height: 17px; }
+
+#map-pin-categories [data-action="interactive-map-add-edit-category"] {
+  margin-right: 5px; }
 
 #map-layers {
   margin: 0;

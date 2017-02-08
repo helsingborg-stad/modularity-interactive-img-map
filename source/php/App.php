@@ -41,7 +41,7 @@ class App
             return;
         }
 
-        wp_enqueue_script('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map-admin.min.js', null, '1.0.0', true);
+        wp_enqueue_script('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map-admin.dev.js', null, '1.0.0', true);
         wp_localize_script('modularity-interactive-map', 'ModInteractiveMapLang', array(
             'close' => __('Close'),
             'remove' => __('Remove'),
