@@ -5,11 +5,11 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
         this.handleEvents();
 
         $(window).resize(function() {
-            $('.mod-interactive-map-pin-info').addClass("hidden");
+            $('.mod-interactive-map-pin-info').addClass("mod-interactive-map-pin-info-hidden");
         });
 
-        $(window).on( "orientationchange", function( event ) {
-            $('.mod-interactive-map-pin-info').addClass("hidden");
+        $(window).on("orientationchange", function( event ) {
+            $('.mod-interactive-map-pin-info').addClass("mod-interactive-map-pin-info-hidden");
         });
     }
 
@@ -18,6 +18,7 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
         //Show panel
         $('.mod-interactive-map-pin').on('click touchstart', function (e) {
             e.preventDefault();
+
             this.populateTooltip(e);
             this.showTooltip(e);
             this.placeTooltip(e);
@@ -26,6 +27,7 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
         //Hide panel
         $('[data-interactive-map-close-tooltip]').on('click touchstart', function (e) {
             e.preventDefault();
+
             this.hideTooltip(e);
         }.bind(this));
     };
@@ -51,11 +53,11 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
     };
 
     PinTooltip.prototype.showTooltip = function(e) {
-        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).removeClass("hidden");
+        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).removeClass("mod-interactive-map-pin-info-hidden");
     };
 
     PinTooltip.prototype.hideTooltip = function(e) {
-        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).addClass("hidden");
+        $('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).addClass("mod-interactive-map-pin-info-hidden");
     };
 
     PinTooltip.prototype.placeTooltip = function(e) {

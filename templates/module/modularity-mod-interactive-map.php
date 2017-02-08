@@ -65,12 +65,20 @@ foreach ($categories as $key => $category) {
         display: block;
     }
 
+    .mod-interactive-map-pin-info.mod-interactive-map-pin-info-hidden {
+        visibility: hidden;
+        opacity: 0;
+    }
+
     .mod-interactive-map-pin-info {
         z-index: 3;
         position: absolute;
         width: 0;
         height: 0;
+        visibility: visible;
         overflow: visible;
+        opacity: 1;
+        transition: visibility 0ms, opacity 300ms ease-in-out;
     }
 
     @media (max-width: 600px) {
@@ -213,7 +221,7 @@ foreach ($categories as $key => $category) {
     <div class="mod-interactive-map-container">
 
         <!-- Template for pins -->
-        <div class="mod-interactive-map-pin-info hidden">
+        <div class="mod-interactive-map-pin-info mod-interactive-map-pin-info-hidden">
             <div class="mod-interactive-map-pin-wrapper">
                 <button type="button" data-interactive-map-close-tooltip>&times;</button>
                 <h3>{{title}}</h3>

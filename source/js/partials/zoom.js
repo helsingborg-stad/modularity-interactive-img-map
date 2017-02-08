@@ -36,7 +36,7 @@ ModularityInteractiveMap.Zoom = (function ($) {
                 $('.mod-interactive-map-zoomable', $(this).parent().parent()).panzoom("resetPan");
 
                 //Remove pin infos
-                $('.mod-interactive-map-pin-info').addClass("hidden");
+                $('.mod-interactive-map-pin-info').addClass("mod-interactive-map-pin-info-hidden");
 
                 // Zoom class
                 $(this).parent().parent().removeClass (function (index, css) {
@@ -63,9 +63,9 @@ ModularityInteractiveMap.Zoom = (function ($) {
 
             //Hide / show zoom options
             if($("img",obj).get(0).naturalWidth / $("img",obj).get(0).clientWidth < 1.4) {
-                $('.mod-iteractive-map-buttons', obj).addClass('hidden');
+                $('.mod-iteractive-map-buttons', obj).addClass('mod-interactive-map-pin-info-hidden');
             } else {
-                $('.mod-iteractive-map-buttons', obj).removeClass('hidden');
+                $('.mod-iteractive-map-buttons', obj).removeClass('mod-interactive-map-pin-info-hidden');
             }
 
             //Reset zoom (zoom all the way out)
