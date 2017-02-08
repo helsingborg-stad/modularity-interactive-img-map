@@ -135,8 +135,6 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     };
 
     MapPinCategories.prototype.editCategory = function(categoryName) {
-        console.log(categoryName);
-
         var $createForm = $('.interactive-map-categories-form');
         var $editForm = $('.interactive-map-categories-form-edit');
         var $category = $('.interactive-map-categories-list li[data-category="' + categoryName + '"]');
