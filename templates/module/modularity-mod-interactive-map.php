@@ -1,6 +1,13 @@
 <?php
-$map = get_post_meta($module->ID, 'interactive_map_image_id', true);
-$map = wp_get_attachment_url($map);
+
+$layers = get_post_meta($module->ID, 'interactive_map_layers', true);
+if (!$layers) {
+    $layers = array(
+        'id' => get_post_meta($module->ID, 'interactive_map_image_id', true),
+        'name' => 'base',
+        'category' => null
+    );
+}
 
 $pins = get_post_meta($module->ID, 'interactive_map_pins', true);
 if (!$pins) {
@@ -172,6 +179,18 @@ foreach ($categories as $key => $category) {
         margin-top: 5px;
     }
 
+    .mod-interactive-map-overflower {
+        position: relative;
+    }
+
+    .mod-interactive-map-overflower img:not(:first-of-type) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
 </style>
 
 <div class="mod-interactive-map-wrapper">
@@ -199,14 +218,16 @@ foreach ($categories as $key => $category) {
                 <button type="button" data-interactive-map-close-tooltip>&times;</button>
                 <h3>{{title}}</h3>
                 <div class="description">{{description}}</div>
-                <a href="{{link}}" class="btn btn-primary btn-sm link"><?php _e("Read more",'modularity-interactive-map'); ?></a>
+                <a href="{{link}}" class="btn btn-primary btn-sm link"><?php _e('Read more', 'modularity-interactive-map'); ?></a>
             </div>
         </div>
 
         <!-- Zoom area with pins -->
         <div class="mod-interactive-map-overflower">
             <div class="mod-interactive-map-zoomable">
-                <img src="<?php echo $map; ?>" style="width: 100%;height: auto;">
+                <?php foreach ($layers as $layer) : ?>
+                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" style="width: 100%;height: auto;" data-category="<?php echo $layer['category']; ?>">
+                <?php endforeach; ?>
 
                 <?php foreach ($pins as $pin) : ?>
                 <div class="mod-interactive-map-pin" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo preg_replace('/\s+/', ' ',trim($pin['text'])); ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
