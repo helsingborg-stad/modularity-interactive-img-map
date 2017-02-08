@@ -167,6 +167,8 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     MapPinCategories.prototype.getMultiSelector = function(name, current) {
         numMultiselectors++;
 
+        current = current.split('|');
+
         if (typeof current === 'undefined') {
             current = null;
         }
@@ -177,6 +179,11 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         var $options = $('<div class="ms-options"></div>');
 
         $.each(categories, function (index, item) {
+            if (current.indexOf(item.name) > -1) {
+                $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '" checked> ' + item.name + '</label>')
+                return;
+            }
+
             $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '"> ' + item.name + '</label>');
         }.bind(this));
 

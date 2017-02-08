@@ -192,13 +192,13 @@
     .ms-options {
         display: none;
         position: absolute;
-        top: calc(100% + 5px);
+        top: calc(100% + 2px);
         left: 0;
         min-width: 150px;
 
         background-color: #fff;
         border: 1px solid #ddd;
-        border-radius: 3px;
+        border-radius: 0 0 3px 3px;
         z-index: 99;
 
         label {

@@ -233,7 +233,7 @@ foreach ($categories as $key => $category) {
         <div class="mod-interactive-map-overflower">
             <div class="mod-interactive-map-zoomable">
                 <?php foreach ($layers as $layer) : ?>
-                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" style="width: 100%;height: auto;" data-interactive-map-category-name="<?php echo $layer['category']; ?>">
+                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" style="width: 100%;height: auto;" data-interactive-map-category-name="<?php echo isset($layer['category']) && is_array($layer['category']) ? implode('|', $layer['category']) : ''; ?>">
                 <?php endforeach; ?>
 
                 <?php foreach ($pins as $pin) : ?>
