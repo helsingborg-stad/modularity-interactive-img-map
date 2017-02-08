@@ -30,6 +30,12 @@ foreach ($categories as $key => $category) {
     }
 
     .mod-interactive-map-pin {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+
+        transition: opacity 300ms,
+                    transform 300ms;
+
         position: absolute;
         min-width: 12px;
         min-height: 12px;
@@ -41,7 +47,11 @@ foreach ($categories as $key => $category) {
         background-color: #fff;
         cursor: pointer;
         box-shadow: 0 0 .3vw rgba(0, 0, 0, 0.7);
-        transform: translate(-50%, -50%);
+    }
+
+    .mod-interactive-map-pin.pin-visible {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
     }
 
     .zoomlevel-2 .mod-interactive-map-pin {
@@ -68,6 +78,7 @@ foreach ($categories as $key => $category) {
     .mod-interactive-map-pin-info.mod-interactive-map-pin-info-hidden {
         visibility: hidden;
         opacity: 0;
+        transform: translateY(0px);
     }
 
     .mod-interactive-map-pin-info {
@@ -78,7 +89,10 @@ foreach ($categories as $key => $category) {
         visibility: visible;
         overflow: visible;
         opacity: 1;
-        transition: visibility 0ms, opacity 300ms ease-in-out;
+        transform: translateY(10px);
+        transition: opacity 300ms ease-in-out,
+                    transform 300ms ease-in-out,
+                    visibility 301ms;
     }
 
     @media (max-width: 600px) {
@@ -237,7 +251,7 @@ foreach ($categories as $key => $category) {
                 <?php endforeach; ?>
 
                 <?php foreach ($pins as $pin) : ?>
-                <div class="mod-interactive-map-pin" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo preg_replace('/\s+/', ' ',trim($pin['text'])); ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
+                <div class="mod-interactive-map-pin pin-visible" data-title="<?php echo $pin['title']; ?>" data-description="<?php echo preg_replace('/\s+/', ' ',trim($pin['text'])); ?>" data-link="<?php echo $pin['link']; ?>" data-interactive-map-category-name="<?php echo $categories[$pin['category']]['name']; ?>" style="top: <?php echo $pin['top']; ?>;left: <?php echo $pin['left']; ?>;background-color: <?php echo $categories[$pin['category']]['color']; ?>;">
                 </div>
                 <?php endforeach; ?>
             </div>

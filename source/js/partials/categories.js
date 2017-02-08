@@ -31,9 +31,9 @@ ModularityInteractiveMap.Categories = (function ($) {
             keys = keys.split('|');
 
             if (!$(keys).filter(activeCategories).length) {
-                $(this).hide();
+                $(this).removeClass('pin-visible');
             } else {
-                $(this).show();
+                $(this).addClass('pin-visible');
             }
         });
     };

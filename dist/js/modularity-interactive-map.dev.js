@@ -1336,9 +1336,9 @@ ModularityInteractiveMap.Categories = (function ($) {
             keys = keys.split('|');
 
             if (!$(keys).filter(activeCategories).length) {
-                $(this).hide();
+                $(this).removeClass('pin-visible');
             } else {
-                $(this).show();
+                $(this).addClass('pin-visible');
             }
         });
     };
@@ -1369,9 +1369,17 @@ ModularityInteractiveMap.PinTooltip = (function ($) {
         $('.mod-interactive-map-pin').on('click touchstart', function (e) {
             e.preventDefault();
 
-            this.populateTooltip(e);
-            this.showTooltip(e);
-            this.placeTooltip(e);
+            var timeout = 0;
+            if (!$('.mod-interactive-map-pin-info', $(e.target).parent().parent().parent()).hasClass("mod-interactive-map-pin-info-hidden")) {
+                this.hideTooltip(e);
+                timeout = 301;
+            }
+
+            setTimeout(function () {
+                this.populateTooltip(e);
+                this.placeTooltip(e);
+                this.showTooltip(e);
+            }.bind(this), timeout);
         }.bind(this));
 
         //Hide panel
