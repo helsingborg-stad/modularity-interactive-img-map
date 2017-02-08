@@ -1,9 +1,5 @@
 var ModularityInteractiveMap = ModularityInteractiveMap || {};
 ModularityInteractiveMap.MapImage = (function ($) {
-
-    var pinNumber = 0;
-
-    var _categories;
     var _mediaModal;
     var _mapImage;
 
@@ -69,9 +65,14 @@ ModularityInteractiveMap.MapImage = (function ($) {
         $('[data-map-editor]').show();
 
         if (typeof map !== 'undefined') {
-            $('#map-image .map-container img').remove();
-            $('#map-image .map-container').prepend('<img src="' + map.url + '">');
-            $('[name="interactive-map-image-id"]').val(map.id);
+            $('#map-image .map-container').append('<img src="' + map.url + '">');
+
+            $('.no-map').remove();
+
+            $('#map-layers').append('<li>\
+                <input type="hidden" name="layer[' + map.id + '][id]" value="' + map.id + '">\
+                <input type="text" name="layer[' + map.id + '][name]" value="' + map.title + '">\
+            </li>');
         }
     };
 

@@ -2,6 +2,7 @@ var ModularityInteractiveMap = ModularityInteractiveMap || {};
 ModularityInteractiveMap.MapPins = (function ($) {
 
     var pinNumber = 0;
+    var _categories;
 
     function MapPins() {
         $('[data-action="interactive-map-add-pin"]').on('click', function (e) {

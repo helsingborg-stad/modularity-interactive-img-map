@@ -1,11 +1,12 @@
 <input type="hidden" name="interactive-map-image-id" value="<?php echo $current['id']; ?>">
 
 <div class="map-pin-toolbox">
-    <button class="button" type="button" data-action="interactive-map-select-image" data-map-editor-no-map><i class="fa fa-map"></i> <?php _e('Select map image', 'modularity-interactive-map'); ?></button>
-
+    <button class="button" type="button" data-action="interactive-map-add-layer"><i class="fa fa-clone"></i> <?php _e('Add layer', 'modularity-interactive-map'); ?></button>
     <button class="button" type="button" data-action="interactive-map-add-pin" data-map-editor><i class="fa fa-map-marker"></i> <?php _e('Add pin', 'modularity-interactive-map'); ?></button>
     <button class="button" type="button" data-action="interactive-map-select-image" data-map-editor><i class="fa fa-map"></i> <?php _e('Change map image', 'modularity-interactive-map'); ?></button>
 </div>
+
+<ol id="map-layers"></ol>
 
 <div class="map-container">
 <?php
@@ -30,7 +31,7 @@ if ($current['id']) {
         echo '});</script>';
     }
 } else {
-    _e('No map image selected', 'modularity-interactive-map');
+    echo '<span class="no-map">' . __('No map image selected', 'modularity-interactive-map') . '</span>';
 }
 ?>
 </div>

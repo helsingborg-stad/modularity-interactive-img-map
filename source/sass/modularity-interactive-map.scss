@@ -21,6 +21,14 @@
             width: 100%;
             height: auto;
         }
+
+        img:not(:first-of-type) {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
     }
 
     .map-pin {
@@ -145,5 +153,30 @@
         margin: 0;
         height: 17px;
         line-height: 17px;
+    }
+}
+
+#map-layers {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #eee;
+
+    &:empty {
+        display: none;
+    }
+
+    counter-reset: maplayers;
+
+    li {
+        margin: 0;
+        padding: 8px 12px;
+        list-style: none;
+
+        &::before {
+            counter-increment: maplayers;
+            content: counter(maplayers);
+            display: inline-block;
+            width: 30px;
+        }
     }
 }
