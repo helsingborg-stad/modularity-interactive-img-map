@@ -30,6 +30,23 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
             $pin.css('backgroundColor', color);
         });
+
+        $(document).on('click', '[data-action="interactive-map-add-edit-category"]', function (e) {
+            e.preventDefault();
+            var $btn = $(e.target).closest('[data-action="interactive-map-add-edit-category"]');
+            this.editCategory($btn.attr('data-category-name'));
+        }.bind(this));
+
+        $('[data-action="interactive-map-stop-edit-pin-category"]').on('click', function (e) {
+            e.preventDefault();
+            $('.interactive-map-categories-form').show();
+            $('.interactive-map-categories-form-edit').hide();
+        });
+
+        $('[data-action="interactive-map-edit-pin-category"]').on('click', function (e) {
+            e.preventDefault();
+            this.savePinEdit(e);
+        }.bind(this));
     };
 
     MapPinCategories.prototype.getSelector = function(name, current, classes) {
@@ -115,6 +132,37 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         });
 
         return categories;
+    };
+
+    MapPinCategories.prototype.editCategory = function(categoryName) {
+        console.log(categoryName);
+
+        var $createForm = $('.interactive-map-categories-form');
+        var $editForm = $('.interactive-map-categories-form-edit');
+        var $category = $('.interactive-map-categories-list li[data-category="' + categoryName + '"]');
+
+        $editForm.find('[name="map-category-name-before"]').val(categoryName);
+        $editForm.find('[name="map-category-name"]').val($category.find('input[name*="name"]').val());
+        $editForm.find('[name="map-category-pin-color"]').val($category.find('input[name*="color"]').val());
+
+        $createForm.hide();
+        $editForm.show();
+    };
+
+    MapPinCategories.prototype.savePinEdit = function(e) {
+        var $editForm = $('.interactive-map-categories-form-edit');
+
+        var nameBefore = $editForm.find('[name="map-category-name-before"]').val();
+        var name = $editForm.find('[name="map-category-name"]').val();
+        var color = $editForm.find('[name="map-category-pin-color"]').val();
+
+        var $categoryRow = $('.interactive-map-categories-list li[data-category="' + nameBefore + '"]');
+
+        $categoryRow.attr('data-category', name);
+        $categoryRow.find('[data-category-name]').attr('data-category-name', name);
+        $categoryRow.find('span').text(name);
+        $categoryRow.find('input[name*="name"]').val(name).attr('data-map-category', name);
+        $categoryRow.find('input[name*="color"]').val(color).attr('data-map-category-color', color);
     };
 
     /**

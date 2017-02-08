@@ -83,15 +83,22 @@
   #map-image [data-action="interactive-map-pin-remove"]:hover {
     color: #ff0000; }
 
-#map-pin-categories .interactive-map-categories-form {
+#map-pin-categories .interactive-map-categories-form,
+#map-pin-categories .interactive-map-categories-form-edit {
   padding: 12px;
   background-color: #f9f9f9;
   border-bottom: 1px solid #eee; }
-  #map-pin-categories .interactive-map-categories-form label {
+  #map-pin-categories .interactive-map-categories-form label,
+  #map-pin-categories .interactive-map-categories-form-edit label {
     display: inline-block;
     margin-bottom: 2px; }
-  #map-pin-categories .interactive-map-categories-form div + div {
+  #map-pin-categories .interactive-map-categories-form div + div,
+  #map-pin-categories .interactive-map-categories-form-edit div + div {
     margin-top: 8px; }
+
+#map-pin-categories .interactive-map-categories-form-edit {
+  display: none;
+  background-color: #FDFBE3; }
 
 #map-pin-categories ul {
   padding: 0;

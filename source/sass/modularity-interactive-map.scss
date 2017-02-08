@@ -117,7 +117,8 @@
 }
 
 #map-pin-categories {
-    .interactive-map-categories-form {
+    .interactive-map-categories-form,
+    .interactive-map-categories-form-edit {
         padding: 12px;
         background-color: #f9f9f9;
         border-bottom: 1px solid #eee;
@@ -130,6 +131,11 @@
         div + div {
             margin-top: 8px;
         }
+    }
+
+    .interactive-map-categories-form-edit {
+        display: none;
+        background-color: #FDFBE3;
     }
 
     ul {
