@@ -2,6 +2,7 @@ var ModularityInteractiveMap = ModularityInteractiveMap || {};
 ModularityInteractiveMap.MapPinCategories = (function ($) {
 
     var numCategories = 0;
+    var numMultiselectors = 0;
 
     function MapPinCategories() {
         this.handleEvents();
@@ -55,6 +56,26 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         }.bind(this));
 
         return $select[0].outerHTML;
+    };
+
+    MapPinCategories.prototype.getMultiSelector = function(name, current) {
+        numMultiselectors++;
+
+        if (typeof current === 'undefined') {
+            current = null;
+        }
+
+        var categories = this.getAll('numeric');
+
+        var $wrapper = $('<div class="ms-wrapper"><input class="ms-toggle" type="checkbox" id="dropdownopen-' + numMultiselectors + '"><label class="ms-placeholder" for="dropdownopen-' + numMultiselectors + '">Välj kategorier</label></div>');
+        var $options = $('<div class="ms-options"></div>');
+
+        $.each(categories, function (index, item) {
+            $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '"> ' + item.name + '</label>');
+        }.bind(this));
+
+        $wrapper.append($options);
+        return $wrapper[0].outerHTML;
     };
 
     MapPinCategories.prototype.updateSelectors = function(name, color) {

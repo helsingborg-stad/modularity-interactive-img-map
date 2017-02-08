@@ -108,7 +108,6 @@ foreach ($categories as $key => $category) {
         padding: 20px;
         border-radius: 5px;
         cursor: default;
-        outline: 1px solid #eee;
         border-radius: 2px;
         box-shadow: 0 0 3px rgba(0,0,0,.2);
         transform: translate(calc(-50% + 10px), calc(-100% - 10px));

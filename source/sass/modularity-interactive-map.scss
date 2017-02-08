@@ -184,3 +184,48 @@
         }
     }
 }
+
+.ms-wrapper {
+    display: inline-block;
+    position: relative;
+
+    .ms-options {
+        display: none;
+        position: absolute;
+        top: calc(100% + 5px);
+        left: 0;
+        min-width: 150px;
+
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        z-index: 99;
+
+        label {
+            display: block;
+            padding: 5px 10px;
+        }
+    }
+
+    .ms-toggle {
+        display: none;
+    }
+
+    .ms-placeholder {
+        border: 1px solid #ddd;
+        line-height: 1.2;
+        vertical-align: top;
+        padding: 3.5px 6px;
+    }
+
+    .ms-placeholder::after {
+        content: "\f140";
+        font-family: 'dashicons';
+        position: relative;
+        top: 2px;
+    }
+
+    input[type="checkbox"].ms-toggle:checked ~ .ms-options {
+        display: block;
+    }
+}
