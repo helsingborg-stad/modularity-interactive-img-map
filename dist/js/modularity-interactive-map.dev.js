@@ -1324,17 +1324,23 @@ ModularityInteractiveMap.Categories = (function ($) {
     };
 
     Categories.prototype.toggleCategoryAssets = function(category, state) {
-        var $assets = $('[data-interactive-map-category-name="' + category + '"]');
+        var $checked = $('[data-interactive-map-category]:checked');
+        var activeCategories = [];
 
-        switch (state) {
-            case 'hide':
-                $assets.hide();
-                return;
+        $checked.each(function (index, element) {
+            activeCategories.push($(this).attr('data-interactive-map-category'));
+        });
 
-            case 'show':
-                $assets.show();
-                return;
-        }
+        $('[data-interactive-map-category-name]').each(function (index, element) {
+            var keys = $(this).attr('data-interactive-map-category-name');
+            keys = keys.split('|');
+
+            if (!$(keys).filter(activeCategories).length) {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
+        });
     };
 
     return new Categories();
