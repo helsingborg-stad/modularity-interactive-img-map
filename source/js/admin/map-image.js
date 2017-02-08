@@ -15,7 +15,7 @@ ModularityInteractiveMap.MapImage = (function ($) {
                     var category = $(this).attr('data-layer-category');
 
                     if (id) {
-                        $(this).append(
+                        $(this).find('.actions').before(
                             ModularityInteractiveMap.MapPinCategories.getMultiSelector('interactive-map-layers[' + id + '][category]', category, null)
                         );
                     }
@@ -35,6 +35,16 @@ ModularityInteractiveMap.MapImage = (function ($) {
             e.preventDefault();
             this.removeMap();
         }.bind(this));
+
+        $(document).on('click', '[data-action="interactive-map-remove-layer"]', function (e) {
+            var layerId = $(e.target).closest('button').attr('data-layer-id');
+            this.removeLayer(layerId);
+        }.bind(this));
+    };
+
+    MapImage.prototype.removeLayer = function(layerId) {
+        $('[data-layer-id="' + layerId + '"]').remove();
+
     };
 
     MapImage.prototype.openMediaModal = function(btn) {
@@ -79,7 +89,7 @@ ModularityInteractiveMap.MapImage = (function ($) {
         $('[data-map-editor]').show();
 
         if (typeof map !== 'undefined') {
-            $('#map-image .map-container').append('<img src="' + map.url + '">');
+            $('#map-image .map-container').append('<img src="' + map.url + '" data-layer-id="' + map.id + '">');
 
             $('.no-map').remove();
 

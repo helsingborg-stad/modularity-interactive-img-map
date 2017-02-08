@@ -11,6 +11,10 @@
     <li data-layer-id="<?php echo $layer['id']; ?>" data-layer-category="<?php echo isset($layer['category']) && is_array($layer['category']) ? implode('|', $layer['category']) : ''; ?>">
         <input type="hidden" name="interactive-map-layers[<?php echo $layer['id']; ?>][id]" value="<?php echo $layer['id']; ?>">
         <input type="text" name="interactive-map-layers[<?php echo $layer['id']; ?>][name]" value="<?php echo $layer['name']; ?>">
+
+        <div class="actions">
+            <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="<?php echo $layer['id']; ?>"><i class="fa fa-trash"></i></button>
+        </div>
     </li>
 <?php endforeach; endif; ?></ol>
 
@@ -19,7 +23,7 @@
 if (is_array($current['layers'])) {
     foreach ($current['layers'] as $layer) {
         $imageSrc = wp_get_attachment_url($layer['id']);
-        echo '<img src="', $imageSrc, '">';
+        echo '<img src="', $imageSrc, '" data-layer-id="' . $layer['id'] . '">';
     }
 } elseif ($current['id']) {
     $imageSrc = wp_get_attachment_url($current['id']);
