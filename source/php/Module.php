@@ -62,6 +62,7 @@ class Module extends \Modularity\Module
 
                 $current = array(
                     'id' => get_post_meta($post->ID, 'interactive_map_image_id', true),
+                    'layers' => get_post_meta($post->ID, 'interactive_map_layers', true),
                     'pins' => get_post_meta($post->ID, 'interactive_map_pins', true)
                 );
 
@@ -92,14 +93,22 @@ class Module extends \Modularity\Module
             return;
         }
 
+        // Save layers
+        if (isset($_POST['interactive-map-layers']) && is_array($_POST['interactive-map-layers'])) {
+            update_post_meta($postId, 'interactive_map_layers', $_POST['interactive-map-layers']);
+        }
+
+        // Save map id (deprecated)
         if (isset($_POST['interactive-map-image-id']) && !empty($_POST['interactive-map-image-id'])) {
             update_post_meta($postId, 'interactive_map_image_id', $_POST['interactive-map-image-id']);
         }
 
+        // Save map pins
         if (isset($_POST['interactive-map-pin']) && !empty($_POST['interactive-map-pin'])) {
             update_post_meta($postId, 'interactive_map_pins', $_POST['interactive-map-pin']);
         }
 
+        // Save map categories
         if (isset($_POST['interactive-map-categories']) && !empty($_POST['interactive-map-categories'])) {
             update_post_meta($postId, 'interactive_map_categories', $_POST['interactive-map-categories']);
         }

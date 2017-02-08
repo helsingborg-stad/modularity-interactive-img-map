@@ -6,7 +6,7 @@ ModularityInteractiveMap.MapImage = (function ($) {
     function MapImage() {
         this.handleEvents();
 
-        if ($('[name="interactive-map-image-id"]').val()) {
+        if ($('[name="interactive-map-is-selected"]').val() == 1) {
             this.mapSelected();
         }
     }
@@ -70,8 +70,8 @@ ModularityInteractiveMap.MapImage = (function ($) {
             $('.no-map').remove();
 
             $('#map-layers').append('<li>\
-                <input type="hidden" name="layer[' + map.id + '][id]" value="' + map.id + '">\
-                <input type="text" name="layer[' + map.id + '][name]" value="' + map.title + '">\
+                <input type="hidden" name="interactive-map-layers[' + map.id + '][id]" value="' + map.id + '">\
+                <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
             </li>');
         }
     };
