@@ -4,7 +4,6 @@
 <div class="map-pin-toolbox">
     <button class="button" type="button" data-action="interactive-map-add-layer"><i class="fa fa-clone"></i> <?php _e('Add layer', 'modularity-interactive-map'); ?></button>
     <button class="button" type="button" data-action="interactive-map-add-pin" data-map-editor><i class="fa fa-map-marker"></i> <?php _e('Add pin', 'modularity-interactive-map'); ?></button>
-    <button class="button" type="button" data-action="interactive-map-select-image" data-map-editor><i class="fa fa-map"></i> <?php _e('Change map image', 'modularity-interactive-map'); ?></button>
 </div>
 
 <ol id="map-layers"><?php if (is_array($current['layers']))  : foreach ($current['layers'] as $layer) : ?>

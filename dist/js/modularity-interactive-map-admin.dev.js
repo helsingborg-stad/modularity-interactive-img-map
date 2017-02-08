@@ -209,11 +209,11 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $.each(categories, function (index, item) {
             if (current && current.indexOf(item.name) > -1) {
-                $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '" checked> ' + item.name + '</label>')
+                $options.append('<label data-category="' + item.name + '"><input type="checkbox" name="' + name + '[]" value="' + item.name + '" checked> <span>' + item.name + '</span></label>')
                 return;
             }
 
-            $options.append('<label><input type="checkbox" name="' + name + '[]" value="' + item.name + '"> ' + item.name + '</label>');
+            $options.append('<label data-category="' + item.name + '"><input type="checkbox" name="' + name + '[]" value="' + item.name + '"> <span>' + item.name + '</span></label>');
         }.bind(this));
 
         $wrapper.append($options);
@@ -264,6 +264,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     };
 
     MapPinCategories.prototype.savePinEdit = function(e) {
+        var $createForm = $('.interactive-map-categories-form');
         var $editForm = $('.interactive-map-categories-form-edit');
 
         var nameBefore = $editForm.find('[name="map-category-name-before"]').val();
@@ -272,11 +273,37 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         var $categoryRow = $('.interactive-map-categories-list li[data-category="' + nameBefore + '"]');
 
+        // Change category details
         $categoryRow.attr('data-category', name);
         $categoryRow.find('[data-category-name]').attr('data-category-name', name);
         $categoryRow.find('span').text(name);
         $categoryRow.find('input[name*="name"]').val(name).attr('data-map-category', name);
         $categoryRow.find('input[name*="color"]').val(color).attr('data-map-category-color', color);
+
+        // Chage category dropdowns and pin
+        $('[data-map-category-selector]').each(function (index, element) {
+            var $this = $(element);
+            $this.find('option[value="' + nameBefore + '"]').val(name).text(name).css('color', color);
+
+            if ($this.val() == nameBefore) {
+                var $pin = $this.parents('.map-pin');
+                $pin.css('background-color', color);
+            }
+        });
+
+        // Change multiselects
+        $('.ms-wrapper').each(function (index, element) {
+            var $this = $(element);
+            var $label = $this.find('.ms-options label[data-category="' + nameBefore + '"]');
+
+            $label.attr('data-category', name);
+            $label.find('input').val(name);
+            $label.find('span').text(name);
+        });
+
+
+        $createForm.show();
+        $editForm.hide();
     };
 
     /**
