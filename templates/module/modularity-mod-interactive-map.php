@@ -169,7 +169,9 @@ foreach ($categories as $key => $category) {
         cursor: default;
         border-radius: 2px;
         box-shadow: 0 0 3px rgba(0,0,0,.2);
-        transform: translate(calc(-50% + 10px), calc(-100% - 10px));
+        margin-top: -10px;
+        margin-left: 10px;
+        transform: translate(-50%, -100%);
     }
 
     .mod-interactive-map-pin-info::after {
