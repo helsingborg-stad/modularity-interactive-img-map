@@ -114,6 +114,10 @@ ModularityInteractiveMap.MapImage = (function ($) {
                 <input type="hidden" name="interactive-map-layers[' + map.id + '][id]" value="' + map.id + '">\
                 <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
                 ' + ModularityInteractiveMap.MapPinCategories.getMultiSelector('interactive-map-layers[' + map.id + '][category]', null, null) + '\
+                <div class="actions">\
+                    <button type="button" class="button button-link" data-action="interactive-map-toggle-layer" data-layer-id="' + map.id + '"><i class="fa fa-eye-slash"></i></button>\
+                    <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="' + map.id + '"><i class="fa fa-trash"></i></button>\
+                </div>\
             </li>');
         }
     };

@@ -105,7 +105,15 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     };
 
     MapPinCategories.prototype.updateSelectors = function(name, color) {
+        // Default select
         $('[data-map-category-selector]').append('<option style="color:' + color + ';" value="' + name + '" data-color="' + color + '">' + name + '</option>');
+
+        // Multiselect
+        var $row = $('.ms-wrapper .ms-options label:first').clone();
+        $row.attr('data-category', name);
+        $row.find('input[type="checkbox"]').val(name);
+        $row.find('span').text(name);
+        $row.appendTo('.ms-wrapper .ms-options');
     };
 
     MapPinCategories.prototype.getAll = function(keys) {
