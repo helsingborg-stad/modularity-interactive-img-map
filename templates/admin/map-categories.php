@@ -5,7 +5,7 @@
     </div>
     <div>
         <label for="map-category-pin-color"><?php _e('Pin color', 'modularity-interactive-map'); ?> (Hex)</label>
-        <input id="map-category-pin-color" type="text" name="map-category-pin-color" class="widefat" maxlength="7">
+        <input id="map-category-pin-color" type="color" name="map-category-pin-color" class="widefat" maxlength="7">
     </div>
     <div>
         <button type="button" class="button button-primary" data-action="interactive-map-add-pin-category"><?php _e('Add'); ?></button>
@@ -21,7 +21,7 @@
     </div>
     <div>
         <label for="map-category-pin-color"><?php _e('Edit pin color', 'modularity-interactive-map'); ?> (Hex)</label>
-        <input id="map-category-pin-color" type="text" name="map-category-pin-color" class="widefat" maxlength="7">
+        <input id="map-category-pin-color" type="color" name="map-category-pin-color" class="widefat map-category.colorpicker" maxlength="7">
     </div>
     <div>
         <button type="button" class="button button-primary" data-action="interactive-map-edit-pin-category"><?php _e('Save changes'); ?></button>

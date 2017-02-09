@@ -46,6 +46,7 @@ gulp.task('scripts-dist', function() {
 
 gulp.task('scripts-dist-admin', function() {
     gulp.src([
+            'node_modules/spectrum-colorpicker/spectrum.js',
             'source/js/admin/*.js',
         ])
         .pipe(concat('modularity-interactive-map-admin.dev.js'))
