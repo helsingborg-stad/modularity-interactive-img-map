@@ -210,6 +210,14 @@ foreach ($categories as $key => $category) {
         left: 0;
         right: 0;
         bottom: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 100ms, transform 100ms;
+    }
+
+    .mod-interactive-map-overflower img.pin-visible {
+        opacity: 1;
+        transform: translateY(0px);
     }
 
 </style>
@@ -247,7 +255,7 @@ foreach ($categories as $key => $category) {
         <div class="mod-interactive-map-overflower">
             <div class="mod-interactive-map-zoomable">
                 <?php foreach ($layers as $layer) : ?>
-                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" style="width: 100%;height: auto;" <?php echo isset($layer['category']) && is_array($layer['category']) ? 'data-interactive-map-category-name="' . implode('|', $layer['category']) . '"' : ''; ?>>
+                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" class="pin-visible" <?php echo isset($layer['category']) && is_array($layer['category']) ? 'data-interactive-map-category-name="' . implode('|', $layer['category']) . '"' : ''; ?>>
                 <?php endforeach; ?>
 
                 <?php foreach ($pins as $pin) : ?>
