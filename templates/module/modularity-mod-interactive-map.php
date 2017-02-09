@@ -39,6 +39,27 @@ foreach ($categories as $key => $category) {
             opacity: 0;
         }
     }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(.5);
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeInSimple {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
 </style>
 <style scoped>
     .mod-interactive-map-container {
@@ -79,20 +100,6 @@ foreach ($categories as $key => $category) {
         box-shadow: 0 0 10px #000;
         animation: pulseate 2000ms infinite ease-in-out;
     }
-
-    /*
-    .mod-interactive-map-pin:nth-of-type(3n + 1)::after {
-        animation-delay: 500ms;
-    }
-
-    .mod-interactive-map-pin:nth-of-type(3n + 2)::after {
-        animation-delay: 800ms;
-    }
-
-    .mod-interactive-map-pin:nth-of-type(3n + 3)::after {
-        animation-delay: 1100ms;
-    }
-    */
 
     .mod-interactive-map-pin.pin-visible {
         transform: translate(-50%, -50%) scale(1);
@@ -205,6 +212,7 @@ foreach ($categories as $key => $category) {
 
     .mod-interactive-map-categories {
         margin-bottom: 60px;
+        animation: fadeInSimple 300ms ease-in;
     }
 
     .mod-interactive-map-categories ul {
@@ -215,7 +223,7 @@ foreach ($categories as $key => $category) {
         display: inline-block;
         padding: 5px 10px;
         padding-right: 15px;
-        border-radius: 30px;
+        border-radius: 3px;
         background-color: rgba(0,0,0,.1);
         text-align: left;
     }
@@ -235,16 +243,42 @@ foreach ($categories as $key => $category) {
         display: block;
         position: absolute;
         right: 0;
-        bottom: 5px;
+        bottom: 10px;
+        padding: 7px 15px;
+        background: rgba(0,0,0,.1);
+        border-radius: 3px;
+    }
+
+    .mod-iteractive-map-buttons.mod-interactive-map-pin-info-hidden {
+        display: none;
     }
 
     .mod-iteractive-map-buttons > button {
-        display: block;
-        padding: 7px;
+        display: inline-block;
+        padding: 0px;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 20px;
+        animation: fadeIn 300ms ease-in;
+        color: #fff;
+        opacity: .8;
+    }
+
+    .mod-iteractive-map-buttons > button:hover,
+    .mod-iteractive-map-buttons > button:hover i {
+        opacity: 1;
+        cursor: hand;
+        cursor: pointer;
     }
 
     .mod-iteractive-map-buttons > button + button {
-        margin-top: 5px;
+        margin-left: 10px;
+    }
+
+    .mod-iteractive-map-buttons > button > i {
+        text-shadow: 0 0 3px rgba(0,0,0,.5);
+        transition: opacity 200ms;
     }
 
     .mod-interactive-map-overflower {
@@ -265,6 +299,10 @@ foreach ($categories as $key => $category) {
     .mod-interactive-map-overflower img.pin-visible {
         opacity: 1;
         transform: translateY(0px);
+    }
+
+    .mod-interactive-map-zoomable .image-layer {
+        width: 100%;
     }
 
 </style>
@@ -302,7 +340,7 @@ foreach ($categories as $key => $category) {
         <div class="mod-interactive-map-overflower">
             <div class="mod-interactive-map-zoomable">
                 <?php foreach ($layers as $layer) : ?>
-                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" class="pin-visible" <?php echo isset($layer['category']) && is_array($layer['category']) ? 'data-interactive-map-category-name="' . implode('|', $layer['category']) . '"' : ''; ?>>
+                <img src="<?php echo wp_get_attachment_url($layer['id']); ?>" class="pin-visible image-layer" <?php echo isset($layer['category']) && is_array($layer['category']) ? 'data-interactive-map-category-name="' . implode('|', $layer['category']) . '"' : ''; ?>>
                 <?php endforeach; ?>
 
                 <?php foreach ($pins as $pin) : ?>
@@ -315,12 +353,12 @@ foreach ($categories as $key => $category) {
         <!-- Zoom action buttons -->
         <div class="mod-iteractive-map-buttons">
 
-            <button class="zoom-in btn button-md btn-secondary">
+            <button class="zoom-in">
                 <i class="pricon pricon-plus-o"></i>
                 <span class="sr-only"><?php _e("Zoom in", 'modularity-interactive-map'); ?></span>
             </button>
 
-            <button class="zoom-out btn button-md btn-secondary">
+            <button class="zoom-out">
                 <i class="pricon pricon-minus-o"></i>
                 <span class="sr-only"><?php _e("Zoom out", 'modularity-interactive-map'); ?></span>
             </button>
