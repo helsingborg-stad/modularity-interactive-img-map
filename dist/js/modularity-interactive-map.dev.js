@@ -1477,10 +1477,6 @@ ModularityInteractiveMap.Zoom = (function ($) {
         });
     };
 
-    Zoom.prototype.resize = function(object) {
-        //return ;
-    }
-
     Zoom.prototype.resize = function() {
         $(".mod-interactive-map-container").each(function( key, obj ) {
 
