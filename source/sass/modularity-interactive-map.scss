@@ -195,8 +195,16 @@
         }
     }
 
+    li:first-of-type [data-action="interactive-map-toggle-layer"] {
+        display: none;
+    }
+
     .actions {
         float: right;
+
+        button + button {
+            margin-left: 10px;
+        }
 
         .fa {
             font-size: 1.5em;

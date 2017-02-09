@@ -139,8 +139,12 @@
       width: 30px; }
     #map-layers li + li {
       border-top: 1px solid #eee; }
+  #map-layers li:first-of-type [data-action="interactive-map-toggle-layer"] {
+    display: none; }
   #map-layers .actions {
     float: right; }
+    #map-layers .actions button + button {
+      margin-left: 10px; }
     #map-layers .actions .fa {
       font-size: 1.5em; }
 

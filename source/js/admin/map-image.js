@@ -40,11 +40,28 @@ ModularityInteractiveMap.MapImage = (function ($) {
             var layerId = $(e.target).closest('button').attr('data-layer-id');
             this.removeLayer(layerId);
         }.bind(this));
+
+        $(document).on('click', '[data-action="interactive-map-toggle-layer"]', function (e) {
+            var layerId = $(e.target).closest('button').attr('data-layer-id');
+            this.toggleLayerVisibility(layerId, $(e.target).closest('button'));
+        }.bind(this));
+    };
+
+    MapImage.prototype.toggleLayerVisibility = function(layerId, button) {
+
+        if ($('img[data-layer-id="' + layerId + '"]').is(':visible')) {
+            button.find('.fa').removeClass('fa-eye-slash').addClass('fa-eye');
+            $('img[data-layer-id="' + layerId + '"]').hide();
+            return;
+        }
+
+        button.find('.fa').removeClass('fa-eye').addClass('fa-eye-slash');
+        $('img[data-layer-id="' + layerId + '"]').show();
+        return;
     };
 
     MapImage.prototype.removeLayer = function(layerId) {
         $('[data-layer-id="' + layerId + '"]').remove();
-
     };
 
     MapImage.prototype.openMediaModal = function(btn) {
