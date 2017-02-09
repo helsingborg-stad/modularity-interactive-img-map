@@ -2438,6 +2438,10 @@ ModularityInteractiveMap.MapImage = (function ($) {
                 <input type="hidden" name="interactive-map-layers[' + map.id + '][id]" value="' + map.id + '">\
                 <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
                 ' + ModularityInteractiveMap.MapPinCategories.getMultiSelector('interactive-map-layers[' + map.id + '][category]', null, null) + '\
+                <div class="actions">\
+                    <button type="button" class="button button-link" data-action="interactive-map-toggle-layer" data-layer-id="' + map.id + '"><i class="fa fa-eye-slash"></i></button>\
+                    <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="' + map.id + '"><i class="fa fa-trash"></i></button>\
+                </div>\
             </li>');
         }
     };
@@ -2562,7 +2566,15 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
     };
 
     MapPinCategories.prototype.updateSelectors = function(name, color) {
+        // Default select
         $('[data-map-category-selector]').append('<option style="color:' + color + ';" value="' + name + '" data-color="' + color + '">' + name + '</option>');
+
+        // Multiselect
+        var $row = $('.ms-wrapper .ms-options label:first').clone();
+        $row.attr('data-category', name);
+        $row.find('input[type="checkbox"]').val(name);
+        $row.find('span').text(name);
+        $row.appendTo('.ms-wrapper .ms-options');
     };
 
     MapPinCategories.prototype.getAll = function(keys) {
