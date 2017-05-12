@@ -9,7 +9,9 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        new \ModularityInteractiveMap\Module();
+        add_action('Modularity', function () {
+            new \ModularityInteractiveMap\Module();
+        });
     }
 
     /**
