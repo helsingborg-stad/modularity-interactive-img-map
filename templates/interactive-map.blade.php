@@ -304,9 +304,9 @@
         <div class="mod-interactive-map-pin-info mod-interactive-map-pin-info-hidden">
             <div class="mod-interactive-map-pin-wrapper">
                 <button type="button" data-interactive-map-close-tooltip>&times;</button>
-                <h3>{{title}}</h3>
-                <div class="description">{{description}}</div>
-                <a href="{{link}}" class="btn btn-primary btn-sm link"><?php _e('Read more', 'modularity-interactive-map'); ?></a>
+                <h3>{#title#}</h3>
+                <div class="description">{#description#}</div>
+                <a href="{#link#}" class="btn btn-primary btn-sm link"><?php _e('Read more', 'modularity-interactive-map'); ?></a>
             </div>
         </div>
 
@@ -318,7 +318,12 @@
                 @endforeach
 
                 @foreach ($pins as $pin)
-                <div class="mod-interactive-map-pin pin-visible" data-title="{{ $pin['title'] }}" data-description="{{ preg_replace('/\s+/', ' ',trim($pin['text'])) }}" data-link="{{ $pin['link'] }}" data-interactive-map-category-name="{{ $categories[$pin['category']]['name'] }}" style="top: {{ $pin['top'] }};left: {{ $pin['left'] }};background-color: {{ $categories[$pin['category']]['color'] }};color: {{ $categories[$pin['category']]['color'] }};">
+                <div class="mod-interactive-map-pin pin-visible"
+                    data-title="{{ isset($pin['title']) ? $pin['title'] : '' }}"
+                    data-description="{{ isset($pin['text']) ? preg_replace('/\s+/', ' ',trim($pin['text'])) : '' }}"
+                    data-link="{{ isset($pin['link']) ? $pin['link'] : '' }}"
+                    data-interactive-map-category-name="{{ isset($pin['category']) && isset($categories[$pin['category']]) ? $categories[$pin['category']]['name'] : '' }}"
+                    style="top: {{ $pin['top'] }};left: {{ $pin['left'] }};background-color: {{ isset($pin['category']) && isset($categories[$pin['category']]['color']) ? $categories[$pin['category']]['color'] : '' }};color: {{ isset($pin['category']) && isset($categories[$pin['category']]['color']) ? $categories[$pin['category']]['color'] : '' }};">
                 </div>
                 @endforeach
             </div>
@@ -340,3 +345,4 @@
         </div>
     </div>
 </div>
+

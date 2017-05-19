@@ -4,49 +4,80 @@ namespace ModularityInteractiveMap;
 
 class Module extends \Modularity\Module
 {
-    public $args = array(
-        'id' => 'interactive-map',
-        'nameSingular' => 'Interactive Map',
-        'namePlural' => 'Interactive Map',
-        'description' => 'Create interactive image maps',
-        'supports' => array(),
-        'icon' => ''
-    );
+    public $slug = 'interactive-map';
+    public $icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuOTYxIDguNDI5Yy0uODMxLjk4Mi0xLjYxNCAxLjkxOC0xLjk2MSAzLjc3NXY2LjY4M2wtNCAyLjQ3OXYtOS4xNjFjLS4zNDctMS44NTctMS4xMy0yLjc5My0xLjk2MS0zLjc3NS0uOTA4LTEuMDc1LTIuMDM5LTIuNDExLTIuMDM5LTQuNjI5bC4wMTktLjM0NS0yLjAxOS0xLjQ1Ni01LjU0NSA0LTYuNDU1LTR2MThsNi40NTUgNCA1LjU0NS00IDUuNTQ1IDQgNi40NTUtNHYtMTEuNjE4bC0uMDM5LjA0N3ptLTEyLjk2MSA5LjgyNmwtNCAyLjg4NXYtMTMuMDY3bDQtMi44ODZ2MTMuMDY4em05LTE4LjI1NWMtMi4xIDAtNCAxLjcwMi00IDMuODAxIDAgMy4xMjEgMy4xODggMy40NTEgNCA4LjE5OS44MTItNC43NDggNC01LjA3OCA0LTguMTk5IDAtMi4wOTktMS45LTMuODAxLTQtMy44MDF6bTAgNS41Yy0uODI4IDAtMS41LS42NzEtMS41LTEuNXMuNjcyLTEuNSAxLjUtMS41IDEuNS42NzEgMS41IDEuNS0uNjcyIDEuNS0xLjUgMS41eiIvPjwvc3ZnPg==';
+    public $supports = array();
 
-    public function __construct()
+    public $templateDir = MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH;
+
+    public function init()
     {
-        // This will register the module
-        $this->register(
-            $this->args['id'],
-            $this->args['nameSingular'],
-            $this->args['namePlural'],
-            $this->args['description'],
-            $this->args['supports'],
-            $this->args['icon']
-        );
-
-        // Add our template folder as search path for templates
-        add_filter('Modularity/Module/TemplatePath', function ($paths) {
-            $paths[] = MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH;
-            return $paths;
-        });
+        $this->nameSingular = __('Interactive Map', 'modularity-interactive-map');
+        $this->namePlural = __('Interactive Map', 'modularity-interactive-map');
+        $this->description = __('Create interactive image maps', 'modularity-interactive-map');
 
         add_action('add_meta_boxes', array($this, 'addMetaboxes'));
         add_action('save_post', array($this, 'save'), 11, 2);
+    }
 
-        add_action('wp_enqueue_scripts', array($this, 'enqueueAssets'));
+    public function data() : array
+    {
+        $data = array();
+        $data['layers'] = $this->getLayers();
+        $data['pins'] = $this->getPins();
+        $data['categories'] = $this->getCategories();
+
+        return $data;
+    }
+
+    public function getCategories()
+    {
+        $categories = get_post_meta($this->ID, 'interactive_map_categories', true);
+
+        if (!$categories) {
+            $categories = array();
+        }
+
+        foreach ($categories as $key => $category) {
+            $categories[$category['name']] = $category;
+            unset($categories[$key]);
+        }
+
+        return $categories;
+    }
+
+    public function getPins()
+    {
+        $pins = get_post_meta($this->ID, 'interactive_map_pins', true);
+
+        if (!$pins) {
+            $pins = array();
+        }
+
+        return $pins;
+    }
+
+    public function getLayers()
+    {
+        $layers = get_post_meta($this->ID, 'interactive_map_layers', true);
+
+        if (!$layers) {
+            $layers = array(
+                'id' => get_post_meta($this->ID, 'interactive_map_image_id', true),
+                'name' => 'base',
+                'category' => null
+            );
+        }
+
+        return $layers;
     }
 
     /**
      * Enqueue your scripts and/or styles with wp_enqueue_script / wp_enqueue_style
      * @return
      */
-    public function enqueueAssets()
+    public function script()
     {
-        /*if (!\ModularityOnePage\App::isOnepage() && !$this->hasModule()) {
-            return;
-        }*/
-
         wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map.dev.js', null, '1.1.4', true);
         wp_enqueue_script('modularity-interative-map');
     }
@@ -113,4 +144,14 @@ class Module extends \Modularity\Module
             update_post_meta($postId, 'interactive_map_categories', $_POST['interactive-map-categories']);
         }
     }
+
+    /**
+     * Available "magic" methods for modules:
+     * init()            What to do on initialization (if you must, use __construct with care, this will probably break stuff!!)
+     * data()            Use to send data to view (return array)
+     * style()           Enqueue style only when module is used on page
+     * script            Enqueue script only when module is used on page
+     * adminEnqueue()    Enqueue scripts for the module edit/add page in admin
+     * template()        Return the view template (blade) the module should use when displayed
+     */
 }
