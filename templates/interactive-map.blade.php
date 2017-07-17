@@ -36,6 +36,10 @@
     }
 </style>
 <style scoped>
+    .mod-interactive-map-wrapper ul li::before {
+        display: none;
+    }
+
     .mod-interactive-map-container {
         position: relative;
     }
@@ -58,6 +62,7 @@
         background-color: #fff;
         cursor: pointer;
         box-shadow: 0 0 .3vw rgba(0, 0, 0, 0.7);
+        margin: 0px !important;
     }
 
     .mod-interactive-map-pin::after {
