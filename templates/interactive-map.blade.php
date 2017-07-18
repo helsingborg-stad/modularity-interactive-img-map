@@ -88,8 +88,8 @@
     .zoomlevel-2 .mod-interactive-map-pin {
         min-width: 8px;
         min-height: 8px;
-        max-width: 12px;
-        max-height: 12px;
+        max-width: 12px !important;
+        max-height: 12px !important;
     }
 
     .zoomlevel-3 .mod-interactive-map-pin,
@@ -98,8 +98,8 @@
     .zoomlevel-6 .mod-interactive-map-pin {
         min-width: 6px;
         min-height: 6px;
-        max-width: 8px;
-        max-height: 8px;
+        max-width: 8px !important;
+        max-height: 8px !important;
     }
 
     .mod-interactive-map-pin.mod-interactive-map-pin-active .mod-interactive-map-pin-info {
