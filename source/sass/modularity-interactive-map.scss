@@ -133,6 +133,23 @@
         div + div {
             margin-top: 8px;
         }
+
+        #map-category-pin-icon {
+            margin: 8px 0 8px 0;
+
+            .mod-map-icon-default {
+            width: 17px;
+            height: 17px;
+            background-color: #000;
+            border-radius: 50%;
+            }
+
+            img[src$=".svg"] {
+                max-width:20px;
+                width: 100%;
+            }
+
+        }
     }
 
     .interactive-map-categories-form-edit {

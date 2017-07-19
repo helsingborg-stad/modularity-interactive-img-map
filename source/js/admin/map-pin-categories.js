@@ -1,6 +1,6 @@
 var ModularityInteractiveMap = ModularityInteractiveMap || {};
 ModularityInteractiveMap.MapPinCategories = (function ($) {
-
+    var _mediaModal;
     var numCategories = 0;
     var numMultiselectors = 0;
 
@@ -47,7 +47,50 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             e.preventDefault();
             this.savePinEdit(e);
         }.bind(this));
+
+        $('[data-action="interactive-map-add-icon"]').on('click', function (e) {
+            e.preventDefault();
+            this.openMediaModal();
+        }.bind(this));
     };
+
+    MapPinCategories.prototype.openMediaModal = function(btn) {
+        if (_mediaModal) {
+            // Open the modal
+            _mediaModal.open();
+
+            // Default to upload file tab
+            $('.media-router a:first-of-type').trigger('click');
+
+            return;
+        }
+
+        this.setupMediaModal();
+    };
+
+MapPinCategories.prototype.setupMediaModal = function() {
+    _mediaModal = wp.media({
+        title: 'Pin icon',
+        button: {
+            text: 'Select'
+        },
+        multiple: false
+    });
+
+    _mediaModal.on('select', function () {
+        var selected = _mediaModal.state().get('selection').first().toJSON();
+
+        if (typeof selected === 'undefined') {
+            return;
+        }
+
+        $('[name="map-category-pin-icon"]').attr('src', selected.url).attr('data-layer-id', selected.id);
+
+    }.bind(this));
+
+    this.openMediaModal();
+};
+
 
     MapPinCategories.prototype.getSelector = function(name, current, classes) {
         if (typeof current === 'undefined') {
@@ -126,11 +169,13 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $items.each(function (index, item) {
             var name = $(this).find('[data-map-category]').val();
+            var icon = $(this).find('[data-map-category-pin-icon]').val();
             var color = $(this).find('[data-map-category-color]').val();
 
             var category = [];
             category['name'] = name;
             category['color'] = color;
+            category['icon'] = icon;
 
             if (keys === 'numeric') {
                 categories.push(category);
@@ -150,6 +195,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         $editForm.find('[name="map-category-name-before"]').val(categoryName);
         $editForm.find('[name="map-category-name"]').val($category.find('input[name*="name"]').val());
         $editForm.find('[name="map-category-pin-color"]').val($category.find('input[name*="color"]').val());
+        $editForm.find('[name="map-category-pin-icon"]').attr('src', $category.find('input[name*="icon"]').val());
 
         $createForm.hide();
         $editForm.show();
@@ -221,8 +267,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
      * Add a category
      * @param {string} name  Name of the category
      * @param {string} color Hexadecimal color code
+     * @param {string} icon  Image url
      */
-    MapPinCategories.prototype.addCategory = function(name, color) {
+    MapPinCategories.prototype.addCategory = function(name, color, icon) {
         if (numCategories === 0) {
             numCategories = $('.interactive-map-categories-list li').length;
         }
@@ -237,6 +284,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         if (typeof color === 'undefined') {
             color = $('[name="map-category-pin-color"]').val();
             //$('[name="map-category-pin-color"]').val('')
+        }
+
+        if (typeof icon === 'undefined') {
+            icon = (typeof $('[name="map-category-pin-icon"]').attr('src') !== 'undefined') ? $('[name="map-category-pin-icon"]').attr('src') : '';
         }
 
         if (!color) {
@@ -266,6 +317,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
                 \
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][name]" value="' + name + '" data-map-category>\
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][color]" value="' + color + '" data-map-category-color>\
+                <input type="hidden" name="interactive-map-categories[' + numCategories + '][icon]" value="' + icon + '" data-map-category-pin-icon>\
             </li>\
         ');
 

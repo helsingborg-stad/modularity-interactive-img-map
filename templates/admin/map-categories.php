@@ -4,6 +4,13 @@
         <input id="map-category-name" type="text" name="map-category-name" class="widefat">
     </div>
     <div>
+        <label for="map-category-pin-icon"><?php _e('Pin icon', 'modularity-interactive-map'); ?></label>
+        <div id="map-category-pin-icon">
+            <img src="" name="map-category-pin-icon">
+        </div>
+        <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
+    </div>
+    <div>
         <label for="map-category-pin-color"><?php _e('Pin color', 'modularity-interactive-map'); ?> (Hex)</label>
         <input id="map-category-pin-color" type="color" name="map-category-pin-color" class="widefat" maxlength="7">
     </div>
@@ -20,6 +27,13 @@
         <input id="map-category-name" type="text" name="map-category-name" class="widefat">
     </div>
     <div>
+        <label for="map-category-pin-icon"><?php _e('Pin icon', 'modularity-interactive-map'); ?></label>
+        <div id="map-category-pin-icon">
+            <img src="" name="map-category-pin-icon">
+        </div>
+        <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
+    </div>
+    <div>
         <label for="map-category-pin-color"><?php _e('Edit pin color', 'modularity-interactive-map'); ?> (Hex)</label>
         <input id="map-category-pin-color" type="color" name="map-category-pin-color" class="widefat map-category.colorpicker" maxlength="7">
     </div>
@@ -32,12 +46,12 @@
 <?php
 if (count($categories)) {
     echo '<script>jQuery(document).ready(function() {';
-
     foreach ($categories as $category) {
         echo 'ModularityInteractiveMap.MapPinCategories.addCategory(
                     \'' . $category['name'] . '\',
-                    \'' . $category['color'] . '\'
-            );';
+                    \'' . $category['color'] . '\',
+                    \'' . $category['icon'] . '\'
+        );';
     }
 
     echo '});</script>';

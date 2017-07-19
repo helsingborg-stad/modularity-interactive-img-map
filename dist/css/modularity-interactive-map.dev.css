@@ -546,6 +546,19 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   #map-pin-categories .interactive-map-categories-form div + div,
   #map-pin-categories .interactive-map-categories-form-edit div + div {
     margin-top: 8px; }
+  #map-pin-categories .interactive-map-categories-form #map-category-pin-icon,
+  #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon {
+    margin: 8px 0 8px 0; }
+    #map-pin-categories .interactive-map-categories-form #map-category-pin-icon .mod-map-icon-default,
+    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon .mod-map-icon-default {
+      width: 17px;
+      height: 17px;
+      background-color: #000;
+      border-radius: 50%; }
+    #map-pin-categories .interactive-map-categories-form #map-category-pin-icon img[src$=".svg"],
+    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon img[src$=".svg"] {
+      max-width: 20px;
+      width: 100%; }
 
 #map-pin-categories .interactive-map-categories-form-edit {
   display: none;
