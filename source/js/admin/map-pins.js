@@ -71,14 +71,22 @@ ModularityInteractiveMap.MapPins = (function ($) {
             text = '';
         }
 
-         var categoryColor = '';
+        var $svg = $('<div><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg></div>');
+
         if (category) {
-            categoryColor = 'background-color:' + _categories[category].color + ';';
+            if (_categories[category].svg) {
+                $svg = $('<div>' + _categories[category].svg + '</div>');
+            }
+
+            $('svg', $svg).css({ fill: _categories[category].color  });
         }
+
+        //console.log($svg.html());
 
         // Pin template and for fields
         var $pin = $('\
-            <div class="map-pin" data-pin-id="' + pinNumber + '" style="position: absolute;top: ' + posTop + ';left: ' + posLeft + ';' + categoryColor + '">\
+            <div class="map-pin" data-pin-id="' + pinNumber + '" style="position: absolute;top: ' + posTop + ';left: ' + posLeft + ';">\
+            ' + $svg.html() + '\
                 <div class="map-pin-popup">\
                     <input type="text" name="interactive-map-pin[' + pinNumber + '][title]" class="widefat" placeholder="' + ModInteractiveMapLang.title + '…" value="' + title +  '">\
                     <input type="text" name="interactive-map-pin[' + pinNumber + '][link]" class="widefat" placeholder="' + ModInteractiveMapLang.link + '…" value="' + link +  '">\
@@ -109,6 +117,11 @@ ModularityInteractiveMap.MapPins = (function ($) {
 
         // Append pin
         $pin.appendTo('#map-image .map-container');
+    };
+
+    MapPins.prototype.categoryPinIcon = function(pinId, iconUrl, color) {
+        console.log('pinId');
+        $('[data-pin-id="' + pinId + '"]').append('<div>Kalle</div>');
     };
 
     MapPins.prototype.showPin = function(target) {

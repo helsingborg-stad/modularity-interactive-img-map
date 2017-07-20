@@ -6,6 +6,7 @@
     <div>
         <label for="map-category-pin-icon"><?php _e('Pin icon', 'modularity-interactive-map'); ?></label>
         <div id="map-category-pin-icon">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>
             <img src="" name="map-category-pin-icon">
         </div>
         <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
@@ -29,6 +30,7 @@
     <div>
         <label for="map-category-pin-icon"><?php _e('Pin icon', 'modularity-interactive-map'); ?></label>
         <div id="map-category-pin-icon">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>
             <img src="" name="map-category-pin-icon">
         </div>
         <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
@@ -47,15 +49,17 @@
 if (count($categories)) {
     echo '<script>jQuery(document).ready(function() {';
     foreach ($categories as $category) {
+        $svg = (!empty($category['icon'])) ? \Municipio\Helper\Svg::extract($category['icon']) : '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>';
+        $svg = preg_replace( "/\r|\n/", "", $svg);
         echo 'ModularityInteractiveMap.MapPinCategories.addCategory(
                     \'' . $category['name'] . '\',
                     \'' . $category['color'] . '\',
-                    \'' . $category['icon'] . '\'
+                    \'' . $category['icon'] . '\',
+                    \'' . $svg . '\'
         );';
     }
 
     echo '});</script>';
 }
 ?>
-
 <ul class="interactive-map-categories-list"></ul>

@@ -34,14 +34,18 @@
     }
 
     .map-pin {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         position: absolute;
-        background-color: #F2FF00;
-        box-shadow: 0 0 10px rgba(0,0,0,.3);
-        border-radius: 50%;
+        fill: #F2FF00;
+        //box-shadow: 0 0 10px rgba(0,0,0,.3);
+        //border-radius: 50%;
         transform: translate(-50%, -50%);
         z-index: 99;
+
+        svg {
+            width: 100%;
+        }
     }
 
     [data-map-editor] {
@@ -136,19 +140,12 @@
 
         #map-category-pin-icon {
             margin: 8px 0 8px 0;
+            width: 22px;
+            height: 22px;
 
-            .mod-map-icon-default {
-            width: 17px;
-            height: 17px;
-            background-color: #000;
-            border-radius: 50%;
-            }
-
-            img[src$=".svg"] {
-                max-width:20px;
+            img[src$=".svg"], svg {
                 width: 100%;
             }
-
         }
     }
 

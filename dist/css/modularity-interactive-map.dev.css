@@ -473,14 +473,14 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     right: 0; }
 
 #map-image .map-pin {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   position: absolute;
-  background-color: #F2FF00;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
+  fill: #F2FF00;
   transform: translate(-50%, -50%);
   z-index: 99; }
+  #map-image .map-pin svg {
+    width: 100%; }
 
 #map-image [data-map-editor] {
   display: none; }
@@ -548,16 +548,12 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     margin-top: 8px; }
   #map-pin-categories .interactive-map-categories-form #map-category-pin-icon,
   #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon {
-    margin: 8px 0 8px 0; }
-    #map-pin-categories .interactive-map-categories-form #map-category-pin-icon .mod-map-icon-default,
-    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon .mod-map-icon-default {
-      width: 17px;
-      height: 17px;
-      background-color: #000;
-      border-radius: 50%; }
-    #map-pin-categories .interactive-map-categories-form #map-category-pin-icon img[src$=".svg"],
-    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon img[src$=".svg"] {
-      max-width: 20px;
+    margin: 8px 0 8px 0;
+    width: 22px;
+    height: 22px; }
+    #map-pin-categories .interactive-map-categories-form #map-category-pin-icon img[src$=".svg"], #map-pin-categories .interactive-map-categories-form #map-category-pin-icon svg,
+    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon img[src$=".svg"],
+    #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon svg {
       width: 100%; }
 
 #map-pin-categories .interactive-map-categories-form-edit {

@@ -2486,10 +2486,13 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         }.bind(this));
 
         $(document).on('change', '.map-pin [data-map-category-selector]', function (e) {
+            var selected = $('option:selected', this).text();
+            var categories = MapPinCategories.prototype.getAll();
             var $pin = $(this).parents('.map-pin');
             var color = $(this).find('option:selected').attr('data-color');
 
-            $pin.css('backgroundColor', color);
+            $('svg', $pin).replaceWith(categories[selected].svg);
+            $('svg', $pin).css('fill', color);
         });
 
         $(document).on('click', '[data-action="interactive-map-add-edit-category"]', function (e) {
@@ -2529,29 +2532,29 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         this.setupMediaModal();
     };
 
-MapPinCategories.prototype.setupMediaModal = function() {
-    _mediaModal = wp.media({
-        title: 'Pin icon',
-        button: {
-            text: 'Select'
-        },
-        multiple: false
-    });
+    MapPinCategories.prototype.setupMediaModal = function() {
+        _mediaModal = wp.media({
+            title: 'Pin icon',
+            button: {
+                text: 'Select'
+            },
+            multiple: false
+        });
 
-    _mediaModal.on('select', function () {
-        var selected = _mediaModal.state().get('selection').first().toJSON();
+        _mediaModal.on('select', function () {
+            var selected = _mediaModal.state().get('selection').first().toJSON();
 
-        if (typeof selected === 'undefined') {
-            return;
-        }
+            if (typeof selected === 'undefined') {
+                return;
+            }
 
-        $('[name="map-category-pin-icon"]').attr('src', selected.url).attr('data-layer-id', selected.id);
+            $('svg', '#map-category-pin-icon').hide();
+            $('[name="map-category-pin-icon"]').attr('src', selected.url).attr('data-layer-id', selected.id);
 
-    }.bind(this));
+        }.bind(this));
 
-    this.openMediaModal();
-};
-
+        this.openMediaModal();
+    };
 
     MapPinCategories.prototype.getSelector = function(name, current, classes) {
         if (typeof current === 'undefined') {
@@ -2630,13 +2633,15 @@ MapPinCategories.prototype.setupMediaModal = function() {
 
         $items.each(function (index, item) {
             var name = $(this).find('[data-map-category]').val();
-            var icon = $(this).find('[data-map-category-pin-icon]').val();
             var color = $(this).find('[data-map-category-color]').val();
+            var icon = $(this).find('[data-map-category-pin-icon]').val();
+            var svg = $(this).find('[data-map-category-svg]').val();
 
             var category = [];
             category['name'] = name;
             category['color'] = color;
             category['icon'] = icon;
+            category['svg'] = svg;
 
             if (keys === 'numeric') {
                 categories.push(category);
@@ -2657,6 +2662,11 @@ MapPinCategories.prototype.setupMediaModal = function() {
         $editForm.find('[name="map-category-name"]').val($category.find('input[name*="name"]').val());
         $editForm.find('[name="map-category-pin-color"]').val($category.find('input[name*="color"]').val());
         $editForm.find('[name="map-category-pin-icon"]').attr('src', $category.find('input[name*="icon"]').val());
+        if ($category.find('input[name*="icon"]').val()) {
+            $('svg', $editForm).hide();
+        } else {
+            $('svg', $editForm).show();
+        }
 
         $createForm.hide();
         $editForm.show();
@@ -2669,6 +2679,7 @@ MapPinCategories.prototype.setupMediaModal = function() {
         var nameBefore = $editForm.find('[name="map-category-name-before"]').val();
         var name = $editForm.find('[name="map-category-name"]').val();
         var color = $editForm.find('[name="map-category-pin-color"]').val();
+        var icon = $editForm.find('[name="map-category-pin-icon"]').attr('src');
 
         var $categoryRow = $('.interactive-map-categories-list li[data-category="' + nameBefore + '"]');
 
@@ -2697,6 +2708,7 @@ MapPinCategories.prototype.setupMediaModal = function() {
         $categoryRow.find('span').text(name);
         $categoryRow.find('input[name*="name"]').val(name).attr('data-map-category', name);
         $categoryRow.find('input[name*="color"]').val(color).attr('data-map-category-color', color);
+        $categoryRow.find('input[name*="icon"]').val(icon).attr('data-map-category-color', color);
 
         // Chage category dropdowns and pin
         $('[data-map-category-selector]').each(function (index, element) {
@@ -2705,7 +2717,7 @@ MapPinCategories.prototype.setupMediaModal = function() {
 
             if ($this.val() == nameBefore) {
                 var $pin = $this.parents('.map-pin');
-                $pin.css('background-color', color);
+                $pin.css('fill', color);
             }
         });
 
@@ -2730,7 +2742,7 @@ MapPinCategories.prototype.setupMediaModal = function() {
      * @param {string} color Hexadecimal color code
      * @param {string} icon  Image url
      */
-    MapPinCategories.prototype.addCategory = function(name, color, icon) {
+    MapPinCategories.prototype.addCategory = function(name, color, icon, svg) {
         if (numCategories === 0) {
             numCategories = $('.interactive-map-categories-list li').length;
         }
@@ -2749,6 +2761,11 @@ MapPinCategories.prototype.setupMediaModal = function() {
 
         if (typeof icon === 'undefined') {
             icon = (typeof $('[name="map-category-pin-icon"]').attr('src') !== 'undefined') ? $('[name="map-category-pin-icon"]').attr('src') : '';
+        }
+
+        if (typeof svg === 'undefined') {
+            // FIXA Ladda iconen med färg asynkront istället
+            svg = '<img src="' + icon + '">';
         }
 
         if (!color) {
@@ -2779,6 +2796,7 @@ MapPinCategories.prototype.setupMediaModal = function() {
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][name]" value="' + name + '" data-map-category>\
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][color]" value="' + color + '" data-map-category-color>\
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][icon]" value="' + icon + '" data-map-category-pin-icon>\
+                <input type="hidden" value=\'' + svg + '\' data-map-category-svg>\
             </li>\
         ');
 
@@ -2868,14 +2886,22 @@ ModularityInteractiveMap.MapPins = (function ($) {
             text = '';
         }
 
-         var categoryColor = '';
+        var $svg = $('<div><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg></div>');
+
         if (category) {
-            categoryColor = 'background-color:' + _categories[category].color + ';';
+            if (_categories[category].svg) {
+                $svg = $('<div>' + _categories[category].svg + '</div>');
+            }
+
+            $('svg', $svg).css({ fill: _categories[category].color  });
         }
+
+        //console.log($svg.html());
 
         // Pin template and for fields
         var $pin = $('\
-            <div class="map-pin" data-pin-id="' + pinNumber + '" style="position: absolute;top: ' + posTop + ';left: ' + posLeft + ';' + categoryColor + '">\
+            <div class="map-pin" data-pin-id="' + pinNumber + '" style="position: absolute;top: ' + posTop + ';left: ' + posLeft + ';">\
+            ' + $svg.html() + '\
                 <div class="map-pin-popup">\
                     <input type="text" name="interactive-map-pin[' + pinNumber + '][title]" class="widefat" placeholder="' + ModInteractiveMapLang.title + '…" value="' + title +  '">\
                     <input type="text" name="interactive-map-pin[' + pinNumber + '][link]" class="widefat" placeholder="' + ModInteractiveMapLang.link + '…" value="' + link +  '">\
@@ -2906,6 +2932,11 @@ ModularityInteractiveMap.MapPins = (function ($) {
 
         // Append pin
         $pin.appendTo('#map-image .map-container');
+    };
+
+    MapPins.prototype.categoryPinIcon = function(pinId, iconUrl, color) {
+        console.log('pinId');
+        $('[data-pin-id="' + pinId + '"]').append('<div>Kalle</div>');
     };
 
     MapPins.prototype.showPin = function(target) {
