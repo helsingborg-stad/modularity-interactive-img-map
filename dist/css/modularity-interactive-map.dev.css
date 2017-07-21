@@ -454,6 +454,26 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   padding: 0;
   margin: 0; }
 
+#map-image .pin-actions,
+#map-pin-categories .pin-actions {
+  text-align: left; }
+  #map-image .pin-actions .button:first-child,
+  #map-pin-categories .pin-actions .button:first-child {
+    margin-right: 10px; }
+
+#map-image .button-link:hover,
+#map-pin-categories .button-link:hover {
+  background-color: transparent; }
+
+#map-image [data-action="interactive-map-pin-remove"], #map-image [data-action="interactive-map-remove-icon"],
+#map-pin-categories [data-action="interactive-map-pin-remove"],
+#map-pin-categories [data-action="interactive-map-remove-icon"] {
+  color: #a00; }
+  #map-image [data-action="interactive-map-pin-remove"]:hover, #map-image [data-action="interactive-map-remove-icon"]:hover,
+  #map-pin-categories [data-action="interactive-map-pin-remove"]:hover,
+  #map-pin-categories [data-action="interactive-map-remove-icon"]:hover {
+    color: #ff0000; }
+
 #map-image .map-pin-toolbox {
   background-color: #f9f9f9;
   border-bottom: 1px solid #eee;
@@ -524,16 +544,6 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
 
 #map-image .pin-actions {
   text-align: right; }
-  #map-image .pin-actions .button + .button {
-    margin-left: 10px; }
-
-#map-image .button-link:hover {
-  background-color: transparent; }
-
-#map-image [data-action="interactive-map-pin-remove"] {
-  color: #a00; }
-  #map-image [data-action="interactive-map-pin-remove"]:hover {
-    color: #ff0000; }
 
 #map-pin-categories .interactive-map-categories-form,
 #map-pin-categories .interactive-map-categories-form-edit {

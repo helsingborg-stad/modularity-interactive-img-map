@@ -6,6 +6,26 @@
         padding: 0;
         margin: 0;
     }
+
+    .pin-actions {
+        text-align: left;
+
+        .button:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    .button-link:hover {
+        background-color: transparent;
+    }
+
+    [data-action="interactive-map-pin-remove"], [data-action="interactive-map-remove-icon"] {
+        color: #a00;
+
+        &:hover {
+            color: #ff0000;
+        }
+    }
 }
 
 #map-image {
@@ -102,22 +122,6 @@
 
     .pin-actions {
         text-align: right;
-
-        .button + .button {
-            margin-left: 10px;
-        }
-    }
-
-    .button-link:hover {
-        background-color: transparent;
-    }
-
-    [data-action="interactive-map-pin-remove"] {
-        color: #a00;
-
-        &:hover {
-            color: #ff0000;
-        }
     }
 }
 

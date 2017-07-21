@@ -33,8 +33,10 @@
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>
             <img src="" name="map-category-pin-icon">
         </div>
-        <p><a href="#" data-action="interactive-map-remove-icon"><?php _e('Remove', 'modularity-interactive-map'); ?></a><p>
-        <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
+        <div class="pin-actions">
+            <button class="button button-link" type="button" data-action="interactive-map-remove-icon"><?php _e('Remove', 'modularity-interactive-map'); ?></button>
+            <button class="button" type="button" data-action="interactive-map-add-icon"><i class="fa fa-map-marker"></i> <?php _e('Add icon', 'modularity-interactive-map'); ?></button>
+        </div>
     </div>
     <div>
         <label for="map-category-pin-color"><?php _e('Edit pin color', 'modularity-interactive-map'); ?> (Hex)</label>
