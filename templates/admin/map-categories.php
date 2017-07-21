@@ -52,12 +52,13 @@
 if (count($categories)) {
     echo '<script>jQuery(document).ready(function() {';
     foreach ($categories as $category) {
-        $svg = (!empty($category['icon'])) ? \Municipio\Helper\Svg::extract($category['icon']) : '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>';
-        $svg = preg_replace( "/\r|\n/", "", $svg);
+        $icon = (isset($category['icon']) && !empty($category['icon'])) ? $category['icon'] : '';
+        $svg = ($icon) ? \Municipio\Helper\Svg::extract($category['icon']) : '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>';
+        $svg = preg_replace('/\r|\n/', '', $svg);
         echo 'ModularityInteractiveMap.MapPinCategories.addCategory(
                     \'' . $category['name'] . '\',
                     \'' . $category['color'] . '\',
-                    \'' . $category['icon'] . '\',
+                    \'' . $icon . '\',
                     \'' . $svg . '\'
         );';
     }
