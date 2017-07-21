@@ -480,6 +480,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
   transform: translate(-50%, -50%);
   z-index: 99; }
   #map-image .map-pin svg {
+    displ: block;
     width: 100%; }
 
 #map-image [data-map-editor] {
@@ -554,6 +555,7 @@ See http://bgrins.github.io/spectrum/themes/ for instructions.
     #map-pin-categories .interactive-map-categories-form #map-category-pin-icon img[src$=".svg"], #map-pin-categories .interactive-map-categories-form #map-category-pin-icon svg,
     #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon img[src$=".svg"],
     #map-pin-categories .interactive-map-categories-form-edit #map-category-pin-icon svg {
+      display: block;
       width: 100%; }
 
 #map-pin-categories .interactive-map-categories-form-edit {

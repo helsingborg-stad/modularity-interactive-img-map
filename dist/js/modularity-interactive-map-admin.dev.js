@@ -2516,6 +2516,13 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             e.preventDefault();
             this.openMediaModal();
         }.bind(this));
+
+        $('[data-action="interactive-map-remove-icon"]').on('click', function (e) {
+            e.preventDefault();
+            $(e.target).hide();
+            $('#map-category-pin-icon > svg', '').show();
+            $('[name="map-category-pin-icon"]').attr('src', '');
+        }.bind(this));
     };
 
     MapPinCategories.prototype.openMediaModal = function(btn) {
@@ -2548,7 +2555,12 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
                 return;
             }
 
-            $('svg', '#map-category-pin-icon').hide();
+            if (selected.mime !== 'image/svg+xml') {
+                alert('Only icons of file type SVG are allowed');
+                return;
+            }
+
+            $('#map-category-pin-icon > svg').hide();
             $('[name="map-category-pin-icon"]').attr('src', selected.url).attr('data-layer-id', selected.id);
 
         }.bind(this));
@@ -2664,8 +2676,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         $editForm.find('[name="map-category-pin-icon"]').attr('src', $category.find('input[name*="icon"]').val());
         if ($category.find('input[name*="icon"]').val()) {
             $('svg', $editForm).hide();
+            $('[data-action="interactive-map-remove-icon"]').show();
         } else {
             $('svg', $editForm).show();
+            $('[data-action="interactive-map-remove-icon"]').hide();
         }
 
         $createForm.hide();
@@ -2697,7 +2711,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             existingCategories.push($(this).val());
         });
 
-        if (existingCategories.indexOf(name) > -1) {
+        if (existingCategories.indexOf(name) > -1 && name !== nameBefore) {
             alert('Category name must be unique');
             return;
         }
@@ -2764,7 +2778,6 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         }
 
         if (typeof svg === 'undefined') {
-            // FIXA Ladda iconen med färg asynkront istället
             svg = '<img src="' + icon + '">';
         }
 

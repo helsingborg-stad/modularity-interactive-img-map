@@ -39,7 +39,15 @@ class Module extends \Modularity\Module
         }
 
         foreach ($categories as $key => $category) {
+            if (!empty($category['icon'])) {
+                $svg = \Municipio\Helper\Svg::extract($category['icon']);
+                $svg = str_replace('<svg', '<svg style="fill:' . $category['color'] . ';"', $svg);
+            } else {
+                $svg = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="fill:' . $category['color'] . ';"><circle cx="100" cy="100" r="100"/></svg>';
+            }
+
             $categories[$category['name']] = $category;
+            $categories[$category['name']]['svg'] = $svg;
             unset($categories[$key]);
         }
 

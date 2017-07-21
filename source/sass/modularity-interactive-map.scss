@@ -38,12 +38,11 @@
         height: 22px;
         position: absolute;
         fill: #F2FF00;
-        //box-shadow: 0 0 10px rgba(0,0,0,.3);
-        //border-radius: 50%;
         transform: translate(-50%, -50%);
         z-index: 99;
 
         svg {
+            displ: block;
             width: 100%;
         }
     }
@@ -144,6 +143,7 @@
             height: 22px;
 
             img[src$=".svg"], svg {
+                display: block;
                 width: 100%;
             }
         }

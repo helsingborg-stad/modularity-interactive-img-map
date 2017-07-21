@@ -47,22 +47,23 @@
     .mod-interactive-map-pin {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0);
-
         transition: opacity 300ms,
                     transform 300ms;
-
         position: absolute;
         min-width: 12px;
         min-height: 12px;
         max-width: 20px;
         max-height: 20px;
+        cursor: pointer;
+        margin: 0px !important;
         width: 1vw;
         height: 1vw;
-        border-radius: 50%;
-        background-color: #fff;
-        cursor: pointer;
-        box-shadow: 0 0 .3vw rgba(0, 0, 0, 0.7);
-        margin: 0px !important;
+        color: #fff;
+    }
+
+    .mod-interactive-map-pin svg {
+        width: 100%;
+        display: block;
     }
 
     .mod-interactive-map-pin::after {
@@ -209,9 +210,13 @@
 
     .mod-interactive-map-category-color-indicator {
         display: inline-block;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+    }
+
+    .mod-interactive-map-category-color-indicator svg {
+        width: 100%;
+        display: block;
     }
 
     .mod-interactive-map-pin-info a.btn {
@@ -295,7 +300,9 @@
                 <label>
                     <input type="checkbox" data-interactive-map-category="{{ $category['name'] }}" checked>
                     {{ $category['name'] }}
-                    <span style="background-color:{{ $category['color']  }}" class="mod-interactive-map-category-color-indicator"></span>
+                    <span class="mod-interactive-map-category-color-indicator">
+                        {!! $category['svg'] !!}
+                    </span>
                 </label>
             </li>
             @endforeach
@@ -328,7 +335,13 @@
                     data-description="{{ isset($pin['text']) ? preg_replace('/\s+/', ' ',trim($pin['text'])) : '' }}"
                     data-link="{{ isset($pin['link']) ? $pin['link'] : '' }}"
                     data-interactive-map-category-name="{{ isset($pin['category']) && isset($categories[$pin['category']]) ? $categories[$pin['category']]['name'] : '' }}"
-                    style="top: {{ $pin['top'] }};left: {{ $pin['left'] }};background-color: {{ isset($pin['category']) && isset($categories[$pin['category']]['color']) ? $categories[$pin['category']]['color'] : '' }};color: {{ isset($pin['category']) && isset($categories[$pin['category']]['color']) ? $categories[$pin['category']]['color'] : '' }};">
+                    style="top: {{ $pin['top'] }};left: {{ $pin['left'] }};color: {{ isset($pin['category']) && isset($categories[$pin['category']]['color']) ? $categories[$pin['category']]['color'] : '' }};">
+
+                    @if(isset($categories[$pin['category']]['svg']))
+                        {!! $categories[$pin['category']]['svg'] !!}
+                    @else
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="fill:#fff";><circle cx="100" cy="100" r="100"/></svg>
+                    @endif
                 </div>
                 @endforeach
             </div>
