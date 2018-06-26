@@ -10,10 +10,12 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         add_action('plugins_loaded', function () {
-            modularity_register_module(
-                MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/', // The directory path of the module
-                'Module' // The class' file and class name (should be the same) withot .php extension
-            );
+            if (function_exists('modularity_register_module')) {
+                modularity_register_module(
+                    MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/', // The directory path of the module
+                    'Module' // The class' file and class name (should be the same) withot .php extension
+                );
+            }
         });
     }
 
