@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Plugin Name:       Modularity Interactive Image Map
+ * Plugin Name:       Modularity Interactive Image Map v3
  * Plugin URI:
  * Description:       Build a interactive image map in a Modularity Module
- * Version:           1.1.0
- * Author:            Kristoffer Svanmark, Sebastian Thulin
+ * Version:           3.0
+ * Author:            Guy Incognito
  * Author URI:
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
@@ -22,6 +22,9 @@ define('MODULARITY_INTERACTIVE_MAP_PATH', plugin_dir_path(__FILE__));
 define('MODULARITY_INTERACTIVE_MAP_URL', plugins_url('', __FILE__));
 define('MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH', MODULARITY_INTERACTIVE_MAP_PATH . 'templates/');
 
+define('MODULARITY_INTERACTIVE_MAP_MODULE_VIEW_PATH', MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/Module/views');
+define('MODULARITY_INTERACTIVE_MAP_MODULE_PATH', MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/Module/');
+
 load_plugin_textdomain('modularity-interactive-map', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
 require_once MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
@@ -32,6 +35,15 @@ $loader = new ModularityInteractiveMap\Vendor\Psr4ClassLoader();
 $loader->addPrefix('ModularityInteractiveMap', MODULARITY_INTERACTIVE_MAP_PATH);
 $loader->addPrefix('ModularityInteractiveMap', MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/');
 $loader->register();
+
+// View paths
+add_filter('Municipio/blade/view_paths', function ($array){
+    return $array;
+}, 2, 1);
+add_filter('/Modularity/externalViewPath', function ($arr) {
+    $arr['mod-interactive-map'] = MODULARITY_INTERACTIVE_MAP_MODULE_VIEW_PATH;
+    return $arr;
+}, 10, 3);
 
 // Start application
 new ModularityInteractiveMap\App();

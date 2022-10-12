@@ -51,10 +51,17 @@
 <?php
 if (count($categories)) {
     echo '<script>jQuery(document).ready(function() {';
+    /*
+    echo 'console.log(myLibrary.foo); ';
+    echo 'myLibrary.sayFoz(); ';
+    echo 'myLibrary.Korv.sayKorv(); ';
+    echo 'myLibrary.Korv.sayKorv(); ';
+    echo 'myLibrary.Korv.sayKolbasz(); ';*/
     foreach ($categories as $category) {
         $icon = (isset($category['icon']) && !empty($category['icon'])) ? $category['icon'] : '';
         $svg = ($icon) ? \Municipio\Helper\Svg::extract($category['icon']) : '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="100"/></svg>';
         $svg = preg_replace('/\r|\n/', '', $svg);
+        //echo 'ModularityInteractiveMap.MapPinCategories.addCategory(
         echo 'ModularityInteractiveMap.MapPinCategories.addCategory(
                     \'' . $category['name'] . '\',
                     \'' . $category['color'] . '\',

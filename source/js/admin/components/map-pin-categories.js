@@ -1,35 +1,34 @@
-var ModularityInteractiveMap = ModularityInteractiveMap || {};
-ModularityInteractiveMap.MapPinCategories = (function ($) {
+
+export default {addCategory, getAll, getSelector, getMultiSelector}
+
     var _mediaModal;
     var numCategories = 0;
     var numMultiselectors = 0;
 
-    function MapPinCategories() {
-        this.handleEvents();
-    }
+    var $ = (jQuery);
 
-    /**
-     * Handle evets
-     * @return {void}
-     */
-    MapPinCategories.prototype.handleEvents = function() {
+    $(document).ready(function(){
+    	mapPinCategories();
+    });
+
+	function mapPinCategories() {
+		
         $('[data-action="interactive-map-add-pin-category"]').on('click', function (e) {
             e.preventDefault();
-            this.addCategory();
+            addCategory();
         }.bind(this));
 
         $(document).on('click', '[data-action="interactive-map-add-remove-category"]', function (e) {
             e.preventDefault();
             var $btn = $(e.target).closest('[data-action="interactive-map-add-remove-category"]');
-            this.removeCategory($btn.attr('data-category-name'));
+            removeCategory($btn.attr('data-category-name'));
         }.bind(this));
 
         $(document).on('change', '.map-pin [data-map-category-selector]', function (e) {
             var selected = $('option:selected', this).text();
-            var categories = MapPinCategories.prototype.getAll();
+            var categories = getAll();
             var $pin = $(this).parents('.map-pin');
             var color = $(this).find('option:selected').attr('data-color');
-
             $('svg', $pin).replaceWith(categories[selected].svg);
             $('svg', $pin).css('fill', color);
         });
@@ -37,7 +36,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         $(document).on('click', '[data-action="interactive-map-add-edit-category"]', function (e) {
             e.preventDefault();
             var $btn = $(e.target).closest('[data-action="interactive-map-add-edit-category"]');
-            this.editCategory($btn.attr('data-category-name'));
+            editCategory($btn.attr('data-category-name'));
         }.bind(this));
 
         $('[data-action="interactive-map-stop-edit-pin-category"]').on('click', function (e) {
@@ -48,12 +47,12 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $('[data-action="interactive-map-edit-pin-category"]').on('click', function (e) {
             e.preventDefault();
-            this.savePinEdit(e);
+            savePinEdit(e);
         }.bind(this));
 
         $('[data-action="interactive-map-add-icon"]').on('click', function (e) {
             e.preventDefault();
-            this.openMediaModal();
+            openMediaModal();
         }.bind(this));
 
         $('[data-action="interactive-map-remove-icon"]').on('click', function (e) {
@@ -62,9 +61,12 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             $('#map-category-pin-icon > svg', '').show();
             $('[name="map-category-pin-icon"]').attr('src', '');
         }.bind(this));
-    };
+    }
+    
 
-    MapPinCategories.prototype.openMediaModal = function(btn) {
+
+
+    function openMediaModal(btn) {
         if (_mediaModal) {
             // Open the modal
             _mediaModal.open();
@@ -75,10 +77,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             return;
         }
 
-        this.setupMediaModal();
-    };
+        setupMediaModal();
+    }
 
-    MapPinCategories.prototype.setupMediaModal = function() {
+    function setupMediaModal() {
         _mediaModal = wp.media({
             title: 'Pin icon',
             button: {
@@ -104,10 +106,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         }.bind(this));
 
-        this.openMediaModal();
-    };
+        openMediaModal();
+    }
 
-    MapPinCategories.prototype.getSelector = function(name, current, classes) {
+    function getSelector(name, current, classes) {
         if (typeof current === 'undefined') {
             current = null;
         }
@@ -116,7 +118,8 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             classes = 'widefat';
         }
 
-        var categories = this.getAll('numeric');
+        //var categories = this.getAll('numeric');
+        var categories = getAll('numeric');
         var $select = $('<select class="' + classes + '" name="' + name + '" data-map-category-selector></select>');
 
         $select.append('<option value="" selected>-</option>');
@@ -131,9 +134,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         }.bind(this));
 
         return $select[0].outerHTML;
-    };
+    }
 
-    MapPinCategories.prototype.getMultiSelector = function(name, current) {
+    function getMultiSelector(name, current) {
         numMultiselectors++;
 
         if (typeof current === 'undefined') {
@@ -144,7 +147,8 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             current = current.split('|');
         }
 
-        var categories = this.getAll('numeric');
+        //var categories = this.getAll('numeric');
+        var categories = getAll('numeric');
 
         var $wrapper = $('<div class="ms-wrapper"><input class="ms-toggle" type="checkbox" id="dropdownopen-' + numMultiselectors + '"><label class="ms-placeholder" for="dropdownopen-' + numMultiselectors + '">Välj kategorier</label></div>');
         var $options = $('<div class="ms-options"></div>');
@@ -160,9 +164,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $wrapper.append($options);
         return $wrapper[0].outerHTML;
-    };
+    }
 
-    MapPinCategories.prototype.updateSelectors = function(name, color) {
+    function updateSelectors(name, color) {
         // Default select
         $('[data-map-category-selector]').append('<option style="color:' + color + ';" value="' + name + '" data-color="' + color + '">' + name + '</option>');
 
@@ -172,9 +176,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         $row.find('input[type="checkbox"]').val(name);
         $row.find('span').text(name);
         $row.appendTo('.ms-wrapper .ms-options');
-    };
+    }
 
-    MapPinCategories.prototype.getAll = function(keys) {
+    function getAll(keys) {
         if (typeof keys === 'undefined') {
             keys = 'name';
         }
@@ -202,9 +206,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         });
 
         return categories;
-    };
+    }
 
-    MapPinCategories.prototype.editCategory = function(categoryName) {
+    function editCategory(categoryName) {
         var $createForm = $('.interactive-map-categories-form');
         var $editForm = $('.interactive-map-categories-form-edit');
         var $category = $('.interactive-map-categories-list li[data-category="' + categoryName + '"]');
@@ -223,9 +227,9 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $createForm.hide();
         $editForm.show();
-    };
+    }
 
-    MapPinCategories.prototype.savePinEdit = function(e) {
+    function savePinEdit(e) {
         var $createForm = $('.interactive-map-categories-form');
         var $editForm = $('.interactive-map-categories-form-edit');
 
@@ -287,7 +291,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         $createForm.show();
         $editForm.hide();
-    };
+    }
 
     /**
      * Add a category
@@ -295,7 +299,7 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
      * @param {string} color Hexadecimal color code
      * @param {string} icon  Image url
      */
-    MapPinCategories.prototype.addCategory = function(name, color, icon, svg) {
+    function addCategory(name, color, icon, svg) {
         if (numCategories === 0) {
             numCategories = $('.interactive-map-categories-list li').length;
         }
@@ -304,12 +308,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
 
         if (typeof name === 'undefined') {
             name = $('[name="map-category-name"]').val();
-            //$('[name="map-category-name"]').val('');
         }
 
         if (typeof color === 'undefined') {
             color = $('[name="map-category-pin-color"]').val();
-            //$('[name="map-category-pin-color"]').val('')
         }
 
         if (typeof icon === 'undefined') {
@@ -342,8 +344,8 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
         $('.interactive-map-categories-list').append('\
             <li data-category="' + name + '">\
                 <span style="color:' + color + ';">' + name + '</span>\
-                <button type="button" class="button button-link" data-action="interactive-map-add-remove-category" data-category-name="' + name + '"><i class="fa fa-trash"></i></button>\
-                <button type="button" class="button button-link" data-action="interactive-map-add-edit-category" data-category-name="' + name + '"><i class="fa fa-edit"></i></button>\
+                <button type="button" class="button button-link" data-action="interactive-map-add-remove-category" data-category-name="' + name + '"><span class="dashicons dashicons-trash"></button>\
+                <button type="button" class="button button-link" data-action="interactive-map-add-edit-category" data-category-name="' + name + '"><span class="dashicons dashicons-edit"></span></button>\
                 \
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][name]" value="' + name + '" data-map-category>\
                 <input type="hidden" name="interactive-map-categories[' + numCategories + '][color]" value="' + color + '" data-map-category-color>\
@@ -352,15 +354,10 @@ ModularityInteractiveMap.MapPinCategories = (function ($) {
             </li>\
         ');
 
-        this.updateSelectors(name, color);
-    };
+        updateSelectors(name, color);
+    }
 
-    MapPinCategories.prototype.removeCategory = function(name) {
+    function removeCategory(name) {
         $('.interactive-map-categories-list li[data-category="' + name + '"]').remove();
         $('[data-map-category-selector] option[value="' + name + '"]').remove();
-    };
-
-    return new MapPinCategories();
-
-})(jQuery);
-
+    }

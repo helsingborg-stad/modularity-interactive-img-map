@@ -1,14 +1,17 @@
 <?php
 
-namespace ModularityInteractiveMap;
+namespace ModularityInteractiveMap\Module;
 
-class Module extends \Modularity\Module
+use ModularityInteractiveMap\Helper\CacheBust;
+
+class InteractiveMap extends \Modularity\Module
 {
     public $slug = 'interactive-map';
     public $icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuOTYxIDguNDI5Yy0uODMxLjk4Mi0xLjYxNCAxLjkxOC0xLjk2MSAzLjc3NXY2LjY4M2wtNCAyLjQ3OXYtOS4xNjFjLS4zNDctMS44NTctMS4xMy0yLjc5My0xLjk2MS0zLjc3NS0uOTA4LTEuMDc1LTIuMDM5LTIuNDExLTIuMDM5LTQuNjI5bC4wMTktLjM0NS0yLjAxOS0xLjQ1Ni01LjU0NSA0LTYuNDU1LTR2MThsNi40NTUgNCA1LjU0NS00IDUuNTQ1IDQgNi40NTUtNHYtMTEuNjE4bC0uMDM5LjA0N3ptLTEyLjk2MSA5LjgyNmwtNCAyLjg4NXYtMTMuMDY3bDQtMi44ODZ2MTMuMDY4em05LTE4LjI1NWMtMi4xIDAtNCAxLjcwMi00IDMuODAxIDAgMy4xMjEgMy4xODggMy40NTEgNCA4LjE5OS44MTItNC43NDggNC01LjA3OCA0LTguMTk5IDAtMi4wOTktMS45LTMuODAxLTQtMy44MDF6bTAgNS41Yy0uODI4IDAtMS41LS42NzEtMS41LTEuNXMuNjcyLTEuNSAxLjUtMS41IDEuNS42NzEgMS41IDEuNS0uNjcyIDEuNS0xLjUgMS41eiIvPjwvc3ZnPg==';
     public $supports = array();
+    //public $isLegacy = true;
 
-    public $templateDir = MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH;
+    //public $templateDir = MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH;
 
     public function init()
     {
@@ -28,6 +31,15 @@ class Module extends \Modularity\Module
         $data['categories'] = $this->getCategories();
 
         return $data;
+    }
+
+    /**
+     * Blade Template
+     * @return string
+     */
+    public function template() : string
+    {
+        return 'interactive-map.blade.php';
     }
 
     public function getCategories()
@@ -86,7 +98,10 @@ class Module extends \Modularity\Module
      */
     public function script()
     {
-        wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map.dev.js', null, '1.1.4', true);
+
+        wp_register_script('panzoom', MODULARITY_INTERACTIVE_MAP_URL . '/source/js/vendor/panzoom.js', array('jquery'), '3.0.0', true);
+        wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/' . CacheBust::name('js/modularity-interactive-map.js'), null, '3.0.0', false);
+        wp_enqueue_script('panzoom');
         wp_enqueue_script('modularity-interative-map');
     }
 
@@ -155,11 +170,12 @@ class Module extends \Modularity\Module
 
     /**
      * Available "magic" methods for modules:
-     * init()            What to do on initialization (if you must, use __construct with care, this will probably break stuff!!)
+     * init()            What to do on initialization
      * data()            Use to send data to view (return array)
      * style()           Enqueue style only when module is used on page
      * script            Enqueue script only when module is used on page
      * adminEnqueue()    Enqueue scripts for the module edit/add page in admin
      * template()        Return the view template (blade) the module should use when displayed
      */
+
 }

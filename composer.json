@@ -5,12 +5,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Kristoffer Svanmark",
-            "email": "kristoffer.svanmark@lexiconitkonsult.se"
-        },
-        {
-            "name": "Sebastian Thulin",
-            "email": "sebastian.thulin@helsingborg.se"
+            "name": "Guy Incognito",
+            "email": "guy.incognito@example.com"
         }
     ],
     "require": {}

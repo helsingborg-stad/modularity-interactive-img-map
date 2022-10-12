@@ -2,6 +2,8 @@
 
 namespace ModularityInteractiveMap;
 
+use ModularityInteractiveMap\Helper\CacheBust;
+
 class App
 {
     public function __construct()
@@ -9,14 +11,21 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        add_action('plugins_loaded', function () {
-            if (function_exists('modularity_register_module')) {
-                modularity_register_module(
-                    MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/', // The directory path of the module
-                    'Module' // The class' file and class name (should be the same) withot .php extension
-                );
-            }
-        });
+        add_action('plugins_loaded', array($this, 'registerModule'));
+    }
+
+    /**
+     * Register the module
+     * @return void
+     */
+    public function registerModule()
+    {
+        if (function_exists('modularity_register_module')) {
+            modularity_register_module(
+                MODULARITY_INTERACTIVE_MAP_MODULE_PATH, 
+                'InteractiveMap' 
+            );
+        }
     }
 
     /**
@@ -31,7 +40,7 @@ class App
             return;
         }
 
-        wp_enqueue_style('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/css/modularity-interactive-map.min.css', null, '1.0.0');
+        wp_enqueue_style('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/' . CacheBust::name('css/modularity-interactive-map.css'), null, '3.0.0');
     }
 
     /**
@@ -46,7 +55,7 @@ class App
             return;
         }
 
-        wp_enqueue_script('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/js/modularity-interactive-map-admin.dev.js', null, '1.0.0', true);
+        wp_enqueue_script('modularity-interactive-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/' . CacheBust::name('js/modularity-interactive-map-admin.js'), array('jquery'), '3.0.0', false);
         wp_localize_script('modularity-interactive-map', 'ModInteractiveMapLang', array(
             'close' => __('Close'),
             'remove' => __('Remove'),

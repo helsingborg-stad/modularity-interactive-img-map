@@ -28,6 +28,13 @@
     }
 }
 
+#map-layers,
+#map-pin-categories {
+    .button-link {
+        text-decoration: none;
+    }
+}
+
 #map-image {
     .map-pin-toolbox {
         background-color: #f9f9f9;

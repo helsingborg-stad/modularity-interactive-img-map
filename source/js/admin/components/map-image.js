@@ -1,13 +1,38 @@
-var ModularityInteractiveMap = ModularityInteractiveMap || {};
-ModularityInteractiveMap.MapImage = (function ($) {
+
+
     var _mediaModal;
     var _mapImage;
 
-    function MapImage() {
-        this.handleEvents();
+    var $ = (jQuery);
+
+    $(document).ready(function(){
+    	mapImage();
+    });
+
+    function mapImage() {
+
+        $('[data-action="interactive-map-add-layer"]').on('click', function (e) {
+            e.preventDefault();
+            openMediaModal();
+        }.bind(this));
+
+        $('[data-action="interactive-map-remove-image"]').on('click', function (e) {
+            e.preventDefault();
+            removeMap();
+        }.bind(this));
+
+        $(document).on('click', '[data-action="interactive-map-remove-layer"]', function (e) {
+            var layerId = $(e.target).closest('button').attr('data-layer-id');
+            removeLayer(layerId);
+        }.bind(this));
+
+        $(document).on('click', '[data-action="interactive-map-toggle-layer"]', function (e) {
+            var layerId = $(e.target).closest('button').attr('data-layer-id');
+            toggleLayerVisibility(layerId, $(e.target).closest('button'));
+        }.bind(this));
 
         if ($('[name="interactive-map-is-selected"]').val() == 1) {
-            this.mapSelected();
+            mapSelected();
 
             $(document).ready(function () {
                 $('#map-layers li').each(function () {
@@ -25,29 +50,8 @@ ModularityInteractiveMap.MapImage = (function ($) {
         }
     }
 
-    MapImage.prototype.handleEvents = function() {
-        $('[data-action="interactive-map-add-layer"]').on('click', function (e) {
-            e.preventDefault();
-            this.openMediaModal();
-        }.bind(this));
 
-        $('[data-action="interactive-map-remove-image"]').on('click', function (e) {
-            e.preventDefault();
-            this.removeMap();
-        }.bind(this));
-
-        $(document).on('click', '[data-action="interactive-map-remove-layer"]', function (e) {
-            var layerId = $(e.target).closest('button').attr('data-layer-id');
-            this.removeLayer(layerId);
-        }.bind(this));
-
-        $(document).on('click', '[data-action="interactive-map-toggle-layer"]', function (e) {
-            var layerId = $(e.target).closest('button').attr('data-layer-id');
-            this.toggleLayerVisibility(layerId, $(e.target).closest('button'));
-        }.bind(this));
-    };
-
-    MapImage.prototype.toggleLayerVisibility = function(layerId, button) {
+    function toggleLayerVisibility(layerId, button) {
 
         if ($('img[data-layer-id="' + layerId + '"]').is(':visible')) {
             button.find('.fa').removeClass('fa-eye-slash').addClass('fa-eye');
@@ -58,13 +62,13 @@ ModularityInteractiveMap.MapImage = (function ($) {
         button.find('.fa').removeClass('fa-eye').addClass('fa-eye-slash');
         $('img[data-layer-id="' + layerId + '"]').show();
         return;
-    };
+    }
 
-    MapImage.prototype.removeLayer = function(layerId) {
+    function removeLayer(layerId) {
         $('[data-layer-id="' + layerId + '"]').remove();
-    };
+    }
 
-    MapImage.prototype.openMediaModal = function(btn) {
+    function openMediaModal(btn) {
         if (_mediaModal) {
             // Open the modal
             _mediaModal.open();
@@ -75,10 +79,10 @@ ModularityInteractiveMap.MapImage = (function ($) {
             return;
         }
 
-        this.setupMediaModal();
-    };
+        setupMediaModal();
+    }
 
-    MapImage.prototype.setupMediaModal = function() {
+    function setupMediaModal() {
         _mediaModal = wp.media({
             title: 'Map image',
             button: {
@@ -94,14 +98,14 @@ ModularityInteractiveMap.MapImage = (function ($) {
                 return;
             }
 
-            this.mapSelected(selected);
+            mapSelected(selected);
 
         }.bind(this));
 
-        this.openMediaModal();
-    };
+        openMediaModal();
+    }
 
-    MapImage.prototype.mapSelected = function(map) {
+    function mapSelected(map) {
         $('[data-map-editor-no-map]').hide();
         $('[data-map-editor]').show();
 
@@ -115,22 +119,17 @@ ModularityInteractiveMap.MapImage = (function ($) {
                 <input type="text" name="interactive-map-layers[' + map.id + '][name]" value="' + map.title + '">\
                 ' + ModularityInteractiveMap.MapPinCategories.getMultiSelector('interactive-map-layers[' + map.id + '][category]', null, null) + '\
                 <div class="actions">\
-                    <button type="button" class="button button-link" data-action="interactive-map-toggle-layer" data-layer-id="' + map.id + '"><i class="fa fa-eye-slash"></i></button>\
-                    <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="' + map.id + '"><i class="fa fa-trash"></i></button>\
+                    <button type="button" class="button button-link" data-action="interactive-map-toggle-layer" data-layer-id="' + map.id + '"><span class="dashicons dashicons-hidden"></span></button>\
+                    <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="' + map.id + '"><span class="dashicons dashicons-trash"></span></button>\
                 </div>\
             </li>');
         }
-    };
+    }
 
-    MapImage.prototype.removeMap = function() {
+    function removeMap() {
         $('[data-map-editor-no-map]').show();
         $('[data-map-editor]').hide();
 
         $('#map-image .map-container img').remove();
         $('[name="interactive-map-image-id"]').val('');
-    };
-
-    return new MapImage();
-
-})(jQuery);
-
+    }
