@@ -20,13 +20,10 @@ function zoom() {
 
 }
 
-function sayZoom() {
-    console.log('zooming you');
-    //init();
-}
+
 
 function init() {
-    console.log('init');
+
     $(".mod-interactive-map-container").each(function( key, obj ) {
         var zoomObj = $(obj).find('.mod-interactive-map-zoomable').get(0);
         const panzoom = Panzoom(zoomObj, {

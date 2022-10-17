@@ -3,6 +3,8 @@ var $ = (jQuery);
 
 $(document).ready(function() {
     categories();
+    $('[data-interactive-map-category]:not(:first)').prop('checked', false);
+    $('[data-interactive-map-category]:not(:first)').trigger('change');
 });
 
 function categories() {
