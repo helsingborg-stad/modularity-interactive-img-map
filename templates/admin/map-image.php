@@ -13,7 +13,7 @@
 
         <div class="actions">
             <button type="button" class="button button-link" data-action="interactive-map-toggle-layer" data-layer-id="<?php echo $layer['id']; ?>"><span class="dashicons dashicons-hidden"></span></button>
-            <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="<?php echo $layer['id']; ?>"><span class="dashicons dashicons-hidden"></span></button>
+            <button type="button" class="button button-link" data-action="interactive-map-remove-layer" data-layer-id="<?php echo $layer['id']; ?>"><span class="dashicons dashicons-trash"></span></button>
         </div>
     </li>
 <?php endforeach; endif; ?></ol>
