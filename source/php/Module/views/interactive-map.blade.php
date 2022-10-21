@@ -229,8 +229,6 @@
         right: 0;
         bottom: 10px;
         padding: 7px 15px;
-        background: rgba(0,0,0,.1);
-        border-radius: 3px;
     }
 
     .mod-iteractive-map-buttons.mod-interactive-map-pin-info-hidden {
@@ -238,15 +236,6 @@
     }
 
     .mod-iteractive-map-buttons > button {
-        display: inline-block;
-        padding: 0px;
-        border: none;
-        outline: none;
-        background: transparent;
-        font-size: 20px;
-        animation: fadeIn 300ms ease-in;
-        color: #fff;
-        opacity: .8;
     }
 
     .mod-iteractive-map-buttons > button:hover,
@@ -257,12 +246,9 @@
     }
 
     .mod-iteractive-map-buttons > button + button {
-        margin-left: 10px;
     }
 
     .mod-iteractive-map-buttons > button > i {
-        text-shadow: 0 0 3px rgba(0,0,0,.5);
-        transition: opacity 200ms;
     }
 
     .mod-interactive-map-overflower {
@@ -346,21 +332,24 @@
                 @endforeach
             </div>
         </div>
-
-        <!-- Zoom action buttons -->
-        <div class="mod-iteractive-map-buttons">
-
-            <button class="zoom-in">
-                <i class="pricon pricon-plus-o"></i>
-                <span class="sr-only"><?php _e("Zoom in", 'modularity-interactive-map'); ?></span>
-            </button>
-
-            <button class="zoom-out">
-                <i class="pricon pricon-minus-o"></i>
-                <span class="sr-only"><?php _e("Zoom out", 'modularity-interactive-map'); ?></span>
-            </button>
-
-        </div>
+        @group(['classList' => ['mod-iteractive-map-buttons']])
+            @button([
+                'type' => 'filled',
+                'color' => 'default',
+                'attributeList' => ['aria-label' => __("Zoom in", "modularity-interactive-map")],
+                'classList' => ['zoom-in'],
+                'icon' => 'add'
+            ])
+            @endbutton
+            @button([
+                'type' => 'filled',
+                'color' => 'default',
+                'attributeList' => ['aria-label' => __("Zoom out", "modularity-interactive-map")],
+                'classList' => ['zoom-out'],
+                'icon' => 'remove'
+            ])
+            @endbutton
+        @endgroup
     </div>
 </div>
 

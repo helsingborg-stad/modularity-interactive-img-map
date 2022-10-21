@@ -22,8 +22,7 @@ module.exports = {
     entry: {
         'css/modularity-interactive-map': './source/sass/modularity-interactive-map.scss',
         'js/modularity-interactive-map': './source/js/front/index.js',
-        'js/modularity-interactive-map-admin': './source/js/admin/index.js',
-//        'js/panzoom': './node_modules/@panzoom/panzoom/dist/panzoom.js'
+        'js/modularity-interactive-map-admin': './source/js/admin/index.js'
     },
     /**
      * Output settings
