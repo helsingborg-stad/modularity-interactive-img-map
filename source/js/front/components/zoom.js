@@ -1,9 +1,15 @@
 
 var $ = (jQuery);
 
+/*
 $(document).ready(function() {
     zoom();
 });
+*/
+
+document.addEventListener('DOMContentLoaded', function() {
+    zoom();
+}.bind(this), false);
 
 function zoom() {
 
@@ -24,7 +30,8 @@ function zoom() {
 
 function init() {
 
-    $(".mod-interactive-map-container").each(function( key, obj ) {
+    // $(".mod-interactive-map-container").each(function( key, obj ) {
+    document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {    
         var zoomObj = $(obj).find('.mod-interactive-map-zoomable').get(0);
         const panzoom = Panzoom(zoomObj, {
             duration: 150,
@@ -35,11 +42,13 @@ function init() {
             contain: false
         });
 
-        $(".zoom-in").click(function(){
+        //$(".zoom-in").click(function(){
+        document.querySelector('.zoom-in').addEventListener('click', function (event) {    
             panzoom.zoomIn();
         });
 
-        $(".zoom-out").click(function(){
+        //$(".zoom-out").click(function(){
+        document.querySelector('.zoom-out').addEventListener('click', function (event) {  
             panzoom.zoomOut();
         });
 
@@ -47,7 +56,8 @@ function init() {
 }
 
 function resize() {
-    $(".mod-interactive-map-container").each(function( key, obj ) {
+    //$(".mod-interactive-map-container").each(function( key, obj ) {
+    document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {  
 
         if($("img",obj).get(0).naturalWidth / $("img",obj).get(0).clientWidth < 1.4) {
             $('.mod-iteractive-map-buttons', obj).addClass('mod-interactive-map-pin-info-hidden');
