@@ -284,7 +284,7 @@
             @foreach ($categories as $category)
             <li>
                 <label>
-                    <input type="checkbox" data-interactive-map-category="{{ $category['name'] }}" checked>
+                    <input type="checkbox" name="mod-interactive-map-category-checkbox" data-interactive-map-category="{{ $category['name'] }}">
                     {{ $category['name'] }}
                     <span class="mod-interactive-map-category-color-indicator">
                         {!! $category['svg'] !!}

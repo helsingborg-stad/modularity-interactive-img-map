@@ -1,41 +1,32 @@
 
-var $ = (jQuery);
-
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', function() {
     categories();
-    $('[data-interactive-map-category]:not(:first)').prop('checked', false).trigger('change');
+    var checkboxes = document.getElementsByName('mod-interactive-map-category-checkbox');
+    checkboxes[0].checked = true;
+    checkboxes[0].dispatchEvent(new Event('change'));
 });
 
 function categories() {
-    $('[data-interactive-map-category]').on('change', function (e) {
-        var $checkbox = $(e.target).closest('input');
-        var category = $checkbox.attr('data-interactive-map-category');
-
-        if ($checkbox.prop('checked')) {
-            toggleCategoryAssets(category, 'show');
-        } else {
-            toggleCategoryAssets(category, 'hide');
-        }
-    }.bind(this));
-}
-
-
-function toggleCategoryAssets(category, state) {
-    var $checked = $('[data-interactive-map-category]:checked');
     var activeCategories = [];
-
-    $checked.each(function (index, element) {
-        activeCategories.push($(this).attr('data-interactive-map-category'));
-    });
-
-    $('[data-interactive-map-category-name]').each(function (index, element) {
-        var keys = $(this).attr('data-interactive-map-category-name');
-        keys = keys.split('|');
-
-        if (!$(keys).filter(activeCategories).length) {
-            $(this).removeClass('pin-visible');
-        } else {
-            $(this).addClass('pin-visible');
-        }
-    });
+    var checkboxes = document.querySelectorAll('input[name=mod-interactive-map-category-checkbox]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            var category = checkbox.getAttribute('data-interactive-map-category');
+            if (checkbox.checked) {
+                activeCategories.push(category);
+            } else {
+                activeCategories.splice(activeCategories.indexOf(category), 1);
+            } 
+            var pinsLayers = document.querySelectorAll('[data-interactive-map-category-name]');
+            pinsLayers.forEach(function(pin) {
+                var keys = pin.getAttribute('data-interactive-map-category-name');
+                keys = keys.split('|');
+                if (!(keys.some(r=> activeCategories.indexOf(r) >= 0))) {
+                    pin.classList.remove('pin-visible');
+                } else {
+                    pin.classList.add('pin-visible');
+                } 
+            });    
+        })
+    }); 
 }
