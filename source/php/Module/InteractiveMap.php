@@ -99,7 +99,7 @@ class InteractiveMap extends \Modularity\Module
     public function script()
     {
 
-        wp_register_script('panzoom', MODULARITY_INTERACTIVE_MAP_URL . '/source/js/vendor/panzoom.js', array('jquery'), '3.0.0', true);
+        wp_register_script('panzoom', MODULARITY_INTERACTIVE_MAP_URL . '/source/js/vendor/panzoom.js', null, '3.0.0', true);
         wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/' . CacheBust::name('js/modularity-interactive-map.js'), null, '3.0.0', false);
         wp_enqueue_script('panzoom');
         wp_enqueue_script('modularity-interative-map');

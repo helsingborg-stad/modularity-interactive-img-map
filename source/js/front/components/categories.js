@@ -2,8 +2,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     categories();
     var checkboxes = document.getElementsByName('mod-interactive-map-category-checkbox');
-    checkboxes[0].checked = true;
-    checkboxes[0].dispatchEvent(new Event('change'));
+    if (checkboxes.length > 0) {
+        checkboxes[0].checked = true;
+        checkboxes[0].dispatchEvent(new Event('change'));
+    }
 });
 
 function categories() {
