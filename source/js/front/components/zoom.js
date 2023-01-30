@@ -42,32 +42,54 @@ function onImageChildrenLoaded(parent) {
     });
 }
 
+const showResetButton = (scale, element) => {
+    if(scale) {
+        element.classList.remove('u-display--none');
+    } else {
+        element.classList.add('u-display--none');
+    }
+}
+
 function init() {
     document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {    
-        var zoomObj = obj.querySelector('.mod-interactive-map-zoomable');
+        let zoomObj = obj.querySelector('.mod-interactive-map-zoomable');
+        const resetButton = obj.querySelector('.mod-interactive-map-reset-button');
 
         onImageChildrenLoaded(obj)
             .then(() => {
                 const panzoom = Panzoom(zoomObj, {
                     duration: 150,
-                    panOnlyWhenZoomed: false,
+                    panOnlyWhenZoomed: true,
                     minScale: 1,
                     maxScale: (obj.querySelector('img').naturalWidth / obj.querySelector('img').clientWidth),
                     increment: 0.1,
-                    contain: false
+                    contain: 'outside',
+                });
+
+                obj.querySelector('.mod-interactive-map-reset-button').addEventListener('click', function (event) {
+                    panzoom.reset(true);
+                    console.log(panzoom.getScale());
+                    showResetButton(false, resetButton);
                 });
 
                 obj.querySelector('.zoom-in').addEventListener('click', function (event) {
                     panzoom.zoomIn();
+                    console.log(panzoom.getScale());
+                    showResetButton(true, resetButton);
+
                 });
 
                 obj.querySelector('.zoom-out').addEventListener('click', function (event) {
                     panzoom.zoomOut();
+                    console.log(panzoom.getScale());
+                    showResetButton(panzoom.getScale() < 1.1 ? false : true, resetButton);
+
                 });
             }).catch((error) => { console.error(error.message) });
         
     });
 }
+
 
 function resize() {
     document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {  

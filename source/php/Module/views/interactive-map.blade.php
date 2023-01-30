@@ -231,6 +231,13 @@
         padding: 7px 15px;
     }
 
+    .mod-interactive-map-reset-button {
+        position: absolute;
+        right: 0;
+        margin: 7px 15px;
+        top: 10px;
+    }
+
     .mod-iteractive-map-buttons.mod-interactive-map-pin-info-hidden {
         display: none;
     }
@@ -332,7 +339,17 @@
                 @endforeach
             </div>
         </div>
-        @group(['classList' => ['mod-iteractive-map-buttons']])
+            @button([
+                'type' => 'filled',
+                'color' => 'default',
+                'attributeList' => ['aria-label' => __("Reset", "modularity-interactive-map")],
+                'classList' => ['mod-interactive-map-reset-button', 'u-display--none'],
+                'icon' => 'refresh'
+            ])
+            @endbutton
+        @group([
+            'classList' => ['mod-iteractive-map-buttons'],
+        ])
             @button([
                 'type' => 'filled',
                 'color' => 'default',
