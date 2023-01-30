@@ -42,17 +42,20 @@ function onImageChildrenLoaded(parent) {
     });
 }
 
-const showResetButton = (scale, element) => {
+const handleClick = (scale, resetButton, overflowContainer) => {
     if(scale) {
-        element.classList.remove('u-display--none');
+        resetButton.classList.remove('u-display--none');
+        overflowContainer.style.pointerEvents = 'all';
     } else {
-        element.classList.add('u-display--none');
+        resetButton.classList.add('u-display--none');
+        overflowContainer.style.pointerEvents = 'none';
     }
 }
 
 function init() {
-    document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {    
+    document.querySelectorAll('.mod-interactive-map-container').forEach(function(obj, key) {
         let zoomObj = obj.querySelector('.mod-interactive-map-zoomable');
+        const overflowContainer = obj.querySelector('.mod-interactive-map-overflower');
         const resetButton = obj.querySelector('.mod-interactive-map-reset-button');
 
         onImageChildrenLoaded(obj)
@@ -68,22 +71,18 @@ function init() {
 
                 obj.querySelector('.mod-interactive-map-reset-button').addEventListener('click', function (event) {
                     panzoom.reset(true);
-                    console.log(panzoom.getScale());
-                    showResetButton(false, resetButton);
+                    handleClick(false, resetButton, overflowContainer);
                 });
 
                 obj.querySelector('.zoom-in').addEventListener('click', function (event) {
                     panzoom.zoomIn();
-                    console.log(panzoom.getScale());
-                    showResetButton(true, resetButton);
-
+                    handleClick(true, resetButton, overflowContainer);
                 });
 
                 obj.querySelector('.zoom-out').addEventListener('click', function (event) {
                     panzoom.zoomOut();
-                    console.log(panzoom.getScale());
-                    showResetButton(panzoom.getScale() < 1.1 ? false : true, resetButton);
-
+                    const zoomStatus = panzoom.getScale() < 1.1 ? false : true;
+                    handleClick(zoomStatus, resetButton, overflowContainer);
                 });
             }).catch((error) => { console.error(error.message) });
         
