@@ -59,6 +59,7 @@
         width: 1vw;
         height: 1vw;
         color: #fff;
+        pointer-events: all;
     }
 
     .mod-interactive-map-pin svg {
@@ -259,6 +260,7 @@
     }
 
     .mod-interactive-map-overflower {
+        pointer-events: none;
         position: relative;
     }
 
