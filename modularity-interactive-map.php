@@ -27,14 +27,11 @@ define('MODULARITY_INTERACTIVE_MAP_MODULE_PATH', MODULARITY_INTERACTIVE_MAP_PATH
 
 load_plugin_textdomain('modularity-interactive-map', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
-require_once MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
+// Autoload from plugin
+if (file_exists(MODULARITY_INTERACTIVE_MAP_PATH . 'vendor/autoload.php')) {
+    require_once MODULARITY_INTERACTIVE_MAP_PATH . 'vendor/autoload.php';
+}
 require_once MODULARITY_INTERACTIVE_MAP_PATH . 'Public.php';
-
-// Instantiate and register the autoloader
-$loader = new ModularityInteractiveMap\Vendor\Psr4ClassLoader();
-$loader->addPrefix('ModularityInteractiveMap', MODULARITY_INTERACTIVE_MAP_PATH);
-$loader->addPrefix('ModularityInteractiveMap', MODULARITY_INTERACTIVE_MAP_PATH . 'source/php/');
-$loader->register();
 
 // View paths
 add_filter('Municipio/blade/view_paths', function ($array){
