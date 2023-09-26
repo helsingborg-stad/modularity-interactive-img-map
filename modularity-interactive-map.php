@@ -4,7 +4,7 @@
  * Plugin Name:       Modularity Interactive Image Map v3
  * Plugin URI:
  * Description:       Build a interactive image map in a Modularity Module
- * Version:           3.0
+ * Version: 3.0.0
  * Author:            Guy Incognito
  * Author URI:
  * License:           MIT
