@@ -9,11 +9,11 @@
             "email": "guy.incognito@example.com"
         }
     ],
-    "require": [],
+    "require": {},
     "autoload": {
         "psr-4": {
             "ModularityInteractiveMap\\": "source/php/"
         }
     },
-    "version": "3.0.0"
+    "version": "4.0.2"
 }
