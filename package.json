@@ -1,6 +1,6 @@
 {
     "name": "@helsingborg-stad/modularity-interactive-img-map",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "description": "Build a interactive image map in a Modularity Module",
     "main": "",
     "repository": {
