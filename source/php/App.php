@@ -11,7 +11,7 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        add_action('plugins_loaded', array($this, 'registerModule'));
+        add_action('init', array($this, 'registerModule'));
     }
 
     /**
