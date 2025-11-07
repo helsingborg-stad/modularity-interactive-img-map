@@ -3,17 +3,36 @@
     "description": "Add functionality to create clickable interactive maps in modularity.",
     "type": "wordpress-plugin",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "vendor/{$vendor}/{$name}": [
+                "type:wordpress-muplugin",
+                "type:wordpress-theme",
+                "type:wordpress-plugin",
+                "type:acf-plugin"
+            ]
+        }
+    },
     "authors": [
         {
             "name": "Guy Incognito",
             "email": "guy.incognito@example.com"
         }
     ],
-    "require": {},
+    "require": {
+        "helsingborg-stad/municipio": "^6.0.0"
+    },
     "autoload": {
         "psr-4": {
             "ModularityInteractiveMap\\": "source/php/"
         }
     },
-    "version": "5.0.0"
+    "version": "5.0.0",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
