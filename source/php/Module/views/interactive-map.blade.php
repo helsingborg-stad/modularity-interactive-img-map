@@ -1,3 +1,8 @@
+<?php
+
+declare(strict_types=1);
+
+?>
 <style>
     @keyframes pulseate {
         0% {

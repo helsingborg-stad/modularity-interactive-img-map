@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ModularityInteractiveMap\Module;
 
 use ModularityInteractiveMap\Helper\CacheBust;
@@ -8,7 +10,8 @@ class InteractiveMap extends \Modularity\Module
 {
     public $slug = 'interactive-map';
     public $icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjMuOTYxIDguNDI5Yy0uODMxLjk4Mi0xLjYxNCAxLjkxOC0xLjk2MSAzLjc3NXY2LjY4M2wtNCAyLjQ3OXYtOS4xNjFjLS4zNDctMS44NTctMS4xMy0yLjc5My0xLjk2MS0zLjc3NS0uOTA4LTEuMDc1LTIuMDM5LTIuNDExLTIuMDM5LTQuNjI5bC4wMTktLjM0NS0yLjAxOS0xLjQ1Ni01LjU0NSA0LTYuNDU1LTR2MThsNi40NTUgNCA1LjU0NS00IDUuNTQ1IDQgNi40NTUtNHYtMTEuNjE4bC0uMDM5LjA0N3ptLTEyLjk2MSA5LjgyNmwtNCAyLjg4NXYtMTMuMDY3bDQtMi44ODZ2MTMuMDY4em05LTE4LjI1NWMtMi4xIDAtNCAxLjcwMi00IDMuODAxIDAgMy4xMjEgMy4xODggMy40NTEgNCA4LjE5OS44MTItNC43NDggNC01LjA3OCA0LTguMTk5IDAtMi4wOTktMS45LTMuODAxLTQtMy44MDF6bTAgNS41Yy0uODI4IDAtMS41LS42NzEtMS41LTEuNXMuNjcyLTEuNSAxLjUtMS41IDEuNS42NzEgMS41IDEuNS0uNjcyIDEuNS0xLjUgMS41eiIvPjwvc3ZnPg==';
-    public $supports = array();
+    public $supports = [];
+
     //public $isLegacy = true;
 
     //public $templateDir = MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH;
@@ -19,13 +22,13 @@ class InteractiveMap extends \Modularity\Module
         $this->namePlural = __('Interactive Map', 'modularity-interactive-map');
         $this->description = __('Create interactive image maps', 'modularity-interactive-map');
 
-        add_action('add_meta_boxes', array($this, 'addMetaboxes'));
-        add_action('save_post', array($this, 'save'), 11, 2);
+        add_action('add_meta_boxes', [$this, 'addMetaboxes']);
+        add_action('save_post', [$this, 'save'], 11, 2);
     }
 
-    public function data() : array
+    public function data(): array
     {
-        $data = array();
+        $data = [];
         $data['layers'] = $this->getLayers();
         $data['pins'] = $this->getPins();
         $data['categories'] = $this->getCategories();
@@ -37,7 +40,7 @@ class InteractiveMap extends \Modularity\Module
      * Blade Template
      * @return string
      */
-    public function template() : string
+    public function template(): string
     {
         return 'interactive-map.blade.php';
     }
@@ -47,7 +50,7 @@ class InteractiveMap extends \Modularity\Module
         $categories = get_post_meta($this->ID, 'interactive_map_categories', true);
 
         if (!$categories) {
-            $categories = array();
+            $categories = [];
         }
 
         foreach ($categories as $key => $category) {
@@ -55,7 +58,10 @@ class InteractiveMap extends \Modularity\Module
                 $svg = \Municipio\Helper\Svg::extract($category['icon']);
                 $svg = str_replace('<svg', '<svg style="fill:' . $category['color'] . ';"', $svg);
             } else {
-                $svg = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="fill:' . $category['color'] . ';"><circle cx="100" cy="100" r="100"/></svg>';
+                $svg =
+                    '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="fill:'
+                    . $category['color']
+                    . ';"><circle cx="100" cy="100" r="100"/></svg>';
             }
 
             $categories[$category['name']] = $category;
@@ -71,7 +77,7 @@ class InteractiveMap extends \Modularity\Module
         $pins = get_post_meta($this->ID, 'interactive_map_pins', true);
 
         if (!$pins) {
-            $pins = array();
+            $pins = [];
         }
 
         return $pins;
@@ -82,11 +88,11 @@ class InteractiveMap extends \Modularity\Module
         $layers = get_post_meta($this->ID, 'interactive_map_layers', true);
 
         if (!$layers) {
-            $layers = array(
+            $layers = [
                 'id' => get_post_meta($this->ID, 'interactive_map_image_id', true),
                 'name' => 'base',
-                'category' => null
-            );
+                'category' => null,
+            ];
         }
 
         return $layers;
@@ -98,11 +104,16 @@ class InteractiveMap extends \Modularity\Module
      */
     public function script()
     {
+        $this->wpEnqueue?->add('js/modularity-interactive-map.js', [], '3.0.0');
 
-        wp_register_script('panzoom', MODULARITY_INTERACTIVE_MAP_URL . '/source/js/vendor/panzoom.js', null, '3.0.0', true);
-        wp_register_script('modularity-interative-map', MODULARITY_INTERACTIVE_MAP_URL . '/dist/' . CacheBust::name('js/modularity-interactive-map.js'), null, '3.0.0', false);
+        wp_register_script(
+            'panzoom',
+            MODULARITY_INTERACTIVE_MAP_URL . '/source/js/vendor/panzoom.js',
+            null,
+            '3.0.0',
+            true,
+        );
         wp_enqueue_script('panzoom');
-        wp_enqueue_script('modularity-interative-map');
     }
 
     public function addMetaboxes()
@@ -111,33 +122,33 @@ class InteractiveMap extends \Modularity\Module
         add_meta_box(
             'map-image',
             __('Map image', 'modularity-interactive-map'),
-            function () {
+            static function () {
                 global $post;
 
-                $current = array(
+                $current = [
                     'id' => get_post_meta($post->ID, 'interactive_map_image_id', true),
                     'layers' => get_post_meta($post->ID, 'interactive_map_layers', true),
-                    'pins' => get_post_meta($post->ID, 'interactive_map_pins', true)
-                );
+                    'pins' => get_post_meta($post->ID, 'interactive_map_pins', true),
+                ];
 
                 include MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH . '/admin/map-image.php';
             },
             'mod-interactive-map',
             'advanced',
-            'high'
+            'high',
         );
 
         add_meta_box(
             'map-pin-categories',
             __('Pin categories', 'modularity-interactive-map'),
-            function () {
+            static function () {
                 global $post;
                 $categories = get_post_meta($post->ID, 'interactive_map_categories', true);
                 include MODULARITY_INTERACTIVE_MAP_TEMPLATE_PATH . '/admin/map-categories.php';
             },
             'mod-interactive-map',
             'side',
-            'default'
+            'default',
         );
     }
 
@@ -177,5 +188,4 @@ class InteractiveMap extends \Modularity\Module
      * adminEnqueue()    Enqueue scripts for the module edit/add page in admin
      * template()        Return the view template (blade) the module should use when displayed
      */
-
 }
