@@ -10,7 +10,7 @@ $(document).ready(() => {
 
 function mapPins() {
 	$('[data-action="interactive-map-add-pin"]').on(
-		"click",
+		'click',
 		((e) => {
 			e.preventDefault();
 			addPin();
@@ -18,14 +18,12 @@ function mapPins() {
 	);
 
 	$(document).on(
-		"click",
-		".map-pin",
+		'click',
+		'.map-pin',
 		((e) => {
 			e.preventDefault();
 
-			if (
-				$(e.target).closest('[data-action="interactive-map-pin-close"]').length
-			) {
+			if ($(e.target).closest('[data-action="interactive-map-pin-close"]').length) {
 				return;
 			}
 			showPin(e.target);
@@ -33,16 +31,16 @@ function mapPins() {
 	);
 
 	$(document).on(
-		"click",
+		'click',
 		((e) => {
-			if (!$(e.target).closest(".map-pin").length) {
+			if (!$(e.target).closest('.map-pin').length) {
 				hidePins();
 			}
 		}).bind(this),
 	);
 
 	$(document).on(
-		"click",
+		'click',
 		'[data-action="interactive-map-pin-close"]',
 		((e) => {
 			e.preventDefault();
@@ -51,7 +49,7 @@ function mapPins() {
 	);
 
 	$(document).on(
-		"click",
+		'click',
 		'[data-action="interactive-map-pin-remove"]',
 		((e) => {
 			removePin(e.target);
@@ -64,34 +62,34 @@ function addPin(posTop, posLeft, title, link, text, category) {
 		_categories = ModularityInteractiveMap.MapPinCategories.getAll();
 	}
 
-	if (typeof category === "undefined") {
-		category = "";
+	if (typeof category === 'undefined') {
+		category = '';
 	}
 
 	if (pinNumber === 0) {
-		pinNumber = $("#map-image .map-container .map-pin").length;
+		pinNumber = $('#map-image .map-container .map-pin').length;
 	}
 
 	pinNumber++;
 
-	if (typeof posTop === "undefined") {
+	if (typeof posTop === 'undefined') {
 		posTop = 0;
 	}
 
-	if (typeof posLeft === "undefined") {
+	if (typeof posLeft === 'undefined') {
 		posLeft = 0;
 	}
 
-	if (typeof title === "undefined") {
-		title = "";
+	if (typeof title === 'undefined') {
+		title = '';
 	}
 
-	if (typeof link === "undefined") {
-		link = "";
+	if (typeof link === 'undefined') {
+		link = '';
 	}
 
-	if (typeof text === "undefined") {
-		text = "";
+	if (typeof text === 'undefined') {
+		text = '';
 	}
 
 	var $svg = $(
@@ -100,10 +98,10 @@ function addPin(posTop, posLeft, title, link, text, category) {
 
 	if (category) {
 		if (_categories[category].svg) {
-			$svg = $("<div>" + _categories[category].svg + "</div>");
+			$svg = $('<div>' + _categories[category].svg + '</div>');
 		}
 
-		$("svg", $svg).css({ fill: _categories[category].color });
+		$('svg', $svg).css({ fill: _categories[category].color });
 	}
 
 	// Pin template and for fields
@@ -113,7 +111,7 @@ function addPin(posTop, posLeft, title, link, text, category) {
 			pinNumber +
 			'" style="position: absolute;top: ' +
 			posTop +
-			";left: " +
+			';left: ' +
 			posLeft +
 			';">\
             ' +
@@ -140,10 +138,10 @@ function addPin(posTop, posLeft, title, link, text, category) {
 			ModInteractiveMapLang.description +
 			'…">' +
 			text +
-			"</textarea>\
-                    " +
+			'</textarea>\
+                    ' +
 			ModularityInteractiveMap.MapPinCategories.getSelector(
-				"interactive-map-pin[" + pinNumber + "][category]",
+				'interactive-map-pin[' + pinNumber + '][category]',
 				category,
 			) +
 			'\
@@ -173,55 +171,44 @@ function addPin(posTop, posLeft, title, link, text, category) {
 
 	// Pin draggable
 	$pin.draggable({
-		containment: "parent",
+		containment: 'parent',
 		start: () => {
 			hidePins();
 		},
 		stop: function (event, ui) {
 			$(this)
-				.find("[data-map-pin-top]")
-				.val(
-					parseInt($(this).css("top")) /
-						($("#map-image .map-container").height() / 100) +
-						"%",
-				);
+				.find('[data-map-pin-top]')
+				.val(parseInt($(this).css('top')) / ($('#map-image .map-container').height() / 100) + '%');
 			$(this)
-				.find("[data-map-pin-left]")
-				.val(
-					parseInt($(this).css("left")) /
-						($("#map-image .map-container").width() / 100) +
-						"%",
-				);
+				.find('[data-map-pin-left]')
+				.val(parseInt($(this).css('left')) / ($('#map-image .map-container').width() / 100) + '%');
 		},
 	});
 
 	// Append pin
-	$pin.appendTo("#map-image .map-container");
+	$pin.appendTo('#map-image .map-container');
 }
 
 function categoryPinIcon(pinId, iconUrl, color) {
-	console.log("pinId");
-	$('[data-pin-id="' + pinId + '"]').append("<div>Kalle</div>");
+	console.log('pinId');
+	$('[data-pin-id="' + pinId + '"]').append('<div>Kalle</div>');
 }
 
 function showPin(target) {
 	hidePins();
-	var $pin = $(target).closest(".map-pin");
-	$pin.find(".map-pin-popup").show();
+	var $pin = $(target).closest('.map-pin');
+	$pin.find('.map-pin-popup').show();
 }
 
 function hidePin(target) {
-	var $pin = $(target).closest(".map-pin");
-	$pin.find(".map-pin-popup").hide();
+	var $pin = $(target).closest('.map-pin');
+	$pin.find('.map-pin-popup').hide();
 }
 
 function hidePins() {
-	$(".map-pin-popup").hide();
+	$('.map-pin-popup').hide();
 }
 
 function removePin(target) {
-	$(target)
-		.closest('[data-action="interactive-map-pin-remove"]')
-		.parents(".map-pin")
-		.remove();
+	$(target).closest('[data-action="interactive-map-pin-remove"]').parents('.map-pin').remove();
 }

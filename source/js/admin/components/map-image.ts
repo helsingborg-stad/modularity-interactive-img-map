@@ -9,7 +9,7 @@ $(document).ready(() => {
 
 function mapImage() {
 	$('[data-action="interactive-map-add-layer"]').on(
-		"click",
+		'click',
 		((e) => {
 			e.preventDefault();
 			openMediaModal();
@@ -17,7 +17,7 @@ function mapImage() {
 	);
 
 	$('[data-action="interactive-map-remove-image"]').on(
-		"click",
+		'click',
 		((e) => {
 			e.preventDefault();
 			removeMap();
@@ -25,20 +25,20 @@ function mapImage() {
 	);
 
 	$(document).on(
-		"click",
+		'click',
 		'[data-action="interactive-map-remove-layer"]',
 		((e) => {
-			var layerId = $(e.target).closest("button").attr("data-layer-id");
+			var layerId = $(e.target).closest('button').attr('data-layer-id');
 			removeLayer(layerId);
 		}).bind(this),
 	);
 
 	$(document).on(
-		"click",
+		'click',
 		'[data-action="interactive-map-toggle-layer"]',
 		((e) => {
-			var layerId = $(e.target).closest("button").attr("data-layer-id");
-			toggleLayerVisibility(layerId, $(e.target).closest("button"));
+			var layerId = $(e.target).closest('button').attr('data-layer-id');
+			toggleLayerVisibility(layerId, $(e.target).closest('button'));
 		}).bind(this),
 	);
 
@@ -46,16 +46,16 @@ function mapImage() {
 		mapSelected();
 
 		$(document).ready(() => {
-			$("#map-layers li").each(function () {
-				var id = $(this).attr("data-layer-id");
-				var category = $(this).attr("data-layer-category");
+			$('#map-layers li').each(function () {
+				var id = $(this).attr('data-layer-id');
+				var category = $(this).attr('data-layer-category');
 
 				if (id) {
 					$(this)
-						.find(".actions")
+						.find('.actions')
 						.before(
 							ModularityInteractiveMap.MapPinCategories.getMultiSelector(
-								"interactive-map-layers[" + id + "][category]",
+								'interactive-map-layers[' + id + '][category]',
 								category,
 								null,
 							),
@@ -67,13 +67,13 @@ function mapImage() {
 }
 
 function toggleLayerVisibility(layerId, button) {
-	if ($('img[data-layer-id="' + layerId + '"]').is(":visible")) {
-		button.find(".fa").removeClass("fa-eye-slash").addClass("fa-eye");
+	if ($('img[data-layer-id="' + layerId + '"]').is(':visible')) {
+		button.find('.fa').removeClass('fa-eye-slash').addClass('fa-eye');
 		$('img[data-layer-id="' + layerId + '"]').hide();
 		return;
 	}
 
-	button.find(".fa").removeClass("fa-eye").addClass("fa-eye-slash");
+	button.find('.fa').removeClass('fa-eye').addClass('fa-eye-slash');
 	$('img[data-layer-id="' + layerId + '"]').show();
 	return;
 }
@@ -88,7 +88,7 @@ function openMediaModal(btn) {
 		_mediaModal.open();
 
 		// Default to upload file tab
-		$(".media-router a:first-of-type").trigger("click");
+		$('.media-router a:first-of-type').trigger('click');
 
 		return;
 	}
@@ -98,19 +98,19 @@ function openMediaModal(btn) {
 
 function setupMediaModal() {
 	_mediaModal = wp.media({
-		title: "Map image",
+		title: 'Map image',
 		button: {
-			text: "Select",
+			text: 'Select',
 		},
 		multiple: false,
 	});
 
 	_mediaModal.on(
-		"select",
+		'select',
 		(() => {
-			var selected = _mediaModal.state().get("selection").first().toJSON();
+			var selected = _mediaModal.state().get('selection').first().toJSON();
 
-			if (typeof selected === "undefined") {
+			if (typeof selected === 'undefined') {
 				return;
 			}
 
@@ -122,17 +122,15 @@ function setupMediaModal() {
 }
 
 function mapSelected(map) {
-	$("[data-map-editor-no-map]").hide();
-	$("[data-map-editor]").show();
+	$('[data-map-editor-no-map]').hide();
+	$('[data-map-editor]').show();
 
-	if (typeof map !== "undefined") {
-		$("#map-image .map-container").append(
-			'<img src="' + map.url + '" data-layer-id="' + map.id + '">',
-		);
+	if (typeof map !== 'undefined') {
+		$('#map-image .map-container').append('<img src="' + map.url + '" data-layer-id="' + map.id + '">');
 
-		$(".no-map").remove();
+		$('.no-map').remove();
 
-		$("#map-layers").append(
+		$('#map-layers').append(
 			'<li data-layer-id="' +
 				map.id +
 				'">\
@@ -148,7 +146,7 @@ function mapSelected(map) {
 				'">\
                 ' +
 				ModularityInteractiveMap.MapPinCategories.getMultiSelector(
-					"interactive-map-layers[" + map.id + "][category]",
+					'interactive-map-layers[' + map.id + '][category]',
 					null,
 					null,
 				) +
@@ -167,9 +165,9 @@ function mapSelected(map) {
 }
 
 function removeMap() {
-	$("[data-map-editor-no-map]").show();
-	$("[data-map-editor]").hide();
+	$('[data-map-editor-no-map]').show();
+	$('[data-map-editor]').hide();
 
-	$("#map-image .map-container img").remove();
-	$('[name="interactive-map-image-id"]').val("");
+	$('#map-image .map-container img').remove();
+	$('[name="interactive-map-image-id"]').val('');
 }

@@ -4,15 +4,13 @@
  * https://github.com/timmywil/panzoom/blob/main/MIT-License.txt
  */
 (function (global, factory) {
-	typeof exports === "object" && typeof module !== "undefined"
+	typeof exports === 'object' && typeof module !== 'undefined'
 		? (module.exports = factory())
-		: typeof define === "function" && define.amd
+		: typeof define === 'function' && define.amd
 			? define(factory)
-			: ((global =
-					typeof globalThis !== "undefined" ? globalThis : global || self),
-				(global.Panzoom = factory()));
+			: ((global = typeof globalThis !== 'undefined' ? globalThis : global || self), (global.Panzoom = factory()));
 })(this, function () {
-	"use strict";
+	'use strict';
 
 	/******************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -35,8 +33,7 @@
 			function __assign(t) {
 				for (var s, i = 1, n = arguments.length; i < n; i++) {
 					s = arguments[i];
-					for (var p in s)
-						if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+					for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
 				}
 				return t;
 			};
@@ -44,23 +41,18 @@
 	};
 
 	/* eslint-disable no-var */
-	if (typeof window !== "undefined") {
+	if (typeof window !== 'undefined') {
 		// Support: IE11 only
 		if (window.NodeList && !NodeList.prototype.forEach) {
 			NodeList.prototype.forEach = Array.prototype.forEach;
 		}
 		// Support: IE11 only
 		// CustomEvent is an object instead of a constructor
-		if (typeof window.CustomEvent !== "function") {
+		if (typeof window.CustomEvent !== 'function') {
 			window.CustomEvent = function CustomEvent(event, params) {
 				params = params || { bubbles: false, cancelable: false, detail: null };
-				var evt = document.createEvent("CustomEvent");
-				evt.initCustomEvent(
-					event,
-					params.bubbles,
-					params.cancelable,
-					params.detail,
-				);
+				var evt = document.createEvent('CustomEvent');
+				evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
 				return evt;
 			};
 		}
@@ -141,43 +133,42 @@
 		var event1 = pointers[0];
 		var event2 = pointers[1];
 		return Math.sqrt(
-			Math.pow(Math.abs(event2.clientX - event1.clientX), 2) +
-				Math.pow(Math.abs(event2.clientY - event1.clientY), 2),
+			Math.pow(Math.abs(event2.clientX - event1.clientX), 2) + Math.pow(Math.abs(event2.clientY - event1.clientY), 2),
 		);
 	}
 
 	var events = {
-		down: "mousedown",
-		move: "mousemove",
-		up: "mouseup mouseleave",
+		down: 'mousedown',
+		move: 'mousemove',
+		up: 'mouseup mouseleave',
 	};
-	if (typeof window !== "undefined") {
-		if (typeof window.PointerEvent === "function") {
+	if (typeof window !== 'undefined') {
+		if (typeof window.PointerEvent === 'function') {
 			events = {
-				down: "pointerdown",
-				move: "pointermove",
-				up: "pointerup pointerleave pointercancel",
+				down: 'pointerdown',
+				move: 'pointermove',
+				up: 'pointerup pointerleave pointercancel',
 			};
-		} else if (typeof window.TouchEvent === "function") {
+		} else if (typeof window.TouchEvent === 'function') {
 			events = {
-				down: "touchstart",
-				move: "touchmove",
-				up: "touchend touchcancel",
+				down: 'touchstart',
+				move: 'touchmove',
+				up: 'touchend touchcancel',
 			};
 		}
 	}
 	function onPointer(event, elem, handler, eventOpts) {
-		events[event].split(" ").forEach(function (name) {
+		events[event].split(' ').forEach(function (name) {
 			elem.addEventListener(name, handler, eventOpts);
 		});
 	}
 	function destroyPointer(event, elem, handler) {
-		events[event].split(" ").forEach(function (name) {
+		events[event].split(' ').forEach(function (name) {
 			elem.removeEventListener(name, handler);
 		});
 	}
 
-	var isIE = typeof document !== "undefined" && !!document.documentMode;
+	var isIE = typeof document !== 'undefined' && !!document.documentMode;
 	/**
 	 * Lazy creation of a CSS style declaration
 	 */
@@ -186,12 +177,12 @@
 		if (divStyle) {
 			return divStyle;
 		}
-		return (divStyle = document.createElement("div").style);
+		return (divStyle = document.createElement('div').style);
 	}
 	/**
 	 * Proper prefixing for cross-browser compatibility
 	 */
-	var prefixes = ["webkit", "moz", "ms"];
+	var prefixes = ['webkit', 'moz', 'ms'];
 	var prefixCache = {};
 	function getPrefixedName(name) {
 		if (prefixCache[name]) {
@@ -204,7 +195,7 @@
 		var capName = name[0].toUpperCase() + name.slice(1);
 		var i = prefixes.length;
 		while (i--) {
-			var prefixedName = "".concat(prefixes[i]).concat(capName);
+			var prefixedName = ''.concat(prefixes[i]).concat(capName);
 			if (prefixedName in divStyle) {
 				return (prefixCache[name] = prefixedName);
 			}
@@ -222,12 +213,12 @@
 		}
 		// Support: FF 68+
 		// Firefox requires specificity for border
-		var suffix = name === "border" ? "Width" : "";
+		var suffix = name === 'border' ? 'Width' : '';
 		return {
-			left: getCSSNum("".concat(name, "Left").concat(suffix), style),
-			right: getCSSNum("".concat(name, "Right").concat(suffix), style),
-			top: getCSSNum("".concat(name, "Top").concat(suffix), style),
-			bottom: getCSSNum("".concat(name, "Bottom").concat(suffix), style),
+			left: getCSSNum(''.concat(name, 'Left').concat(suffix), style),
+			right: getCSSNum(''.concat(name, 'Right').concat(suffix), style),
+			top: getCSSNum(''.concat(name, 'Top').concat(suffix), style),
+			bottom: getCSSNum(''.concat(name, 'Bottom').concat(suffix), style),
 		};
 	}
 	/**
@@ -242,15 +233,8 @@
 	 * and takes care of prefixing the transition and transform
 	 */
 	function setTransition(elem, options) {
-		var transform = getPrefixedName("transform");
-		setStyle(
-			elem,
-			"transition",
-			""
-				.concat(transform, " ")
-				.concat(options.duration, "ms ")
-				.concat(options.easing),
-		);
+		var transform = getPrefixedName('transform');
+		setStyle(elem, 'transition', ''.concat(transform, ' ').concat(options.duration, 'ms ').concat(options.easing));
 	}
 	/**
 	 * Set the transform using the proper prefix
@@ -276,16 +260,10 @@
 			y = _a.y,
 			scale = _a.scale,
 			isSVG = _a.isSVG;
-		setStyle(
-			elem,
-			"transform",
-			"scale(".concat(scale, ") translate(").concat(x, "px, ").concat(y, "px)"),
-		);
+		setStyle(elem, 'transform', 'scale('.concat(scale, ') translate(').concat(x, 'px, ').concat(y, 'px)'));
 		if (isSVG && isIE) {
-			var matrixValue = window
-				.getComputedStyle(elem)
-				.getPropertyValue("transform");
-			elem.setAttribute("transform", matrixValue);
+			var matrixValue = window.getComputedStyle(elem).getPropertyValue('transform');
+			elem.setAttribute('transform', matrixValue);
 		}
 	}
 	/**
@@ -306,8 +284,8 @@
 				bottom: rectElem.bottom,
 				left: rectElem.left,
 				right: rectElem.right,
-				margin: getBoxStyle(elem, "margin", style),
-				border: getBoxStyle(elem, "border", style),
+				margin: getBoxStyle(elem, 'margin', style),
+				border: getBoxStyle(elem, 'border', style),
 			},
 			parent: {
 				style: parentStyle,
@@ -317,8 +295,8 @@
 				bottom: rectParent.bottom,
 				left: rectParent.left,
 				right: rectParent.right,
-				padding: getBoxStyle(parent, "padding", parentStyle),
-				border: getBoxStyle(parent, "border", parentStyle),
+				padding: getBoxStyle(parent, 'padding', parentStyle),
+				border: getBoxStyle(parent, 'border', parentStyle),
 			},
 		};
 	}
@@ -330,30 +308,18 @@
 	function isAttached(elem) {
 		var doc = elem.ownerDocument;
 		var parent = elem.parentNode;
-		return (
-			doc &&
-			parent &&
-			doc.nodeType === 9 &&
-			parent.nodeType === 1 &&
-			doc.documentElement.contains(parent)
-		);
+		return doc && parent && doc.nodeType === 9 && parent.nodeType === 1 && doc.documentElement.contains(parent);
 	}
 
 	function getClass(elem) {
-		return (elem.getAttribute("class") || "").trim();
+		return (elem.getAttribute('class') || '').trim();
 	}
 	function hasClass(elem, className) {
-		return (
-			elem.nodeType === 1 &&
-			" ".concat(getClass(elem), " ").indexOf(" ".concat(className, " ")) > -1
-		);
+		return elem.nodeType === 1 && ' '.concat(getClass(elem), ' ').indexOf(' '.concat(className, ' ')) > -1;
 	}
 	function isExcluded(elem, options) {
 		for (var cur = elem; cur != null; cur = cur.parentNode) {
-			if (
-				hasClass(cur, options.excludeClass) ||
-				options.exclude.indexOf(cur) > -1
-			) {
+			if (hasClass(cur, options.excludeClass) || options.exclude.indexOf(cur) > -1) {
 				return true;
 			}
 		}
@@ -366,9 +332,7 @@
 	 */
 	var rsvg = /^http:[\w\.\/]+svg$/;
 	function isSVGElement(elem) {
-		return (
-			rsvg.test(elem.namespaceURI) && elem.nodeName.toLowerCase() !== "svg"
-		);
+		return rsvg.test(elem.namespaceURI) && elem.nodeName.toLowerCase() !== 'svg';
 	}
 
 	function shallowClone(obj) {
@@ -384,22 +348,22 @@
 	var defaultOptions = {
 		animate: false,
 		canvas: false,
-		cursor: "move",
+		cursor: 'move',
 		disablePan: false,
 		disableZoom: false,
 		disableXAxis: false,
 		disableYAxis: false,
 		duration: 200,
-		easing: "ease-in-out",
+		easing: 'ease-in-out',
 		exclude: [],
-		excludeClass: "panzoom-exclude",
+		excludeClass: 'panzoom-exclude',
 		handleStartEvent: function (e) {
 			e.preventDefault();
 			e.stopPropagation();
 		},
 		maxScale: 4,
 		minScale: 0.125,
-		overflow: "hidden",
+		overflow: 'hidden',
 		panOnlyWhenZoomed: false,
 		pinchAndPan: false,
 		relative: false,
@@ -408,54 +372,44 @@
 		startY: 0,
 		startScale: 1,
 		step: 0.3,
-		touchAction: "none",
+		touchAction: 'none',
 	};
 	function Panzoom(elem, options) {
 		if (!elem) {
-			throw new Error("Panzoom requires an element as an argument");
+			throw new Error('Panzoom requires an element as an argument');
 		}
 		if (elem.nodeType !== 1) {
-			throw new Error("Panzoom requires an element with a nodeType of 1");
+			throw new Error('Panzoom requires an element with a nodeType of 1');
 		}
 		if (!isAttached(elem)) {
-			throw new Error(
-				"Panzoom should be called on elements that have been attached to the DOM",
-			);
+			throw new Error('Panzoom should be called on elements that have been attached to the DOM');
 		}
 		options = __assign(__assign({}, defaultOptions), options);
 		var isSVG = isSVGElement(elem);
 		var parent = elem.parentNode;
 		// Set parent styles
 		parent.style.overflow = options.overflow;
-		parent.style.userSelect = "none";
+		parent.style.userSelect = 'none';
 		// This is important for mobile to
 		// prevent scrolling while panning
 		parent.style.touchAction = options.touchAction;
 		(options.canvas ? parent : elem).style.cursor = options.cursor;
 		// Set element styles
-		elem.style.userSelect = "none";
+		elem.style.userSelect = 'none';
 		elem.style.touchAction = options.touchAction;
 		// The default for HTML is '50% 50%'
 		// The default for SVG is '0 0'
 		// SVG can't be changed in IE
-		setStyle(
-			elem,
-			"transformOrigin",
-			typeof options.origin === "string"
-				? options.origin
-				: isSVG
-					? "0 0"
-					: "50% 50%",
-		);
+		setStyle(elem, 'transformOrigin', typeof options.origin === 'string' ? options.origin : isSVG ? '0 0' : '50% 50%');
 		function resetStyle() {
-			parent.style.overflow = "";
-			parent.style.userSelect = "";
-			parent.style.touchAction = "";
-			parent.style.cursor = "";
-			elem.style.cursor = "";
-			elem.style.userSelect = "";
-			elem.style.touchAction = "";
-			setStyle(elem, "transformOrigin", "");
+			parent.style.overflow = '';
+			parent.style.userSelect = '';
+			parent.style.touchAction = '';
+			parent.style.cursor = '';
+			elem.style.cursor = '';
+			elem.style.userSelect = '';
+			elem.style.touchAction = '';
+			setStyle(elem, 'transformOrigin', '');
 		}
 		function setOptions(opts) {
 			if (opts === void 0) {
@@ -467,14 +421,14 @@
 				}
 			}
 			// Handle option side-effects
-			if (opts.hasOwnProperty("cursor") || opts.hasOwnProperty("canvas")) {
-				parent.style.cursor = elem.style.cursor = "";
+			if (opts.hasOwnProperty('cursor') || opts.hasOwnProperty('canvas')) {
+				parent.style.cursor = elem.style.cursor = '';
 				(options.canvas ? parent : elem).style.cursor = options.cursor;
 			}
-			if (opts.hasOwnProperty("overflow")) {
+			if (opts.hasOwnProperty('overflow')) {
 				parent.style.overflow = opts.overflow;
 			}
-			if (opts.hasOwnProperty("touchAction")) {
+			if (opts.hasOwnProperty('touchAction')) {
 				parent.style.touchAction = opts.touchAction;
 				elem.style.touchAction = opts.touchAction;
 			}
@@ -506,27 +460,23 @@
 				originalEvent: originalEvent,
 			};
 			requestAnimationFrame(function () {
-				if (typeof opts.animate === "boolean") {
+				if (typeof opts.animate === 'boolean') {
 					if (opts.animate) {
 						setTransition(elem, opts);
 					} else {
-						setStyle(elem, "transition", "none");
+						setStyle(elem, 'transition', 'none');
 					}
 				}
 				opts.setTransform(elem, value, opts);
 				trigger(eventName, value, opts);
-				trigger("panzoomchange", value, opts);
+				trigger('panzoomchange', value, opts);
 			});
 			return value;
 		}
 		function constrainXY(toX, toY, toScale, panOptions) {
 			var opts = __assign(__assign({}, options), panOptions);
 			var result = { x: x, y: y, opts: opts };
-			if (
-				!opts.force &&
-				(opts.disablePan ||
-					(opts.panOnlyWhenZoomed && scale === opts.startScale))
-			) {
+			if (!opts.force && (opts.disablePan || (opts.panOnlyWhenZoomed && scale === opts.startScale))) {
 				return result;
 			}
 			toX = parseFloat(toX);
@@ -545,12 +495,8 @@
 				var scaledHeight = realHeight * toScale;
 				var diffHorizontal = (scaledWidth - realWidth) / 2;
 				var diffVertical = (scaledHeight - realHeight) / 2;
-				if (opts.contain === "inside") {
-					var minX =
-						(-dims.elem.margin.left -
-							dims.parent.padding.left +
-							diffHorizontal) /
-						toScale;
+				if (opts.contain === 'inside') {
+					var minX = (-dims.elem.margin.left - dims.parent.padding.left + diffHorizontal) / toScale;
 					var maxX =
 						(dims.parent.width -
 							scaledWidth -
@@ -561,9 +507,7 @@
 							diffHorizontal) /
 						toScale;
 					result.x = Math.max(Math.min(result.x, maxX), minX);
-					var minY =
-						(-dims.elem.margin.top - dims.parent.padding.top + diffVertical) /
-						toScale;
+					var minY = (-dims.elem.margin.top - dims.parent.padding.top + diffVertical) / toScale;
 					var maxY =
 						(dims.parent.height -
 							scaledHeight -
@@ -574,7 +518,7 @@
 							diffVertical) /
 						toScale;
 					result.y = Math.max(Math.min(result.y, maxY), minY);
-				} else if (opts.contain === "outside") {
+				} else if (opts.contain === 'outside') {
 					var minX =
 						(-(scaledWidth - dims.parent.width) -
 							dims.parent.padding.left -
@@ -614,19 +558,13 @@
 				var elemWidth = dims.elem.width / scale;
 				var elemHeight = dims.elem.height / scale;
 				if (elemWidth > 1 && elemHeight > 1) {
-					var parentWidth =
-						dims.parent.width -
-						dims.parent.border.left -
-						dims.parent.border.right;
-					var parentHeight =
-						dims.parent.height -
-						dims.parent.border.top -
-						dims.parent.border.bottom;
+					var parentWidth = dims.parent.width - dims.parent.border.left - dims.parent.border.right;
+					var parentHeight = dims.parent.height - dims.parent.border.top - dims.parent.border.bottom;
 					var elemScaledWidth = parentWidth / elemWidth;
 					var elemScaledHeight = parentHeight / elemHeight;
-					if (options.contain === "inside") {
+					if (options.contain === 'inside') {
 						maxScale = Math.min(maxScale, elemScaledWidth, elemScaledHeight);
-					} else if (options.contain === "outside") {
+					} else if (options.contain === 'outside') {
 						minScale = Math.max(minScale, elemScaledWidth, elemScaledHeight);
 					}
 				}
@@ -640,7 +578,7 @@
 			if (x !== result.x || y !== result.y) {
 				x = result.x;
 				y = result.y;
-				return setTransformWithEvent("panzoompan", result.opts, originalEvent);
+				return setTransformWithEvent('panzoompan', result.opts, originalEvent);
 			}
 			return {
 				x: x,
@@ -674,13 +612,10 @@
 			x = panResult.x;
 			y = panResult.y;
 			scale = toScale;
-			return setTransformWithEvent("panzoomzoom", opts, originalEvent);
+			return setTransformWithEvent('panzoomzoom', opts, originalEvent);
 		}
 		function zoomInOut(isIn, zoomOptions) {
-			var opts = __assign(
-				__assign(__assign({}, options), { animate: true }),
-				zoomOptions,
-			);
+			var opts = __assign(__assign(__assign({}, options), { animate: true }), zoomOptions);
 			return zoom(scale * Math.exp((isIn ? 1 : -1) * opts.step), opts);
 		}
 		function zoomIn(zoomOptions) {
@@ -712,17 +647,9 @@
 			// Adjust the clientX/clientY to ignore the area
 			// outside the effective area
 			var clientX =
-				point.clientX -
-				dims.parent.left -
-				dims.parent.padding.left -
-				dims.parent.border.left -
-				dims.elem.margin.left;
+				point.clientX - dims.parent.left - dims.parent.padding.left - dims.parent.border.left - dims.elem.margin.left;
 			var clientY =
-				point.clientY -
-				dims.parent.top -
-				dims.parent.padding.top -
-				dims.parent.border.top -
-				dims.elem.margin.top;
+				point.clientY - dims.parent.top - dims.parent.padding.top - dims.parent.border.top - dims.elem.margin.top;
 			// Adjust the clientX/clientY for HTML elements,
 			// because they have a transform-origin of 50% 50%
 			if (!isSVG) {
@@ -736,11 +663,7 @@
 				x: (clientX / effectiveArea.width) * (effectiveArea.width * toScale),
 				y: (clientY / effectiveArea.height) * (effectiveArea.height * toScale),
 			};
-			return zoom(
-				toScale,
-				__assign(__assign({}, zoomOptions), { animate: false, focal: focal }),
-				originalEvent,
-			);
+			return zoom(toScale, __assign(__assign({}, zoomOptions), { animate: false, focal: focal }), originalEvent);
 		}
 		function zoomWithWheel(event, zoomOptions) {
 			// Need to prevent the default here
@@ -750,25 +673,18 @@
 				animate: false,
 			});
 			// Normalize to deltaX in case shift modifier is used on Mac
-			var delta =
-				event.deltaY === 0 && event.deltaX ? event.deltaX : event.deltaY;
+			var delta = event.deltaY === 0 && event.deltaX ? event.deltaX : event.deltaY;
 			var wheel = delta < 0 ? 1 : -1;
-			var toScale = constrainScale(
-				scale * Math.exp((wheel * opts.step) / 3),
-				opts,
-			).scale;
+			var toScale = constrainScale(scale * Math.exp((wheel * opts.step) / 3), opts).scale;
 			return zoomToPoint(toScale, event, opts, event);
 		}
 		function reset(resetOptions) {
-			var opts = __assign(
-				__assign(__assign({}, options), { animate: true, force: true }),
-				resetOptions,
-			);
+			var opts = __assign(__assign(__assign({}, options), { animate: true, force: true }), resetOptions);
 			scale = constrainScale(opts.startScale, opts).scale;
 			var panResult = constrainXY(opts.startX, opts.startY, scale, opts);
 			x = panResult.x;
 			y = panResult.y;
-			return setTransformWithEvent("panzoomreset", opts);
+			return setTransformWithEvent('panzoomreset', opts);
 		}
 		var origX;
 		var origY;
@@ -787,11 +703,7 @@
 			options.handleStartEvent(event);
 			origX = x;
 			origY = y;
-			trigger(
-				"panzoomstart",
-				{ x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event },
-				options,
-			);
+			trigger('panzoomstart', { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event }, options);
 			// This works whether there are multiple
 			// pointers or not
 			var point = getMiddle(pointers);
@@ -849,11 +761,7 @@
 			// Don't call panzoomend when panning with 2 touches
 			// until both touches end
 			if (pointers.length === 1) {
-				trigger(
-					"panzoomend",
-					{ x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event },
-					options,
-				);
+				trigger('panzoomend', { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event }, options);
 			}
 			// Note: don't remove all pointers
 			// Can restart without having to reinitiate all of them
@@ -871,15 +779,15 @@
 				return;
 			}
 			bound = true;
-			onPointer("down", options.canvas ? parent : elem, handleDown);
-			onPointer("move", document, handleMove, { passive: true });
-			onPointer("up", document, handleUp, { passive: true });
+			onPointer('down', options.canvas ? parent : elem, handleDown);
+			onPointer('move', document, handleMove, { passive: true });
+			onPointer('up', document, handleUp, { passive: true });
 		}
 		function destroy() {
 			bound = false;
-			destroyPointer("down", options.canvas ? parent : elem, handleDown);
-			destroyPointer("move", document, handleMove);
-			destroyPointer("up", document, handleUp);
+			destroyPointer('down', options.canvas ? parent : elem, handleDown);
+			destroyPointer('move', document, handleMove);
+			destroyPointer('up', document, handleUp);
 		}
 		if (!options.noBind) {
 			bind();
